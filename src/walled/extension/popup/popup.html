@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Walled</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/48.png" alt="" width="28" height="28">
+    <div>
+      <h1>Walled</h1>
+      <p class="sub">ChatGPT · Perplexity · Claude</p>
+    </div>
+  </header>
+
+  <button id="panel" class="panel-btn">Open Walled in the side panel</button>
+
+  <section class="card" id="agent">
+    <div class="row"><span class="dot" id="dot"></span><strong id="agent-title">Checking the desktop agent…</strong></div>
+    <p class="muted" id="agent-detail"></p>
+  </section>
+
+  <section class="card">
+    <h2>What is checked</h2>
+    <ul>
+      <li>Prompts you send</li>
+      <li>Text, PDF and image uploads (picker, drag-and-drop, paste)</li>
+    </ul>
+    <p class="muted">Anything matching your rules (<code>WALLED_SENSITIVE</code>, card numbers, keys…) waits for your answer in a desktop dialog. Edit rules in the Walled app.</p>
+  </section>
+
+  <section class="card">
+    <h2>Password helper</h2>
+    <label class="row switch"><input type="checkbox" id="pwhelper"> <span>Suggest &amp; fill passwords on all sites</span></label>
+    <p class="muted" id="pw-detail">Strong passwords for sign-ups, logins filled from your encrypted Walled vault.</p>
+  </section>
+
+  <section class="card">
+    <h2>AI response colour</h2>
+    <label class="row switch"><input type="checkbox" id="recolor"> <span>Recolour responses</span></label>
+    <div class="row">
+      <input type="color" id="color" aria-label="Response colour">
+      <div class="swatches" id="swatches"></div>
+    </div>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

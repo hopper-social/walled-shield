@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Claude (test double)</title></head>
+<body>
+<div class="font-claude-message"><p id="answer">Here is a summary.</p></div>
+<fieldset>
+  <div class="ProseMirror" contenteditable="true" id="composer" style="border:1px solid #ccc;min-height:24px"></div>
+  <button aria-label="Send message" id="send">Send</button>
+</fieldset>
+<script>
+  window.__log = { sent: [] };
+  const box = document.getElementById("composer");
+  const send = () => { const t = box.innerText.trim(); if (t) { window.__log.sent.push(t); box.innerText = ""; } };
+  box.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } });
+  document.getElementById("send").addEventListener("click", send);
+</script>
+</body></html>

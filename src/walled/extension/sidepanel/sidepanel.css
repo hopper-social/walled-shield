@@ -1,0 +1,8 @@
+html, body { margin: 0; height: 100%; background: #0b1220; color: #e8ecf4; font: 14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+iframe { border: 0; width: 100%; height: 100vh; display: block; background: #f4f5f8; }
+.center { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; box-sizing: border-box; gap: 6px; }
+.logo { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: #fff; font-size: 22px; background: #0d9488; animation: pulse 1.6s ease-in-out infinite; }
+h1 { font-size: 18px; margin: 10px 0 0; } p { color: #9aa6bf; max-width: 280px; }
+code { background: #1f2a42; padding: 1px 6px; border-radius: 6px; }
+button { margin-top: 10px; border: 0; border-radius: 10px; padding: 9px 16px; background: #0d9488; color: #fff; font-weight: 700; cursor: pointer; }
+@keyframes pulse { 50% { transform: scale(.94); opacity: .8; } }

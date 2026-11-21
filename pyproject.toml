@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "walled-shield"
+version = "2.6.0"
+description = "Guard what you share with AI: Telegram approvals for Claude MCP tool calls, a sensitive-data guard for ChatGPT and Perplexity, and a password vault — managed from one desktop app"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{name = "Vibhav Trivedi"}]
+dependencies = ["pypdf>=4.0", "Pillow>=10.0", "cryptography>=42"]
+
+[project.optional-dependencies]
+ocr = ["pytesseract>=0.3.10"]
+window = ["pywebview>=5"]
+dev = ["pytest", "mypy>=1.10", "reportlab", "playwright"]
+
+[project.scripts]
+walled = "walled.__main__:main"
+walled-guard = "walled_guard.__main__:main"
+mcp-approval-gate = "mcp_approval_gate.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+walled = ["web/*", "samples/*", "practice/*", "extension/*.json", "extension/src/*", "extension/popup/*", "extension/icons/*", "extension/sidepanel/*", "extension/sounds/*"]
+mcp_approval_gate = ["py.typed"]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+# These ignores are needed on some Python/OS combinations (execve stubs, script-mode imports).
+module = ["mcp_approval_gate.telegram_launcher", "mcp_approval_gate.examples.*"]
+warn_unused_ignores = false

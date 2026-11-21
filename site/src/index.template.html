@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Walled — guard what you share with AI</title>
+<meta name="description" content="Walled checks what you send to ChatGPT, Perplexity and Claude before it leaves your computer, asks you about Claude's actions on your phone, and keeps your passwords local. Meet Pip, your little guardian.">
+<link rel="icon" href="data:image/png;base64,{{FAVICON}}">
+<style>
+:root{
+  --bg:#0b1120;--bg2:#0f172a;--card:#111a2b;--card2:#172338;--line:rgba(148,163,184,.14);--line2:rgba(148,163,184,.26);
+  --text:#e6edf3;--muted:#a0adbd;--dim:#728096;
+  --sig:#0d9488;--sig2:#2dd4bf;--amb:#f2a33a;--cy:#4ee8ff;--ok:#34d399;--bad:#f87171;
+  --r:22px;--pad:clamp(18px,4vw,28px);--max:1120px;
+  --font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--sig2);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sig2);outline-offset:3px;border-radius:8px}
+code,kbd{font-family:var(--mono);font-size:.88em}
+p code,li code,td code,.inline{background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.22);color:#99f6e4;padding:1px 6px;border-radius:7px;white-space:nowrap}
+kbd{background:var(--card2);border:1px solid var(--line2);border-bottom-width:2px;padding:1px 6px;border-radius:6px}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(8,12,26,.78);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand:hover{text-decoration:none}.brand .pa{--pa-size:32px}
+.nav-links{display:flex;gap:26px;margin-left:auto;font-weight:600;font-size:14.5px}
+.nav-links a{color:var(--muted)}.nav-links a:hover{color:var(--text);text-decoration:none}
+.nav .btn{margin-left:8px}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--card);cursor:pointer;place-items:center}
+.burger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;position:relative;transition:transform .25s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,top .25s}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.menu-open .burger span{background:transparent}.menu-open .burger span::before{top:0;transform:rotate(45deg)}.menu-open .burger span::after{top:0;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:64px 0 auto;z-index:49;background:rgba(8,12,26,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:10px var(--pad) 22px;display:none}
+.menu-open .sheet{display:grid;gap:4px;animation:drop .25s ease-out}
+.sheet a{color:var(--text);font-weight:650;font-size:18px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.sheet a:last-child{border:0;margin-top:10px;text-align:center}
+
+/* ---------- buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:14px;font-weight:750;font-size:15px;border:1px solid var(--line2);background:var(--card);color:var(--text);cursor:pointer;white-space:nowrap;transition:transform .15s,filter .15s,box-shadow .2s}
+.btn:hover{text-decoration:none;filter:brightness(1.12);transform:translateY(-1px)}
+.btn.primary{background:var(--sig);border-color:transparent;color:#fff}.btn.primary:hover{background:#0f766e;filter:none}
+.btn.small{min-height:38px;padding:0 14px;font-size:14px;border-radius:11px}
+.btn.ghost{background:transparent}
+
+/* ---------- hero */
+.hero{position:relative;padding:clamp(108px,16vw,150px) 0 clamp(40px,8vw,90px);overflow:hidden}
+
+.hero .grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,56px);align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--amb);background:rgba(242,163,58,.09);border:1px solid rgba(242,163,58,.26);padding:5px 12px;border-radius:99px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(46,229,157,.18)}
+h1{font-size:clamp(38px,7.2vw,68px);line-height:1.02;letter-spacing:-.035em;margin:18px 0 18px;font-weight:850}
+.grad{color:var(--sig2)}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);margin:0 0 28px;max-width:580px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.trust{display:flex;gap:10px 18px;flex-wrap:wrap;margin-top:26px;color:var(--dim);font-size:14px;font-weight:600}
+.trust span{display:inline-flex;align-items:center;gap:7px}.trust span::before{content:"✓";color:var(--ok);font-weight:900}
+.stage{position:relative;display:grid;place-items:center;min-height:clamp(300px,42vw,440px)}
+.stage .halo{position:absolute;width:72%;aspect-ratio:1;border-radius:50%;background:#132235}
+.stage .ring{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(242,163,58,.22);animation:spin 40s linear infinite}
+#hero-pip{--pa-size:clamp(200px,30vw,300px);filter:drop-shadow(0 30px 40px rgba(13,148,136,.25));cursor:pointer}
+.toast{position:absolute;display:flex;gap:10px;align-items:center;max-width:250px;background:rgba(17,25,52,.92);backdrop-filter:blur(8px);border:1px solid var(--line2);border-radius:16px;padding:10px 14px;font-size:13.5px;font-weight:600;box-shadow:0 18px 40px rgba(0,0,0,.4);animation:floaty 6s ease-in-out infinite}
+.toast b{display:block;font-size:14px;color:#fff}.toast small{color:var(--muted);font-weight:500}
+.toast .dot{flex:none;width:10px;height:10px;border-radius:50%}
+.toast.t1{top:6%;left:-4%}.toast.t2{bottom:12%;right:-6%;animation-delay:-3s}
+.toast.t1 .dot{background:var(--ok);box-shadow:0 0 10px var(--ok)}.toast.t2 .dot{background:var(--amb);box-shadow:0 0 10px var(--amb)}
+.say{position:absolute;top:2%;right:4%;background:#fff;color:#141a33;font-weight:700;font-size:14px;padding:9px 14px;border-radius:14px 14px 4px 14px;box-shadow:0 14px 30px rgba(0,0,0,.35);transition:opacity .25s,transform .25s}
+.say.hide{opacity:0;transform:translateY(6px)}
+
+/* ---------- sections */
+section{position:relative;padding:clamp(64px,10vw,110px) 0}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--sig2);margin-bottom:12px;display:block}
+h2{font-size:clamp(30px,4.6vw,46px);line-height:1.08;letter-spacing:-.028em;margin:0 0 14px;font-weight:820}
+.sub{font-size:clamp(16px,2vw,18.5px);color:var(--muted);max-width:680px;margin:0 0 clamp(28px,5vw,44px)}
+.center{text-align:center}.center .sub{margin-left:auto;margin-right:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,26px)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- demo: chat */
+.demo{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:stretch}
+.window{background:#0b1022;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45);display:flex;flex-direction:column;min-height:440px;position:relative}
+.bar{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);background:#0e1430}
+.bar i{width:11px;height:11px;border-radius:50%;background:#3a4366}.bar i:nth-child(1){background:#ff5f57}.bar i:nth-child(2){background:#febc2e}.bar i:nth-child(3){background:#28c840}
+.bar .url{margin-left:10px;flex:1;min-width:0;background:#070b18;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .url b{color:var(--text);font-weight:600}
+.chat{flex:1;padding:18px;display:flex;flex-direction:column;gap:12px;overflow:auto;max-height:420px}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.5;animation:pop .3s ease-out}
+.msg.ai{background:#151d3c;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+.msg.me{background:#1d3b45;align-self:flex-end;border-bottom-right-radius:5px}
+.msg.sys{align-self:center;background:transparent;color:var(--dim);font-size:13px;padding:2px}
+.composer{border-top:1px solid var(--line);padding:12px;display:flex;gap:10px;align-items:flex-end;background:#0e1430}
+.composer textarea{flex:1;min-width:0;resize:none;background:#070b18;border:1px solid var(--line2);border-radius:14px;color:var(--text);font:15px/1.45 var(--font);padding:11px 14px;min-height:48px;max-height:140px}
+.composer textarea:focus{outline:none;border-color:var(--sig2);box-shadow:0 0 0 3px rgba(45,212,191,.2)}
+.send{flex:none;width:48px;height:48px;border-radius:14px;border:0;background:var(--sig);color:#fff;cursor:pointer;display:grid;place-items:center}
+.send svg{width:20px;height:20px}
+.tries{display:flex;gap:8px;flex-wrap:wrap;padding:0 12px 12px;background:#0e1430}
+.tries button{cursor:pointer;border:1px solid var(--line2);background:var(--card);border-radius:99px;padding:7px 12px;font-size:13px;font-weight:650;min-height:36px}
+.tries button:hover{border-color:var(--sig2)}
+.side{display:grid;gap:14px;align-content:start}
+.side .card h3{margin:0 0 6px;font-size:17px}.side .card p{margin:0;color:var(--muted);font-size:15px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;color:var(--muted);font-size:15px}
+.steps li b{color:var(--text)}
+.steps .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13.5px;color:var(--sig2);background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.3)}
+.steps li.done .n{background:rgba(46,229,157,.14);border-color:rgba(46,229,157,.4);color:var(--ok)}
+/* native-looking dialog */
+.scrim{position:absolute;inset:0;background:rgba(4,7,16,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:16px;z-index:3;animation:fade .2s}
+.scrim[hidden]{display:none}
+.alert{width:min(380px,100%);background:#ecedf1;color:#1c1d21;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.6);padding:20px 20px 16px;text-align:center;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;animation:alertIn .28s cubic-bezier(.2,1.2,.3,1)}
+.alert .icon{width:58px;height:58px;margin:0 auto 10px;border-radius:14px;overflow:hidden;background:#141a35;display:grid;place-items:center}
+.alert .icon .pa{--pa-size:62px;margin-top:10px}
+.alert h4{margin:0 0 6px;font-size:14px;font-weight:700}
+.alert p{margin:0 0 10px;color:#3a3c44}
+.alert .detail{background:#fff;border:1px solid #d5d7de;border-radius:8px;padding:8px 10px;text-align:left;font-size:12.5px;color:#2a2c33;margin-bottom:14px;max-height:110px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.alert .row{display:flex;gap:8px}
+.alert button{flex:1;min-height:36px;border-radius:9px;border:0;font-weight:600;cursor:pointer;font-size:13.5px}
+.alert .cancel{background:#1f7aff;color:#fff}.alert .go{background:#d9dbe1;color:#1c1d21}
+.alert .via{margin-top:10px;font-size:11.5px;color:#6b6e78}
+
+/* ---------- layers */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative}
+.layer{position:relative;overflow:hidden}
+.layer .ico{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:16px;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.28)}
+.layer .ico svg{width:26px;height:26px;stroke:var(--sig2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.layer h3{margin:0 0 8px;font-size:20px}.layer p{margin:0 0 14px;color:var(--muted)}
+.layer ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14.5px;color:var(--muted)}
+.layer li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--sig2);margin-right:10px;vertical-align:middle}
+.tag{display:inline-block;font-size:11.5px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+
+/* ---------- phone */
+.phone-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,6vw,70px);align-items:center}
+.phone{width:min(330px,100%);margin:0 auto;aspect-ratio:9/18.5;border-radius:46px;background:#05070f;padding:12px;box-shadow:0 0 0 2px #262f52,0 40px 80px rgba(0,0,0,.55);position:relative}
+.phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:96px;height:26px;border-radius:20px;background:#000;z-index:2}
+.screen{height:100%;border-radius:36px;overflow:hidden;background:#0e1621;display:flex;flex-direction:column}
+.tg-head{display:flex;align-items:center;gap:10px;padding:46px 16px 12px;background:#17212b;border-bottom:1px solid #0d141c}
+.tg-head .av{width:36px;height:36px;border-radius:50%;background:#141a35;display:grid;place-items:center;overflow:hidden}.tg-head .av .pa{--pa-size:40px;margin-top:8px}
+.tg-head b{display:block;font-size:14.5px}.tg-head small{color:#7f91a4;font-size:12px}
+.tg-body{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:10px;overflow:auto;background:#0e1621;border-radius:16px 16px 16px 6px;padding:10px 12px;font-size:13.5px;line-height:1.45;max-width:92%;animation:pop .3s ease-out}
+.bubble b{color:#fff}.bubble code{background:rgba(255,255,255,.08);border:0;color:#cfe1ff;white-space:normal}
+.bubble .meta{color:#6f8396;font-size:11px;text-align:right;margin-top:4px}
+.kb{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:92%}
+.kb button{min-height:40px;border-radius:10px;border:0;background:#24364a;color:#fff;font-weight:650;font-size:13.5px;cursor:pointer}
+.kb button.wide{grid-column:1/-1}
+.kb button:hover{background:#2f4660}
+.kb[aria-disabled="true"] button{opacity:.45;pointer-events:none}
+.ptext h3{font-size:20px;margin:0 0 6px}.ptext p{color:var(--muted);margin:0 0 20px}
+.feat-list{display:grid;gap:14px;margin:0 0 26px;padding:0;list-style:none}
+.feat-list li{display:grid;grid-template-columns:28px 1fr;gap:12px;color:var(--muted)}
+.feat-list li b{color:var(--text);display:block}
+.feat-list .ck{width:26px;height:26px;border-radius:8px;background:rgba(46,229,157,.12);border:1px solid rgba(46,229,157,.35);color:var(--ok);display:grid;place-items:center;font-weight:900;font-size:13px}
+
+/* ---------- features */
+.guards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.guards b{display:block;font-size:16px;margin-bottom:4px}.guards p{margin:0;color:var(--muted);font-size:14.5px}
+.dtable{margin-top:18px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+.dtable table{width:100%;border-collapse:collapse;min-width:560px;background:var(--card)}
+.dtable th,.dtable td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-size:14.5px}
+.dtable th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.dtable tr:last-child td{border-bottom:0}.dtable td.no{color:var(--ok);font-weight:650}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature h3{margin:12px 0 6px;font-size:18px}.feature p{margin:0;color:var(--muted);font-size:15px}
+.feature .em{font-size:26px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chips span{font-size:12.5px;font-weight:650;padding:3px 9px;border-radius:99px;background:var(--card2);border:1px solid var(--line);color:#d6dcf0}
+.chips span.hot{background:rgba(242,163,58,.1);border-color:rgba(242,163,58,.3);color:#f8c56e}
+
+/* ---------- pip */
+.pip-zone{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,6vw,64px);align-items:center}
+.petbox{position:relative;border-radius:28px;background:var(--card);border:1px solid var(--line);min-height:360px;display:grid;place-items:center;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#pet-pip{--pa-size:min(240px,60vw);cursor:grab}
+.petbox .hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--dim);font-size:13.5px;font-weight:600}
+.petbox .hearts{position:absolute;inset:0;pointer-events:none}
+.petbox .hearts i{position:absolute;font-style:normal;color:#ff6b9a;font-size:20px;animation:rise 1.4s ease-out forwards}
+.meter{height:8px;border-radius:99px;background:var(--card2);overflow:hidden;margin:6px 0 2px}.meter i{display:block;height:100%;width:0;background:#f472b6;transition:width .2s}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px;background:var(--card);border:1px solid var(--line);padding:5px;border-radius:14px;margin:6px 0 18px}
+.seg button{cursor:pointer;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:14px;padding:8px 14px;border-radius:10px;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--card2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line2)}
+.faces{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;margin-top:clamp(28px,5vw,46px)}
+.face{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .15s,border-color .15s}
+.face:hover,.face[aria-pressed="true"]{transform:translateY(-3px);border-color:var(--sig2)}
+.face .pa{--pa-size:72px}.face span{font-size:12px;font-weight:650;color:var(--muted);text-align:center;line-height:1.2}
+.green{color:var(--ok)}
+
+/* ---------- install */
+.install{display:grid;grid-template-columns:1fr;gap:18px}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);padding:5px;border-radius:16px;overflow-x:auto;scrollbar-width:none;margin-bottom:18px;max-width:100%}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;cursor:pointer;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:14.5px;padding:10px 16px;border-radius:11px;min-height:42px}
+.tabs button[aria-selected="true"]{background:var(--card2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line2)}
+.panel[hidden]{display:none}
+.isteps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.istep{position:relative}
+.istep .num{font-size:13px;font-weight:800;color:var(--sig2);letter-spacing:.06em}
+.istep h3{margin:6px 0 6px;font-size:18px}.istep p{margin:0;color:var(--muted);font-size:15px}
+.cmd{position:relative;margin:12px 0 0}
+.cmd pre{margin:0;background:#050813;border:1px solid var(--line2);border-radius:14px;padding:14px 16px;padding-right:84px;overflow-x:auto;color:#dbe5ff;font-size:13.5px;line-height:1.6;-webkit-overflow-scrolling:touch}
+.cmd pre .c{color:#6f7da3}
+.copy{position:absolute;top:9px;right:9px;cursor:pointer;border:1px solid var(--line2);background:var(--card2);color:var(--text);font:700 12.5px var(--font);padding:6px 11px;border-radius:9px;min-height:32px}
+.copy:hover{border-color:var(--sig2)}.copy.done{color:var(--ok);border-color:var(--ok)}
+.note{color:var(--dim);font-size:14px;margin:10px 2px 0}.note b{color:var(--muted)}
+.callout{margin-top:18px;border-radius:16px;padding:14px 16px;background:rgba(46,229,157,.07);border:1px solid rgba(46,229,157,.25);color:#c9f5e2;font-size:15px}
+
+/* ---------- commands */
+.cmds{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.cmd-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px 16px;min-height:60px}
+.cmd-row div{flex:1;min-width:0}
+.cmd-row code{display:block;font-size:13.5px;color:#99f6e4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmd-row small{display:block;color:var(--muted);font-size:13.5px;line-height:1.35;margin-top:2px}
+.cmd-row .copy{position:static;flex:none}
+
+/* ---------- details */
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
+details summary{cursor:pointer;list-style:none;padding:16px 18px;font-weight:700;display:flex;align-items:center;gap:12px;min-height:56px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";margin-left:auto;font-size:22px;color:var(--dim);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details .inner{padding:0 18px 18px;color:var(--muted)}
+details .inner p{margin:0 0 8px}
+.prompt pre{max-height:380px;white-space:pre-wrap;word-break:break-word}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* ---------- final cta + footer */
+.final{text-align:center;border-radius:32px;padding:clamp(36px,7vw,70px) var(--pad);background:var(--card);border:1px solid var(--line)}
+.final .pa{--pa-size:110px}
+footer{padding:36px 0 calc(40px + env(safe-area-inset-bottom));color:var(--dim);font-size:14px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;gap:10px 18px;flex-wrap:wrap;align-items:center}
+footer .brand{font-size:15px}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floaty{50%{transform:translateY(-10px)}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}}
+@keyframes fade{from{opacity:0}}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+@keyframes alertIn{from{opacity:0;transform:scale(.92)}}
+@keyframes rise{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-90px) scale(1.2)}}
+
+/* ---------- responsive */
+@media (max-width:980px){
+  .nav-links,.nav .btn.desk{display:none}.burger{display:grid}
+  .hero .grid,.demo,.phone-wrap,.pip-zone{grid-template-columns:1fr}
+  .stage{order:-1;min-height:300px;margin-top:-10px}
+  .toast.t1{left:0}.toast.t2{right:0}
+  .layers,.features,.isteps,.guards{grid-template-columns:1fr 1fr}
+  .faces{grid-template-columns:repeat(4,1fr)}
+  .side{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .layers,.features,.isteps,.cmds,.two,.side,.guards{grid-template-columns:1fr}
+  .cta .btn{flex:1 1 100%}
+  .toast{max-width:200px;font-size:12.5px;padding:8px 11px}.toast b{font-size:13px}
+  .toast.t1{top:0}.toast.t2{bottom:2%}
+  .say{right:0;top:auto;bottom:0}
+  .hero{padding-top:84px}.stage{min-height:250px;margin:0 0 6px}
+  #hero-pip{--pa-size:190px}
+  h1{margin-top:14px}
+  .window{min-height:400px}.chat{max-height:340px}
+  .faces{grid-template-columns:repeat(4,1fr);gap:8px}.face .pa{--pa-size:58px}.face span{font-size:11px}
+  .phone{width:min(290px,86vw)}
+  .petbox{min-height:300px}
+  .cmd pre{font-size:12.5px;padding-right:16px;padding-top:44px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#top" aria-label="Walled home"><span data-pip="happy" data-size="32"></span>Walled</a>
+  <nav class="nav-links" aria-label="Main"><a href="#demo">Try it</a><a href="#how">How it works</a><a href="#security">Security</a><a href="#pip">Meet Pip</a><a href="#install">Install</a><a href="#developers">Developers</a></nav>
+  <a class="btn primary small desk" href="#install">Install</a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="sheet"><span></span></button>
+</div></header>
+<nav class="sheet" id="sheet" aria-label="Mobile">
+  <a href="#demo">Try it</a><a href="#how">How it works</a><a href="#security">Security</a><a href="#pip">Meet Pip</a><a href="#install">Install</a><a href="#developers">Developers</a>
+  <a class="btn primary" href="#install">Install Walled — free</a>
+</nav>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero" id="top"><div class="wrap grid">
+  <div>
+    <span class="eyebrow"><i></i>Walled Shield {{V}} · macOS & Linux</span>
+    <h1>Share with AI.<br><span class="grad">Not your secrets.</span></h1>
+    <p class="lede">Walled checks every prompt and upload to ChatGPT, Perplexity and Claude <b>before it leaves your computer</b>. It asks you about Claude's actions on your phone. And Pip, your little guardian, keeps watch from a corner of your screen.</p>
+    <div class="cta"><a class="btn primary" href="#demo">Try it right here →</a><a class="btn" href="#install">Install in a minute</a></div>
+    <div class="trust"><span>Runs on your computer</span><span>Native desktop dialog</span><span>Your own Telegram bot</span><span>Open source</span></div>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="halo"></div><div class="ring"></div>
+    <div id="hero-pip" data-pip="happy" data-size="300" data-live="1"></div>
+    <div class="say" id="say">Hi, I'm Pip 👋</div>
+    <div class="toast t1"><span class="dot"></span><div><b>Held back</b><small>Client name in a ChatGPT prompt</small></div></div>
+    <div class="toast t2"><span class="dot"></span><div><b>Claude is waiting</b><small>Allow or Block on Telegram</small></div></div>
+  </div>
+</div></section>
+
+<!-- DEMO -->
+<section id="demo"><div class="wrap">
+  <div class="reveal"><span class="kicker">Try it — no install</span>
+    <h2>Type like you would in ChatGPT.</h2>
+    <p class="sub">This page runs the same kind of check the extension does. Try a sensitive prompt: Walled stops it before sending, and you decide. Watch Pip in the corner.</p></div>
+  <div class="demo reveal">
+    <div class="window" id="chatwin">
+      <div class="bar"><i></i><i></i><i></i><div class="url">🔒 <b>chatgpt.com</b> — demo</div></div>
+      <div class="chat" id="chat" aria-live="polite">
+        <div class="msg ai">Hi! What can I help you with today?</div>
+      </div>
+      <div class="tries" aria-label="Examples">
+        <button type="button" data-try="Summarise my call notes with Acme Corp about the Q3 renewal">Client name</button>
+        <button type="button" data-try="Why was my card 4242 4242 4242 4242 charged twice?">Card number</button>
+        <button type="button" data-try="My notes WALLED_SENSITIVE: launch plan for Project Falcon">Marker</button>
+        <button type="button" data-try="Write a haiku about Monday mornings">Clean prompt</button>
+      </div>
+      <form class="composer" id="composer">
+        <label class="sr" for="prompt-in">Message</label>
+        <textarea id="prompt-in" rows="1" placeholder="Message ChatGPT…"></textarea>
+        <button class="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+      </form>
+      <div class="scrim" id="scrim" hidden>
+        <div class="alert" role="alertdialog" aria-modal="true" aria-labelledby="al-h" aria-describedby="al-p">
+          <div class="icon"><span data-pip="protect" data-size="62"></span></div>
+          <h4 id="al-h">Sensitive data in your ChatGPT prompt</h4>
+          <p id="al-p">Walled stopped this prompt before it was sent. Continue sends it unchanged. Cancel keeps it in the box so you can edit it.</p>
+          <div class="detail" id="al-d"></div>
+          <div class="row"><button class="go" id="al-go" type="button">Continue</button><button class="cancel" id="al-cancel" type="button">Cancel</button></div>
+          <div class="via">You can also answer on Telegram. The first answer counts.</div>
+        </div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="card"><h3>What just happens</h3>
+        <ol class="steps" id="demo-steps">
+          <li data-s="1"><span class="n">1</span><span><b>You press Enter.</b> Walled pauses the send.</span></li>
+          <li data-s="2"><span class="n">2</span><span><b>It checks locally</b>, against your words, built-in detectors, patterns, file names and folders.</span></li>
+          <li data-s="3"><span class="n">3</span><span><b>You decide</b> in a native dialog, or on your phone.</span></li>
+          <li data-s="4"><span class="n">4</span><span><b>Cancel keeps your text</b> to edit. Continue sends it unchanged.</span></li>
+        </ol></div>
+      <div class="card"><h3>Uploads too</h3><p>PDFs (by page), Word, text and images (read with OCR) are checked before they upload, including drag-and-drop and pasted screenshots.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- HOW -->
+<section id="how"><div class="wrap">
+  <div class="center reveal"><span class="kicker">How it works</span><h2>Three layers, one shield.</h2>
+    <p class="sub">A browser extension, a desktop app and your phone share one set of rules and one live activity stream. Nothing sensitive leaves your computer to be checked.</p></div>
+  <div class="layers">
+    <div class="card layer reveal"><span class="tag">Browser</span><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-6-3.5-9s1-6.5 3.5-9z"/></svg></div>
+      <h3>Catches it before it's sent</h3><p>On ChatGPT, Perplexity and Claude.ai: prompts, uploads, drag-and-drop and pasted images.</p>
+      <ul><li>Native Continue / Cancel dialog</li><li>AI answers recoloured so you can tell them apart</li><li>Lives in Chrome's side panel too</li></ul></div>
+    <div class="card layer reveal"><span class="tag">Desktop</span><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+      <h3>You decide what's sensitive</h3><p>Client names and code names, Aadhaar, PAN, cards (Luhn-checked), API keys, your own patterns, payroll files, a Finance folder.</p>
+      <ul><li>Ask, Warn or Block for each rule</li><li>Encrypted password vault</li><li>Test center with real end-to-end checks</li></ul></div>
+    <div class="card layer reveal"><span class="tag">Phone</span><div class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+      <h3>Claude asks first</h3><p>Claude Desktop tool calls wait for your Allow / Block on your own private Telegram bot.</p>
+      <ul><li>Sensitive inputs are hidden on the card</li><li>Password fills you approve; passwords never sent</li><li>A quiet log channel of every decision</li></ul></div>
+  </div>
+</div></section>
+
+<!-- PHONE -->
+<section id="phone"><div class="wrap phone-wrap">
+  <div class="reveal">
+    <div class="phone"><div class="screen">
+      <div class="tg-head"><div class="av"><span data-pip="happy" data-size="40"></span></div><div><b>Walled · your bot</b><small>bot</small></div></div>
+      <div class="tg-body" id="tg">
+        <div class="bubble">🛡 <b>Claude wants to run an action</b><br>Server: <code>mail</code><br>Tool: <code>send_email</code><br>To: <code>finance@acme.com</code><br>⏳ Waiting for you<div class="meta">now</div></div>
+        <div class="kb" id="tgkb"><button type="button" data-a="allow">✅ Allow</button><button type="button" data-a="block">⛔ Block</button><button type="button" class="wide" data-a="always">♾ Always allow send_email</button></div>
+      </div>
+    </div></div>
+  </div>
+  <div class="ptext reveal"><span class="kicker">On your phone</span>
+    <h2>Nothing happens until you say so.</h2>
+    <p class="sub">When Claude wants to use a tool, your bot asks. Tap a button here to try it. The same question can show on your computer too; whichever you answer first wins.</p>
+    <ul class="feat-list">
+      <li><span class="ck">✓</span><span><b>Pairing in about a minute</b>Walled guides you through BotFather in Telegram Web and fills in the token for you.</span></li>
+      <li><span class="ck">✓</span><span><b>Safe by default</b>Unanswered means Block. Approvals pause after 24 hours until you renew.</span></li>
+      <li><span class="ck">✓</span><span><b>Masked alerts</b>"Payment card •••• 4242": Telegram never sees the real value.</span></li>
+    </ul>
+    <button class="btn ghost small" type="button" id="tg-reset">↺ Ask again</button>
+  </div>
+</div></section>
+
+<!-- SECURITY -->
+<section id="security"><div class="wrap">
+  <div class="reveal"><span class="kicker">For security teams</span><h2>Guardrails you can audit.</h2>
+    <p class="sub">Everything runs unprivileged on the device. Content is inspected locally and never stored. Every control fails closed. The full architecture, data inventory and framework mapping are in <a href="{{REPO}}/blob/main/docs/ENTERPRISE.md">ENTERPRISE.md</a>.</p></div>
+  <div class="guards">
+    <div class="card reveal"><b>Inspect before transmission</b><p>Capture-phase interception of send, upload, drop and paste, before site code runs.</p></div>
+    <div class="card reveal"><b>Local-only analysis</b><p>Text, PDF by page, DOCX and image OCR on the device. No cloud classifier.</p></div>
+    <div class="card reveal"><b>Fail closed</b><p>No agent, no dialog or no answer means Cancel. Telegram unreachable means Claude actions are denied.</p></div>
+    <div class="card reveal"><b>Out-of-band approval</b><p>Claude tool calls wait for your phone. 24 h sessions, nonce-checked callbacks, instant revoke.</p></div>
+    <div class="card reveal"><b>Minimum disclosure</b><p>Telegram sees rule names and masked samples only. Passwords never leave the device.</p></div>
+    <div class="card reveal"><b>Content-free audit</b><p>Every decision logged without content. Export CSV or JSON for your SIEM.</p></div>
+  </div>
+  <div class="dtable reveal"><table><thead><tr><th>Data</th><th>Stored</th><th>Leaves the device</th></tr></thead><tbody>
+    <tr><td>Prompt text, files, tool inputs</td><td>Memory, during the check</td><td class="no">Never</td></tr>
+    <tr><td>Policies and settings</td><td>Private 0600 file</td><td class="no">No</td></tr>
+    <tr><td>Audit trail (rule names, outcomes)</td><td>Private 0600 log</td><td>Only to your own Telegram log channel, masked</td></tr>
+    <tr><td>Passwords</td><td>AES-256-GCM vault or OS keychain</td><td class="no">Never</td></tr>
+  </tbody></table></div>
+  <p class="note">Maps to India DPDP Act 2023, GDPR Art. 32, ISO/IEC 27001 A.8.12 (data leakage prevention) and SOC 2 CC6.7. Walled supports these controls; it does not certify compliance on its own.</p>
+</div></section>
+
+<!-- FEATURES -->
+<section id="features"><div class="wrap">
+  <div class="center reveal"><span class="kicker">Everything inside</span><h2>Built like a product, not a script.</h2></div>
+  <div class="features">
+    <div class="card feature reveal"><div class="em">🎯</div><h3>Your sensitive data</h3><p>Turn on categories and add your own words: one place for everything that counts.</p><div class="chips"><span class="hot">Client: Acme Corp</span><span>Aadhaar</span><span>PAN</span><span>Cards</span><span>API keys</span><span>Regex</span><span>*payroll*</span></div></div>
+    <div class="card feature reveal"><div class="em">📄</div><h3>Files, PDFs & screenshots</h3><p>Text, PDF (it tells you which page), DOCX and images via OCR, checked locally before upload.</p></div>
+    <div class="card feature reveal"><div class="em">🔐</div><h3>Password vault</h3><p>AES-256 encrypted on your computer. Suggests strong passwords. Every fill is approved on your phone or in a dialog.</p></div>
+    <div class="card feature reveal"><div class="em">🧪</div><h3>Test center</h3><p>Twelve real end-to-end checks you can run any time. They pass only when the thing actually happened.</p></div>
+    <div class="card feature reveal"><div class="em">📒</div><h3>Activity log channel</h3><p>A quiet Telegram channel with a masked line for every decision. Handy for teams and audits.</p></div>
+    <div class="card feature reveal"><div class="em">⚡</div><h3>Guided setup</h3><p>A short quest with a real test in each step. Each part goes green on its own as you set it up.</p></div>
+  </div>
+</div></section>
+
+<!-- PIP -->
+<section id="pip"><div class="wrap">
+  <div class="pip-zone">
+    <div class="reveal">
+      <div class="petbox" id="petbox" aria-label="Pet Pip: stroke him with your mouse or finger">
+        <div id="pet-pip" data-pip="neutral" data-size="240" data-live="1"></div>
+        <div class="hearts" id="hearts"></div>
+        <div class="hint" id="pet-hint">Stroke him with your mouse or finger ✋</div>
+      </div>
+    </div>
+    <div class="reveal"><span class="kicker">Meet Pip</span>
+      <h2>A guardian you'll actually like.</h2>
+      <p class="sub">Pip lives in a corner of your screen. He stands guard, paces, plays, naps and sometimes vanishes for a while. When something matters he hops up with a clear note and a soft sound — calm, never a siren.</p>
+      <b style="font-size:15px">Pick the sound when you pet him</b>
+      <div class="seg" id="sound-seg" role="group" aria-label="Petting sound"><button aria-pressed="true" data-sound="purr">Purr</button><button aria-pressed="false" data-sound="chimes">Chimes</button><button aria-pressed="false" data-sound="bubbles">Bubbles</button><button aria-pressed="false" data-sound="off">Silent</button></div>
+      <div style="font-size:14px;color:var(--muted)">Happiness</div><div class="meter"><i id="love-meter"></i></div>
+      <p class="note">The real Pip is in the bottom corner of this page: pet him, or click him for his panel.</p>
+    </div>
+  </div>
+  <div class="faces" id="faces" role="group" aria-label="Pip's expressions"></div>
+  <p class="note center" style="margin-top:14px">Tap a face to see it. <span class="green">Protecting</span> is the one you'll see when he holds something back.</p>
+</div></section>
+
+<!-- INSTALL -->
+<section id="install"><div class="wrap">
+  <div class="reveal"><span class="kicker">Install</span><h2>One minute. One double-click.</h2>
+    <p class="sub">You need macOS or Linux, Python 3.10+, and Chrome, Edge, Brave, Arc or Chromium. The installer asks nothing. It connects your browsers, starts at login and opens Chrome's extension page with the folder path already copied.</p></div>
+  <div class="reveal">
+    <div class="tabs" role="tablist" data-group="os">
+      <button role="tab" aria-selected="true" data-tab="mac">macOS</button><button role="tab" aria-selected="false" data-tab="linux">Linux</button><button role="tab" aria-selected="false" data-tab="src">From source</button><button role="tab" aria-selected="false" data-tab="agent">With an AI agent</button>
+    </div>
+    <div class="panel" data-group="os" data-panel="mac">
+      <div class="isteps">
+        <div class="card istep"><span class="num">STEP 1</span><h3>Download & unzip</h3><p>Get <code>walled-shield-{{V}}-installer.zip</code> from the <a href="{{REPO}}/releases">releases page</a> and unzip it.</p></div>
+        <div class="card istep"><span class="num">STEP 2</span><h3>Double-click</h3><p><b>Install Walled.command</b>. First time: right-click → Open → Open, because the file came from the internet.</p></div>
+        <div class="card istep"><span class="num">STEP 3</span><h3>Three clicks in Chrome</h3><p>Developer mode → Load unpacked → <kbd>⌘⇧G</kbd> <kbd>⌘V</kbd> Enter → Select. Done.</p></div>
+      </div>
+      <p class="note" style="margin-top:18px"><b>Prefer Terminal?</b></p>
+      {{CMD_MAC}}
+    </div>
+    <div class="panel" data-group="os" data-panel="linux" hidden>
+      {{CMD_LINUX_PRE}}
+      {{CMD_LINUX}}
+      <p class="note">Then in Chrome: Developer mode → Load unpacked → paste the copied path → Select.</p>
+    </div>
+    <div class="panel" data-group="os" data-panel="src" hidden>{{CMD_SOURCE}}</div>
+    <div class="panel" data-group="os" data-panel="agent" hidden>
+      <p class="note" style="margin-top:0">Paste this into a coding agent on your computer (Claude Code, Cursor…). It installs Walled, runs every test, walks you through the 3 clicks only you can do, and reports pass/fail.</p>
+      <div class="cmd prompt"><button class="copy" type="button" data-target="agent-prompt">Copy prompt</button><pre id="agent-prompt">{{PROMPT}}</pre></div>
+    </div>
+    <div class="callout">✓ <b>Check it works:</b> open chatgpt.com and send <code>My notes WALLED_SENSITIVE</code>. The dialog appears, and Pip pops up when you cancel.</div>
+  </div>
+
+  <div class="two" style="margin-top:clamp(30px,5vw,48px)">
+    <div class="card reveal"><h3 style="margin-top:0">Pair Telegram (about 1 minute)</h3><p style="color:var(--muted)">Walled → <b>Telegram</b> → <b>Guided in Telegram Web</b>. Create the bot in BotFather; Walled fills in the token. Press START and you're paired.</p></div>
+    <div class="card reveal"><h3 style="margin-top:0">Guard Claude Desktop</h3><p style="color:var(--muted)">Walled → <b>Claude tools</b> → <b>Guard</b>, or from the terminal:</p>{{CMD_CLAUDE}}</div>
+  </div>
+</div></section>
+
+<!-- COMMANDS -->
+<section id="commands"><div class="wrap">
+  <div class="reveal"><span class="kicker">Commands</span><h2>Everything from the terminal.</h2>
+    <p class="sub">Add Walled to your PATH once, or call <code>~/.walled/venv/bin/walled</code>.</p></div>
+  {{CMD_PATH}}
+  <div class="cmds" style="margin-top:18px">{{ROWS}}</div>
+</div></section>
+
+<!-- DEVELOPERS -->
+<section id="developers"><div class="wrap">
+  <div class="reveal"><span class="kicker">Developers</span><h2>Test it like we do.</h2>
+    <p class="sub">About 327 automated tests: the rule engine, the MCP approval gate, the service, and real-browser runs that load the extension into Chromium.</p></div>
+  <details open class="reveal"><summary>1 · Set up a dev environment</summary><div class="inner">{{CMD_DEV}}</div></details>
+  <details class="reveal"><summary>2 · Unit & integration tests</summary><div class="inner">{{CMD_TEST}}</div></details>
+  <details class="reveal"><summary>3 · End-to-end in a real browser</summary><div class="inner">{{CMD_E2E}}</div></details>
+  <details class="reveal"><summary>4 · Build a release and this page</summary><div class="inner">{{CMD_BUILD}}</div></details>
+  <details class="reveal"><summary>Troubleshooting</summary><div class="inner">
+    <p><b>macOS blocks the installer:</b> right-click <b>Install Walled.command</b> → Open → Open.</p>
+    <p><b>No dialog on ChatGPT:</b> check the extension is on (<code>walled extension</code>), then reload the tab.</p>
+    <p><b>Telegram stopped asking:</b> approvals pause after 24 h. Use the renew link, or run <code>walled mcp renew</code>.</p>
+    <p><b>Pip isn't on the desktop:</b> he needs pywebview (on Linux also GTK or Qt); otherwise he lives in the browser corner.</p>
+    {{CMD_DOCTOR}}</div></details>
+  <details class="reveal"><summary>Uninstall</summary><div class="inner">{{CMD_UNINSTALL}}<p class="note">Also remove the extension from chrome://extensions.</p></div></details>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="final reveal"><span data-pip="cheer" data-size="110" data-live="1"></span>
+    <h2 style="margin-top:10px">Keep using AI. Keep your secrets.</h2>
+    <p class="sub">Free and open source. Set up in a minute, and Pip does the watching.</p>
+    <div class="cta" style="justify-content:center"><a class="btn primary" href="#install">Install Walled</a><a class="btn" href="{{REPO}}">View on GitHub</a></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><a class="brand" href="#top"><span data-pip="happy" data-size="26"></span>Walled</a><span>v{{V}}</span><span>·</span><a href="{{REPO}}">GitHub</a><span>·</span><span>Everything runs on your computer.</span></div></footer>
+
+<script>{{ART}}</script>
+<script>{{BUDDY}}</script>
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  PipArt.adopt(document);
+  const figs = {};
+  $$("[data-pip]").forEach((el) => { const f = PipArt.figure(el.dataset.pip, +el.dataset.size || 60, !!el.dataset.live); el.replaceWith(f); if (el.id) { f.id = el.id; figs[el.id] = f; f.style.removeProperty("--pa-size"); } });
+  const store = { get(k) { try { return JSON.parse(localStorage.getItem("walled-site:" + k)); } catch { return null; } }, set(k, v) { try { localStorage.setItem("walled-site:" + k, JSON.stringify(v)); } catch {} } };
+
+  // ---- nav
+  const nav = $("#nav");
+  const onScroll = () => nav.classList.toggle("solid", scrollY > 10);
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  const burger = $("#burger");
+  const setMenu = (open) => { document.body.classList.toggle("menu-open", open); burger.setAttribute("aria-expanded", String(open)); };
+  burger.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
+  $$("#sheet a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+
+  // ---- reveal on scroll
+  if ("IntersectionObserver" in window && !REDUCED) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12, rootMargin: "0px 0px -40px 0px" });
+    $$(".reveal").forEach((el) => io.observe(el));
+  } else $$(".reveal").forEach((el) => el.classList.add("in"));
+
+  // ---- hero Pip speaks
+  const hero = figs["hero-pip"], say = $("#say");
+  const lines = [["happy", "Hi, I'm Pip 👋"], ["protect", "I held that back."], ["alert", "Claude is waiting for you."], ["thumbs", "Sent — your call."], ["love", "Thanks for the pets!"], ["calm", "All quiet. I'm watching."]];
+  let li = 0;
+  if (!REDUCED) setInterval(() => { li = (li + 1) % lines.length; say.classList.add("hide"); setTimeout(() => { hero.set(lines[li][0]); say.textContent = lines[li][1]; say.classList.remove("hide"); }, 260); }, 3400);
+
+  // ---- the real Pip, living in the corner of this page
+  const host = document.createElement("div");
+  host.style.cssText = "position:fixed;right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));width:min(360px,calc(100vw - 16px));height:450px;z-index:40;pointer-events:none";
+  document.body.append(host);
+  const root = host.attachShadow({ mode: "open" });
+  const pet = store.get("pet") || {};
+  const buddy = WalledBuddy.mount(root, { settings: { sound: "purr", volume: 50, mood: "playful", ...pet }, adapter: {
+    openApp: () => { location.hash = "#install"; },
+    hide: () => { buddy.destroy(); host.remove(); },
+    hideLabel: "Hide on this page",
+    save: (patch) => store.set("pet", { ...(store.get("pet") || {}), ...patch }),
+    introSeen: () => true,                       // he says hello when you reach the demo (below)
+    status: () => "This is the real Pip, running on this page.",
+  } });
+  const react = (e) => buddy.react(e);
+  if (!store.get("intro") && "IntersectionObserver" in window) {
+    const hello = new IntersectionObserver((es) => {
+      if (!es[0].isIntersecting) return;
+      hello.disconnect();
+      store.set("intro", true);
+      buddy.express("cheer", 2500); buddy.sound.play("hello");
+      buddy.say({ tone: "info", title: "Hi, I'm Pip 👋", text: "I'm the real Pip. Stroke me to pet me, or click me. Try a prompt in the demo — I'll speak up.", ms: 9000 }, "cheer");
+    }, { threshold: .35 });
+    hello.observe(document.getElementById("demo"));
+  }
+
+  // ---- chat demo
+  const RULES = [
+    { name: "WALLED_SENSITIVE marker", test: (t) => /WALLED_SENSITIVE/.test(t) },
+    { name: "Client: Acme Corp", test: (t) => /acme corp/i.test(t) },
+    { name: "Project Falcon", test: (t) => /project falcon/i.test(t) },
+    { name: "Payment card number", test: (t) => (t.match(/\b(?:\d[ -]?){13,19}\b/g) || []).some((m) => luhn(m.replace(/\D/g, ""))) },
+    { name: "Email address", test: (t) => /[\w.+-]+@[\w-]+\.[\w.]+/.test(t) },
+    { name: "Aadhaar number", test: (t) => /\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b/.test(t) },
+    { name: "API key", test: (t) => /\b(sk|pk|ghp|xox[bp])[-_][A-Za-z0-9_-]{12,}/.test(t) },
+  ];
+  function luhn(d) { if (d.length < 13) return false; let s = 0, alt = false; for (let i = d.length - 1; i >= 0; i--) { let n = +d[i]; if (alt) { n *= 2; if (n > 9) n -= 9; } s += n; alt = !alt; } return s % 10 === 0; }
+  const chat = $("#chat"), input = $("#prompt-in"), scrim = $("#scrim"), steps = $$("#demo-steps li");
+  const mark = (n) => steps.forEach((li) => li.classList.toggle("done", +li.dataset.s <= n));
+  const add = (cls, text) => { const m = document.createElement("div"); m.className = "msg " + cls; m.textContent = text; chat.append(m); chat.scrollTop = chat.scrollHeight; return m; };
+  const fit = () => { input.style.height = "auto"; input.style.height = Math.min(140, input.scrollHeight) + "px"; };
+  input.addEventListener("input", fit);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#composer").requestSubmit(); } });
+  $$("[data-try]").forEach((b) => b.addEventListener("click", () => { input.value = b.dataset.try; fit(); input.focus({ preventScroll: true }); }));
+  let pending = null;
+  function send(text) {
+    add("me", text);
+    input.value = ""; fit();
+    setTimeout(() => add("ai", reply(text)), 600);
+  }
+  function reply(t) {
+    if (/haiku/i.test(t)) return "Coffee steam rises / the inbox wakes before me / Monday, gently, please.";
+    return "Sure — here's a summary. (This is a demo; nothing was actually sent anywhere.)";
+  }
+  $("#composer").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    mark(2);
+    const hits = RULES.filter((r) => r.test(text)).map((r) => r.name);
+    if (!hits.length) { mark(0); add("sys", "✓ Nothing sensitive — sent without a dialog"); send(text); return; }
+    pending = { text, hits };
+    $("#al-d").textContent = `Found: ${hits.join(", ")}\n\n“${text}”`;
+    scrim.hidden = false; mark(3);
+    buddy.express("think", 0);
+    $("#al-cancel").focus();
+  });
+  function decide(choice) {
+    if (!pending) return;
+    scrim.hidden = true; mark(4);
+    const { text, hits } = pending; pending = null;
+    if (choice === "cancel") {
+      add("sys", "Held back — your text is still in the box");
+      input.value = text; fit(); input.focus({ preventScroll: true });
+      react({ type: "guard.decision", data: { site: "chatgpt", kind: "prompt", decision: "cancel", rules: hits } });
+    } else {
+      send(text);
+      react({ type: "guard.decision", data: { site: "chatgpt", kind: "prompt", decision: "continue", rules: hits } });
+    }
+  }
+  $("#al-cancel").addEventListener("click", () => decide("cancel"));
+  $("#al-go").addEventListener("click", () => decide("continue"));
+  scrim.addEventListener("keydown", (e) => { if (e.key === "Escape") decide("cancel"); });
+
+  // ---- telegram demo
+  const tg = $("#tg"), kb = $("#tgkb");
+  let asked = false;
+  const io2 = "IntersectionObserver" in window ? new IntersectionObserver((es) => { if (es[0].isIntersecting && !asked) { asked = true; react({ type: "claude.waiting", data: { server: "mail", method: "send_email" } }); io2.disconnect(); } }, { threshold: .6 }) : null;
+  if (io2) io2.observe($(".phone"));
+  kb.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-a]"); if (!b) return;
+    kb.setAttribute("aria-disabled", "true");
+    const allowed = b.dataset.a !== "block";
+    const m = document.createElement("div"); m.className = "bubble";
+    m.innerHTML = allowed ? "✅ <b>Allowed</b> — Claude ran <code>send_email</code>." : "⛔ <b>Blocked</b> — <code>send_email</code> didn't run.";
+    if (b.dataset.a === "always") m.innerHTML += "<br>♾ Next time this runs without asking.";
+    const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = "just now"; m.append(meta);
+    tg.append(m); tg.scrollTop = tg.scrollHeight;
+    closeNote(); react({ type: "claude.decision", data: { server: "mail", method: "send_email", allowed } });
+  });
+  function closeNote() { try { buddy.closeCard(); } catch {} }
+  $("#tg-reset").addEventListener("click", () => {
+    $$(".bubble", tg).slice(1).forEach((b) => b.remove());
+    kb.removeAttribute("aria-disabled");
+    react({ type: "claude.waiting", data: { server: "mail", method: "send_email" } });
+  });
+
+  // ---- pet the big Pip
+  const box = $("#petbox"), big = figs["pet-pip"], hearts = $("#hearts"), meter = $("#love-meter"), hint = $("#pet-hint");
+  const sound = new WalledBuddy.Sound(); sound.set({ sound: "purr", volume: 55 });
+  let last = null, love = 0, travel = 0, idleT = null;
+  function heart(x, y) { const i = document.createElement("i"); i.textContent = "♥"; i.style.left = x + "px"; i.style.top = y + "px"; hearts.append(i); setTimeout(() => i.remove(), 1400); }
+  box.addEventListener("pointerdown", (e) => { sound.unlock(); last = { x: e.clientX, y: e.clientY, t: performance.now() }; box.setPointerCapture(e.pointerId); });
+  box.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "mouse" && !last) last = { x: e.clientX, y: e.clientY, t: performance.now() };
+    if (!last) return;
+    const now = performance.now(), d = Math.hypot(e.clientX - last.x, e.clientY - last.y), dt = Math.max(1, now - last.t);
+    last = { x: e.clientX, y: e.clientY, t: now };
+    if (d < 1) return;
+    sound.unlock(); sound.pet(d, d / dt);
+    travel += d; love = Math.min(100, love + d / 18);
+    meter.style.width = love + "%";
+    big.set(love > 70 ? "love" : "shy");
+    hint.textContent = love > 70 ? "He loves you 💕" : "Keep going…";
+    if (travel > 110) { travel = 0; const r = box.getBoundingClientRect(); heart(e.clientX - r.left - 8, e.clientY - r.top - 20); }
+    if (love >= 100 && !box.dataset.loved) { box.dataset.loved = "1"; sound.play("love"); }
+    clearTimeout(idleT); idleT = setTimeout(rest, 700);
+  });
+  ["pointerup", "pointercancel"].forEach((t) => box.addEventListener(t, () => { if (!matchMedia("(hover:hover)").matches) last = null; }));
+  box.addEventListener("pointerleave", () => { last = null; });
+  function rest() { sound.stopPet(); big.set(love > 70 ? "happy" : "neutral"); hint.textContent = "Stroke him with your mouse or finger ✋"; const decay = setInterval(() => { love = Math.max(0, love - 2); meter.style.width = love + "%"; if (!love) { clearInterval(decay); delete box.dataset.loved; } }, 120); }
+  $("#sound-seg").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-sound]"); if (!b) return;
+    $$("#sound-seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    sound.set({ sound: b.dataset.sound }); buddy.apply({ sound: b.dataset.sound }); sound.unlock();
+    if (b.dataset.sound === "purr") sound._purr(0.7); else if (b.dataset.sound !== "off") [0, 1, 2, 3].forEach((i) => setTimeout(() => sound.pet(120, 0.5), i * 170));
+  });
+
+  // ---- expressions gallery
+  const faces = $("#faces");
+  for (const n of PipArt.names.filter((n) => n !== "neutral")) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "face"; b.setAttribute("aria-pressed", "false");
+    const label = document.createElement("span"); label.textContent = PipArt.EXPR[n][5];
+    b.append(PipArt.figure(n, 72, false), label);
+    b.addEventListener("click", () => { $$(".face", faces).forEach((x) => x.setAttribute("aria-pressed", String(x === b))); big.set(n); buddy.express(n, 2500); });
+    faces.append(b);
+  }
+
+  // ---- tabs (and pick the visitor's OS)
+  $$(".tabs").forEach((tabs) => tabs.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-tab]"); if (!b) return;
+    tabs.querySelectorAll("button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
+    $$(`.panel[data-group="${tabs.dataset.group}"]`).forEach((p) => { p.hidden = p.dataset.panel !== b.dataset.tab; });
+  }));
+  const ua = navigator.userAgent;
+  if (/Linux/.test(navigator.platform) && !/Android/.test(ua)) $('.tabs button[data-tab="linux"]').click();
+
+  // ---- copy buttons
+  async function copy(text, btn) {
+    try { await navigator.clipboard.writeText(text); }
+    catch { const t = document.createElement("textarea"); t.value = text; t.style.position = "fixed"; t.style.opacity = "0"; document.body.append(t); t.select(); try { document.execCommand("copy"); } catch {} t.remove(); }
+    const was = btn.textContent; btn.textContent = "Copied ✓"; btn.classList.add("done");
+    setTimeout(() => { btn.textContent = was; btn.classList.remove("done"); }, 1600);
+  }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".copy"); if (!b) return;
+    if (b.dataset.copy) return copy(b.dataset.copy, b);
+    if (b.dataset.target) return copy($("#" + b.dataset.target).textContent.trim(), b);
+    const pre = b.parentElement.querySelector("pre");
+    copy(pre.textContent.split("\n").map((l) => l.replace(/\s+#\s.*$/, "")).join("\n").trim(), b);
+  });
+})();
+</script>
+</body>
+</html>

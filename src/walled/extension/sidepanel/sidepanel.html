@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Walled</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div id="loading" class="center">
+    <div class="logo">▲</div>
+    <p>Opening Walled…</p>
+  </div>
+  <div id="offline" class="center" hidden>
+    <div class="logo">▲</div>
+    <h1>Walled isn't running</h1>
+    <p>Open the Walled app once (Launchpad → Walled, or <code>walled app</code>). It stays in the background after that.</p>
+    <button id="retry">Try again</button>
+  </div>
+  <iframe id="app" title="Walled" hidden></iframe>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

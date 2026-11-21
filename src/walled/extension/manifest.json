@@ -1,0 +1,132 @@
+{
+  "manifest_version": 3,
+  "name": "Walled \u2014 AI data guard",
+  "short_name": "Walled",
+  "version": "2.6.0",
+  "description": "Walled watches over ChatGPT, Perplexity and Claude: prompts and uploads with sensitive data ask you first. Sets up Telegram approvals for you and fills strong passwords from your encrypted vault.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvCMdxWuA/FgEvKEQEtTkQIAmo+V1TKZ0n2j+l8c/sjSgTIqZUMjaQ/mEAYBkl2SWLiL/2gYLiCWEPCARe1hG+wn72en0tdaPjfcT4cyhmqm9DKOHy+NHgWyi/p3n6etSQ/rvHwl6c32WI6nakreIACmTduhhCPBdqXgVWErHTs2YuXsyb7MIIfHD5D+gH7TK9FQf0GttOY2IPex13RV1mS2XvSJpNM9xnRlwxWoGmYrKXfdSVDsfjlbJgIlN6FZg5JEzTaAwp+tdWWxkIii/YeAZhgyxTqai3nbFLM1/zZAQ/atuO7IuVknizSxd1jVpkizPvPtaTc10jiqXOrH5VwIDAQAB",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "nativeMessaging",
+    "storage",
+    "scripting",
+    "sidePanel",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://www.perplexity.ai/*",
+    "https://perplexity.ai/*",
+    "https://claude.ai/*",
+    "https://web.telegram.org/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*",
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "src/page-hooks.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*",
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "src/sites.js",
+        "src/content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*",
+        "https://claude.ai/*",
+        "https://web.telegram.org/*"
+      ],
+      "js": [
+        "src/pip-art.js",
+        "src/companion.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*",
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "src/pip-art.js",
+        "src/buddy.js",
+        "src/buddy-browser.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://web.telegram.org/*"
+      ],
+      "js": [
+        "src/telegram.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Walled",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "optional_host_permissions": [
+    "<all_urls>"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sounds/*"
+      ],
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://www.perplexity.ai/*",
+        "https://perplexity.ai/*",
+        "https://claude.ai/*"
+      ]
+    }
+  ]
+}

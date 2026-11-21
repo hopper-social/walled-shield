@@ -1,0 +1,18 @@
+Walled Shield: install in one step
+==================================
+
+macOS
+  Double-click “Install Walled.command”.
+  (The first time, macOS may say it's from an unidentified developer: right-click the file → Open → Open.)
+
+Linux
+  Open a terminal in this folder and run:  bash install.sh
+
+What happens (about a minute, no questions asked):
+  ✓ Walled installs into its own folder (~/.walled). Your system Python isn't touched.
+  ✓ It connects to Chrome/Brave/Edge, starts at login and adds a “Walled” app icon.
+  ✓ Chrome opens on its Extensions page with the extension's folder path already copied.
+    Then you do 3 clicks: Developer mode → Load unpacked → paste (⌘⇧G, ⌘V, Enter) → Select.
+  ✓ The Walled app opens, and Pip guides you through Telegram, your rules and passwords.
+
+You can delete this folder afterwards. To remove Walled: “Uninstall Walled.command” (or bash install.sh --uninstall).

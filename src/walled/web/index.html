@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Walled</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="shell">
+  <aside class="side" aria-label="Sidebar">
+    <a class="brand" href="#home"><span class="mark" id="side-pip"></span><span><b>Walled</b><small>AI data protection</small></span></a>
+    <nav id="nav" aria-label="Main">
+      <a href="#home" data-view="home" data-icon="home">Overview</a>
+      <div class="nav-group">Protect</div>
+      <a href="#sensitive" data-view="sensitive" data-icon="shield">Data policies</a>
+      <a href="#browser" data-view="browser" data-icon="globe">Browser</a>
+      <a href="#claude" data-view="claude" data-icon="spark">Claude tools</a>
+      <div class="nav-group">Connect</div>
+      <a href="#telegram" data-view="telegram" data-icon="send">Telegram</a>
+      <a href="#vault" data-view="vault" data-icon="key">Passwords</a>
+      <div class="nav-group">Assure</div>
+      <a href="#activity" data-view="activity" data-icon="pulse">Audit log</a>
+      <a href="#tests" data-view="tests" data-icon="flask">Verification</a>
+      <a href="#settings" data-view="settings" data-icon="gear">Settings</a>
+    </nav>
+    <div class="side-foot"><span class="live-dot"></span><span id="side-status">Connecting…</span></div>
+  </aside>
+  <header class="topbar">
+    <a class="brand-mini" href="#home" aria-label="Walled home"><span id="top-pip"></span><b>Walled</b></a>
+    <span class="spacer"></span>
+    <span class="top-status"><span class="live-dot"></span><span id="foot-text">Connecting…</span></span>
+  </header>
+  <main id="main" tabindex="-1"><div class="skeleton"><i class="sk-title"></i><i class="sk-card"></i><i class="sk-card"></i></div></main>
+  <nav class="dock" aria-label="Main">
+    <a href="#home" data-view="home">Pip</a>
+    <a href="#sensitive" data-view="sensitive" data-icon="shield">Policies</a>
+    <a href="#browser" data-view="browser" data-icon="globe">Browser</a>
+    <a href="#telegram" data-view="telegram" data-icon="send">Telegram</a>
+    <a href="#vault" data-view="vault" data-icon="key">Passwords</a>
+    <a href="#more" data-view="more" data-icon="dots">More</a>
+  </nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="core.js"></script>
+  <script src="pip-art.js"></script>
+  <script src="buddy.js"></script>
+  <script src="pet.js"></script>
+  <script src="pairing.js"></script>
+  <script src="onboarding.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

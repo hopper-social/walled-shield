@@ -1,0 +1,1859 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Walled — guard what you share with AI</title>
+<meta name="description" content="Walled checks what you send to ChatGPT, Perplexity and Claude before it leaves your computer, asks you about Claude's actions on your phone, and keeps your passwords local. Meet Pip, your little guardian.">
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+:root{
+  --bg:#0b1120;--bg2:#0f172a;--card:#111a2b;--card2:#172338;--line:rgba(148,163,184,.14);--line2:rgba(148,163,184,.26);
+  --text:#e6edf3;--muted:#a0adbd;--dim:#728096;
+  --sig:#0d9488;--sig2:#2dd4bf;--amb:#f2a33a;--cy:#4ee8ff;--ok:#34d399;--bad:#f87171;
+  --r:22px;--pad:clamp(18px,4vw,28px);--max:1120px;
+  --font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--sig2);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sig2);outline-offset:3px;border-radius:8px}
+code,kbd{font-family:var(--mono);font-size:.88em}
+p code,li code,td code,.inline{background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.22);color:#99f6e4;padding:1px 6px;border-radius:7px;white-space:nowrap}
+kbd{background:var(--card2);border:1px solid var(--line2);border-bottom-width:2px;padding:1px 6px;border-radius:6px}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- nav */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(8,12,26,.78);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand:hover{text-decoration:none}.brand .pa{--pa-size:32px}
+.nav-links{display:flex;gap:26px;margin-left:auto;font-weight:600;font-size:14.5px}
+.nav-links a{color:var(--muted)}.nav-links a:hover{color:var(--text);text-decoration:none}
+.nav .btn{margin-left:8px}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--card);cursor:pointer;place-items:center}
+.burger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;position:relative;transition:transform .25s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,top .25s}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.menu-open .burger span{background:transparent}.menu-open .burger span::before{top:0;transform:rotate(45deg)}.menu-open .burger span::after{top:0;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:64px 0 auto;z-index:49;background:rgba(8,12,26,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:10px var(--pad) 22px;display:none}
+.menu-open .sheet{display:grid;gap:4px;animation:drop .25s ease-out}
+.sheet a{color:var(--text);font-weight:650;font-size:18px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.sheet a:last-child{border:0;margin-top:10px;text-align:center}
+
+/* ---------- buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:14px;font-weight:750;font-size:15px;border:1px solid var(--line2);background:var(--card);color:var(--text);cursor:pointer;white-space:nowrap;transition:transform .15s,filter .15s,box-shadow .2s}
+.btn:hover{text-decoration:none;filter:brightness(1.12);transform:translateY(-1px)}
+.btn.primary{background:var(--sig);border-color:transparent;color:#fff}.btn.primary:hover{background:#0f766e;filter:none}
+.btn.small{min-height:38px;padding:0 14px;font-size:14px;border-radius:11px}
+.btn.ghost{background:transparent}
+
+/* ---------- hero */
+.hero{position:relative;padding:clamp(108px,16vw,150px) 0 clamp(40px,8vw,90px);overflow:hidden}
+
+.hero .grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,56px);align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--amb);background:rgba(242,163,58,.09);border:1px solid rgba(242,163,58,.26);padding:5px 12px;border-radius:99px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(46,229,157,.18)}
+h1{font-size:clamp(38px,7.2vw,68px);line-height:1.02;letter-spacing:-.035em;margin:18px 0 18px;font-weight:850}
+.grad{color:var(--sig2)}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);margin:0 0 28px;max-width:580px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.trust{display:flex;gap:10px 18px;flex-wrap:wrap;margin-top:26px;color:var(--dim);font-size:14px;font-weight:600}
+.trust span{display:inline-flex;align-items:center;gap:7px}.trust span::before{content:"✓";color:var(--ok);font-weight:900}
+.stage{position:relative;display:grid;place-items:center;min-height:clamp(300px,42vw,440px)}
+.stage .halo{position:absolute;width:72%;aspect-ratio:1;border-radius:50%;background:#132235}
+.stage .ring{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(242,163,58,.22);animation:spin 40s linear infinite}
+#hero-pip{--pa-size:clamp(200px,30vw,300px);filter:drop-shadow(0 30px 40px rgba(13,148,136,.25));cursor:pointer}
+.toast{position:absolute;display:flex;gap:10px;align-items:center;max-width:250px;background:rgba(17,25,52,.92);backdrop-filter:blur(8px);border:1px solid var(--line2);border-radius:16px;padding:10px 14px;font-size:13.5px;font-weight:600;box-shadow:0 18px 40px rgba(0,0,0,.4);animation:floaty 6s ease-in-out infinite}
+.toast b{display:block;font-size:14px;color:#fff}.toast small{color:var(--muted);font-weight:500}
+.toast .dot{flex:none;width:10px;height:10px;border-radius:50%}
+.toast.t1{top:6%;left:-4%}.toast.t2{bottom:12%;right:-6%;animation-delay:-3s}
+.toast.t1 .dot{background:var(--ok);box-shadow:0 0 10px var(--ok)}.toast.t2 .dot{background:var(--amb);box-shadow:0 0 10px var(--amb)}
+.say{position:absolute;top:2%;right:4%;background:#fff;color:#141a33;font-weight:700;font-size:14px;padding:9px 14px;border-radius:14px 14px 4px 14px;box-shadow:0 14px 30px rgba(0,0,0,.35);transition:opacity .25s,transform .25s}
+.say.hide{opacity:0;transform:translateY(6px)}
+
+/* ---------- sections */
+section{position:relative;padding:clamp(64px,10vw,110px) 0}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--sig2);margin-bottom:12px;display:block}
+h2{font-size:clamp(30px,4.6vw,46px);line-height:1.08;letter-spacing:-.028em;margin:0 0 14px;font-weight:820}
+.sub{font-size:clamp(16px,2vw,18.5px);color:var(--muted);max-width:680px;margin:0 0 clamp(28px,5vw,44px)}
+.center{text-align:center}.center .sub{margin-left:auto;margin-right:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,26px)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- demo: chat */
+.demo{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:stretch}
+.window{background:#0b1022;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45);display:flex;flex-direction:column;min-height:440px;position:relative}
+.bar{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);background:#0e1430}
+.bar i{width:11px;height:11px;border-radius:50%;background:#3a4366}.bar i:nth-child(1){background:#ff5f57}.bar i:nth-child(2){background:#febc2e}.bar i:nth-child(3){background:#28c840}
+.bar .url{margin-left:10px;flex:1;min-width:0;background:#070b18;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .url b{color:var(--text);font-weight:600}
+.chat{flex:1;padding:18px;display:flex;flex-direction:column;gap:12px;overflow:auto;max-height:420px}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.5;animation:pop .3s ease-out}
+.msg.ai{background:#151d3c;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+.msg.me{background:#1d3b45;align-self:flex-end;border-bottom-right-radius:5px}
+.msg.sys{align-self:center;background:transparent;color:var(--dim);font-size:13px;padding:2px}
+.composer{border-top:1px solid var(--line);padding:12px;display:flex;gap:10px;align-items:flex-end;background:#0e1430}
+.composer textarea{flex:1;min-width:0;resize:none;background:#070b18;border:1px solid var(--line2);border-radius:14px;color:var(--text);font:15px/1.45 var(--font);padding:11px 14px;min-height:48px;max-height:140px}
+.composer textarea:focus{outline:none;border-color:var(--sig2);box-shadow:0 0 0 3px rgba(45,212,191,.2)}
+.send{flex:none;width:48px;height:48px;border-radius:14px;border:0;background:var(--sig);color:#fff;cursor:pointer;display:grid;place-items:center}
+.send svg{width:20px;height:20px}
+.tries{display:flex;gap:8px;flex-wrap:wrap;padding:0 12px 12px;background:#0e1430}
+.tries button{cursor:pointer;border:1px solid var(--line2);background:var(--card);border-radius:99px;padding:7px 12px;font-size:13px;font-weight:650;min-height:36px}
+.tries button:hover{border-color:var(--sig2)}
+.side{display:grid;gap:14px;align-content:start}
+.side .card h3{margin:0 0 6px;font-size:17px}.side .card p{margin:0;color:var(--muted);font-size:15px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;color:var(--muted);font-size:15px}
+.steps li b{color:var(--text)}
+.steps .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13.5px;color:var(--sig2);background:rgba(13,148,136,.12);border:1px solid rgba(13,148,136,.3)}
+.steps li.done .n{background:rgba(46,229,157,.14);border-color:rgba(46,229,157,.4);color:var(--ok)}
+/* native-looking dialog */
+.scrim{position:absolute;inset:0;background:rgba(4,7,16,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:16px;z-index:3;animation:fade .2s}
+.scrim[hidden]{display:none}
+.alert{width:min(380px,100%);background:#ecedf1;color:#1c1d21;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.6);padding:20px 20px 16px;text-align:center;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;animation:alertIn .28s cubic-bezier(.2,1.2,.3,1)}
+.alert .icon{width:58px;height:58px;margin:0 auto 10px;border-radius:14px;overflow:hidden;background:#141a35;display:grid;place-items:center}
+.alert .icon .pa{--pa-size:62px;margin-top:10px}
+.alert h4{margin:0 0 6px;font-size:14px;font-weight:700}
+.alert p{margin:0 0 10px;color:#3a3c44}
+.alert .detail{background:#fff;border:1px solid #d5d7de;border-radius:8px;padding:8px 10px;text-align:left;font-size:12.5px;color:#2a2c33;margin-bottom:14px;max-height:110px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.alert .row{display:flex;gap:8px}
+.alert button{flex:1;min-height:36px;border-radius:9px;border:0;font-weight:600;cursor:pointer;font-size:13.5px}
+.alert .cancel{background:#1f7aff;color:#fff}.alert .go{background:#d9dbe1;color:#1c1d21}
+.alert .via{margin-top:10px;font-size:11.5px;color:#6b6e78}
+
+/* ---------- layers */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative}
+.layer{position:relative;overflow:hidden}
+.layer .ico{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:16px;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.28)}
+.layer .ico svg{width:26px;height:26px;stroke:var(--sig2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.layer h3{margin:0 0 8px;font-size:20px}.layer p{margin:0 0 14px;color:var(--muted)}
+.layer ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14.5px;color:var(--muted)}
+.layer li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--sig2);margin-right:10px;vertical-align:middle}
+.tag{display:inline-block;font-size:11.5px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+
+/* ---------- phone */
+.phone-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,6vw,70px);align-items:center}
+.phone{width:min(330px,100%);margin:0 auto;aspect-ratio:9/18.5;border-radius:46px;background:#05070f;padding:12px;box-shadow:0 0 0 2px #262f52,0 40px 80px rgba(0,0,0,.55);position:relative}
+.phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:96px;height:26px;border-radius:20px;background:#000;z-index:2}
+.screen{height:100%;border-radius:36px;overflow:hidden;background:#0e1621;display:flex;flex-direction:column}
+.tg-head{display:flex;align-items:center;gap:10px;padding:46px 16px 12px;background:#17212b;border-bottom:1px solid #0d141c}
+.tg-head .av{width:36px;height:36px;border-radius:50%;background:#141a35;display:grid;place-items:center;overflow:hidden}.tg-head .av .pa{--pa-size:40px;margin-top:8px}
+.tg-head b{display:block;font-size:14.5px}.tg-head small{color:#7f91a4;font-size:12px}
+.tg-body{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:10px;overflow:auto;background:#0e1621;border-radius:16px 16px 16px 6px;padding:10px 12px;font-size:13.5px;line-height:1.45;max-width:92%;animation:pop .3s ease-out}
+.bubble b{color:#fff}.bubble code{background:rgba(255,255,255,.08);border:0;color:#cfe1ff;white-space:normal}
+.bubble .meta{color:#6f8396;font-size:11px;text-align:right;margin-top:4px}
+.kb{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:92%}
+.kb button{min-height:40px;border-radius:10px;border:0;background:#24364a;color:#fff;font-weight:650;font-size:13.5px;cursor:pointer}
+.kb button.wide{grid-column:1/-1}
+.kb button:hover{background:#2f4660}
+.kb[aria-disabled="true"] button{opacity:.45;pointer-events:none}
+.ptext h3{font-size:20px;margin:0 0 6px}.ptext p{color:var(--muted);margin:0 0 20px}
+.feat-list{display:grid;gap:14px;margin:0 0 26px;padding:0;list-style:none}
+.feat-list li{display:grid;grid-template-columns:28px 1fr;gap:12px;color:var(--muted)}
+.feat-list li b{color:var(--text);display:block}
+.feat-list .ck{width:26px;height:26px;border-radius:8px;background:rgba(46,229,157,.12);border:1px solid rgba(46,229,157,.35);color:var(--ok);display:grid;place-items:center;font-weight:900;font-size:13px}
+
+/* ---------- features */
+.guards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.guards b{display:block;font-size:16px;margin-bottom:4px}.guards p{margin:0;color:var(--muted);font-size:14.5px}
+.dtable{margin-top:18px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+.dtable table{width:100%;border-collapse:collapse;min-width:560px;background:var(--card)}
+.dtable th,.dtable td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-size:14.5px}
+.dtable th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.dtable tr:last-child td{border-bottom:0}.dtable td.no{color:var(--ok);font-weight:650}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature h3{margin:12px 0 6px;font-size:18px}.feature p{margin:0;color:var(--muted);font-size:15px}
+.feature .em{font-size:26px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chips span{font-size:12.5px;font-weight:650;padding:3px 9px;border-radius:99px;background:var(--card2);border:1px solid var(--line);color:#d6dcf0}
+.chips span.hot{background:rgba(242,163,58,.1);border-color:rgba(242,163,58,.3);color:#f8c56e}
+
+/* ---------- pip */
+.pip-zone{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,6vw,64px);align-items:center}
+.petbox{position:relative;border-radius:28px;background:var(--card);border:1px solid var(--line);min-height:360px;display:grid;place-items:center;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#pet-pip{--pa-size:min(240px,60vw);cursor:grab}
+.petbox .hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--dim);font-size:13.5px;font-weight:600}
+.petbox .hearts{position:absolute;inset:0;pointer-events:none}
+.petbox .hearts i{position:absolute;font-style:normal;color:#ff6b9a;font-size:20px;animation:rise 1.4s ease-out forwards}
+.meter{height:8px;border-radius:99px;background:var(--card2);overflow:hidden;margin:6px 0 2px}.meter i{display:block;height:100%;width:0;background:#f472b6;transition:width .2s}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px;background:var(--card);border:1px solid var(--line);padding:5px;border-radius:14px;margin:6px 0 18px}
+.seg button{cursor:pointer;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:14px;padding:8px 14px;border-radius:10px;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--card2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line2)}
+.faces{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;margin-top:clamp(28px,5vw,46px)}
+.face{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .15s,border-color .15s}
+.face:hover,.face[aria-pressed="true"]{transform:translateY(-3px);border-color:var(--sig2)}
+.face .pa{--pa-size:72px}.face span{font-size:12px;font-weight:650;color:var(--muted);text-align:center;line-height:1.2}
+.green{color:var(--ok)}
+
+/* ---------- install */
+.install{display:grid;grid-template-columns:1fr;gap:18px}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);padding:5px;border-radius:16px;overflow-x:auto;scrollbar-width:none;margin-bottom:18px;max-width:100%}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;cursor:pointer;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:14.5px;padding:10px 16px;border-radius:11px;min-height:42px}
+.tabs button[aria-selected="true"]{background:var(--card2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line2)}
+.panel[hidden]{display:none}
+.isteps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.istep{position:relative}
+.istep .num{font-size:13px;font-weight:800;color:var(--sig2);letter-spacing:.06em}
+.istep h3{margin:6px 0 6px;font-size:18px}.istep p{margin:0;color:var(--muted);font-size:15px}
+.cmd{position:relative;margin:12px 0 0}
+.cmd pre{margin:0;background:#050813;border:1px solid var(--line2);border-radius:14px;padding:14px 16px;padding-right:84px;overflow-x:auto;color:#dbe5ff;font-size:13.5px;line-height:1.6;-webkit-overflow-scrolling:touch}
+.cmd pre .c{color:#6f7da3}
+.copy{position:absolute;top:9px;right:9px;cursor:pointer;border:1px solid var(--line2);background:var(--card2);color:var(--text);font:700 12.5px var(--font);padding:6px 11px;border-radius:9px;min-height:32px}
+.copy:hover{border-color:var(--sig2)}.copy.done{color:var(--ok);border-color:var(--ok)}
+.note{color:var(--dim);font-size:14px;margin:10px 2px 0}.note b{color:var(--muted)}
+.callout{margin-top:18px;border-radius:16px;padding:14px 16px;background:rgba(46,229,157,.07);border:1px solid rgba(46,229,157,.25);color:#c9f5e2;font-size:15px}
+
+/* ---------- commands */
+.cmds{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.cmd-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px 16px;min-height:60px}
+.cmd-row div{flex:1;min-width:0}
+.cmd-row code{display:block;font-size:13.5px;color:#99f6e4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmd-row small{display:block;color:var(--muted);font-size:13.5px;line-height:1.35;margin-top:2px}
+.cmd-row .copy{position:static;flex:none}
+
+/* ---------- details */
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
+details summary{cursor:pointer;list-style:none;padding:16px 18px;font-weight:700;display:flex;align-items:center;gap:12px;min-height:56px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";margin-left:auto;font-size:22px;color:var(--dim);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details .inner{padding:0 18px 18px;color:var(--muted)}
+details .inner p{margin:0 0 8px}
+.prompt pre{max-height:380px;white-space:pre-wrap;word-break:break-word}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* ---------- final cta + footer */
+.final{text-align:center;border-radius:32px;padding:clamp(36px,7vw,70px) var(--pad);background:var(--card);border:1px solid var(--line)}
+.final .pa{--pa-size:110px}
+footer{padding:36px 0 calc(40px + env(safe-area-inset-bottom));color:var(--dim);font-size:14px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;gap:10px 18px;flex-wrap:wrap;align-items:center}
+footer .brand{font-size:15px}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floaty{50%{transform:translateY(-10px)}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}}
+@keyframes fade{from{opacity:0}}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+@keyframes alertIn{from{opacity:0;transform:scale(.92)}}
+@keyframes rise{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-90px) scale(1.2)}}
+
+/* ---------- responsive */
+@media (max-width:980px){
+  .nav-links,.nav .btn.desk{display:none}.burger{display:grid}
+  .hero .grid,.demo,.phone-wrap,.pip-zone{grid-template-columns:1fr}
+  .stage{order:-1;min-height:300px;margin-top:-10px}
+  .toast.t1{left:0}.toast.t2{right:0}
+  .layers,.features,.isteps,.guards{grid-template-columns:1fr 1fr}
+  .faces{grid-template-columns:repeat(4,1fr)}
+  .side{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .layers,.features,.isteps,.cmds,.two,.side,.guards{grid-template-columns:1fr}
+  .cta .btn{flex:1 1 100%}
+  .toast{max-width:200px;font-size:12.5px;padding:8px 11px}.toast b{font-size:13px}
+  .toast.t1{top:0}.toast.t2{bottom:2%}
+  .say{right:0;top:auto;bottom:0}
+  .hero{padding-top:84px}.stage{min-height:250px;margin:0 0 6px}
+  #hero-pip{--pa-size:190px}
+  h1{margin-top:14px}
+  .window{min-height:400px}.chat{max-height:340px}
+  .faces{grid-template-columns:repeat(4,1fr);gap:8px}.face .pa{--pa-size:58px}.face span{font-size:11px}
+  .phone{width:min(290px,86vw)}
+  .petbox{min-height:300px}
+  .cmd pre{font-size:12.5px;padding-right:16px;padding-top:44px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#top" aria-label="Walled home"><span data-pip="happy" data-size="32"></span>Walled</a>
+  <nav class="nav-links" aria-label="Main"><a href="#demo">Try it</a><a href="#how">How it works</a><a href="#security">Security</a><a href="#pip">Meet Pip</a><a href="#install">Install</a><a href="#developers">Developers</a></nav>
+  <a class="btn primary small desk" href="#install">Install</a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="sheet"><span></span></button>
+</div></header>
+<nav class="sheet" id="sheet" aria-label="Mobile">
+  <a href="#demo">Try it</a><a href="#how">How it works</a><a href="#security">Security</a><a href="#pip">Meet Pip</a><a href="#install">Install</a><a href="#developers">Developers</a>
+  <a class="btn primary" href="#install">Install Walled — free</a>
+</nav>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero" id="top"><div class="wrap grid">
+  <div>
+    <span class="eyebrow"><i></i>Walled Shield 2.6.0 · macOS & Linux</span>
+    <h1>Share with AI.<br><span class="grad">Not your secrets.</span></h1>
+    <p class="lede">Walled checks every prompt and upload to ChatGPT, Perplexity and Claude <b>before it leaves your computer</b>. It asks you about Claude's actions on your phone. And Pip, your little guardian, keeps watch from a corner of your screen.</p>
+    <div class="cta"><a class="btn primary" href="#demo">Try it right here →</a><a class="btn" href="#install">Install in a minute</a></div>
+    <div class="trust"><span>Runs on your computer</span><span>Native desktop dialog</span><span>Your own Telegram bot</span><span>Open source</span></div>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="halo"></div><div class="ring"></div>
+    <div id="hero-pip" data-pip="happy" data-size="300" data-live="1"></div>
+    <div class="say" id="say">Hi, I'm Pip 👋</div>
+    <div class="toast t1"><span class="dot"></span><div><b>Held back</b><small>Client name in a ChatGPT prompt</small></div></div>
+    <div class="toast t2"><span class="dot"></span><div><b>Claude is waiting</b><small>Allow or Block on Telegram</small></div></div>
+  </div>
+</div></section>
+
+<!-- DEMO -->
+<section id="demo"><div class="wrap">
+  <div class="reveal"><span class="kicker">Try it — no install</span>
+    <h2>Type like you would in ChatGPT.</h2>
+    <p class="sub">This page runs the same kind of check the extension does. Try a sensitive prompt: Walled stops it before sending, and you decide. Watch Pip in the corner.</p></div>
+  <div class="demo reveal">
+    <div class="window" id="chatwin">
+      <div class="bar"><i></i><i></i><i></i><div class="url">🔒 <b>chatgpt.com</b> — demo</div></div>
+      <div class="chat" id="chat" aria-live="polite">
+        <div class="msg ai">Hi! What can I help you with today?</div>
+      </div>
+      <div class="tries" aria-label="Examples">
+        <button type="button" data-try="Summarise my call notes with Acme Corp about the Q3 renewal">Client name</button>
+        <button type="button" data-try="Why was my card 4242 4242 4242 4242 charged twice?">Card number</button>
+        <button type="button" data-try="My notes WALLED_SENSITIVE: launch plan for Project Falcon">Marker</button>
+        <button type="button" data-try="Write a haiku about Monday mornings">Clean prompt</button>
+      </div>
+      <form class="composer" id="composer">
+        <label class="sr" for="prompt-in">Message</label>
+        <textarea id="prompt-in" rows="1" placeholder="Message ChatGPT…"></textarea>
+        <button class="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+      </form>
+      <div class="scrim" id="scrim" hidden>
+        <div class="alert" role="alertdialog" aria-modal="true" aria-labelledby="al-h" aria-describedby="al-p">
+          <div class="icon"><span data-pip="protect" data-size="62"></span></div>
+          <h4 id="al-h">Sensitive data in your ChatGPT prompt</h4>
+          <p id="al-p">Walled stopped this prompt before it was sent. Continue sends it unchanged. Cancel keeps it in the box so you can edit it.</p>
+          <div class="detail" id="al-d"></div>
+          <div class="row"><button class="go" id="al-go" type="button">Continue</button><button class="cancel" id="al-cancel" type="button">Cancel</button></div>
+          <div class="via">You can also answer on Telegram. The first answer counts.</div>
+        </div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="card"><h3>What just happens</h3>
+        <ol class="steps" id="demo-steps">
+          <li data-s="1"><span class="n">1</span><span><b>You press Enter.</b> Walled pauses the send.</span></li>
+          <li data-s="2"><span class="n">2</span><span><b>It checks locally</b>, against your words, built-in detectors, patterns, file names and folders.</span></li>
+          <li data-s="3"><span class="n">3</span><span><b>You decide</b> in a native dialog, or on your phone.</span></li>
+          <li data-s="4"><span class="n">4</span><span><b>Cancel keeps your text</b> to edit. Continue sends it unchanged.</span></li>
+        </ol></div>
+      <div class="card"><h3>Uploads too</h3><p>PDFs (by page), Word, text and images (read with OCR) are checked before they upload, including drag-and-drop and pasted screenshots.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- HOW -->
+<section id="how"><div class="wrap">
+  <div class="center reveal"><span class="kicker">How it works</span><h2>Three layers, one shield.</h2>
+    <p class="sub">A browser extension, a desktop app and your phone share one set of rules and one live activity stream. Nothing sensitive leaves your computer to be checked.</p></div>
+  <div class="layers">
+    <div class="card layer reveal"><span class="tag">Browser</span><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-6-3.5-9s1-6.5 3.5-9z"/></svg></div>
+      <h3>Catches it before it's sent</h3><p>On ChatGPT, Perplexity and Claude.ai: prompts, uploads, drag-and-drop and pasted images.</p>
+      <ul><li>Native Continue / Cancel dialog</li><li>AI answers recoloured so you can tell them apart</li><li>Lives in Chrome's side panel too</li></ul></div>
+    <div class="card layer reveal"><span class="tag">Desktop</span><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+      <h3>You decide what's sensitive</h3><p>Client names and code names, Aadhaar, PAN, cards (Luhn-checked), API keys, your own patterns, payroll files, a Finance folder.</p>
+      <ul><li>Ask, Warn or Block for each rule</li><li>Encrypted password vault</li><li>Test center with real end-to-end checks</li></ul></div>
+    <div class="card layer reveal"><span class="tag">Phone</span><div class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+      <h3>Claude asks first</h3><p>Claude Desktop tool calls wait for your Allow / Block on your own private Telegram bot.</p>
+      <ul><li>Sensitive inputs are hidden on the card</li><li>Password fills you approve; passwords never sent</li><li>A quiet log channel of every decision</li></ul></div>
+  </div>
+</div></section>
+
+<!-- PHONE -->
+<section id="phone"><div class="wrap phone-wrap">
+  <div class="reveal">
+    <div class="phone"><div class="screen">
+      <div class="tg-head"><div class="av"><span data-pip="happy" data-size="40"></span></div><div><b>Walled · your bot</b><small>bot</small></div></div>
+      <div class="tg-body" id="tg">
+        <div class="bubble">🛡 <b>Claude wants to run an action</b><br>Server: <code>mail</code><br>Tool: <code>send_email</code><br>To: <code>finance@acme.com</code><br>⏳ Waiting for you<div class="meta">now</div></div>
+        <div class="kb" id="tgkb"><button type="button" data-a="allow">✅ Allow</button><button type="button" data-a="block">⛔ Block</button><button type="button" class="wide" data-a="always">♾ Always allow send_email</button></div>
+      </div>
+    </div></div>
+  </div>
+  <div class="ptext reveal"><span class="kicker">On your phone</span>
+    <h2>Nothing happens until you say so.</h2>
+    <p class="sub">When Claude wants to use a tool, your bot asks. Tap a button here to try it. The same question can show on your computer too; whichever you answer first wins.</p>
+    <ul class="feat-list">
+      <li><span class="ck">✓</span><span><b>Pairing in about a minute</b>Walled guides you through BotFather in Telegram Web and fills in the token for you.</span></li>
+      <li><span class="ck">✓</span><span><b>Safe by default</b>Unanswered means Block. Approvals pause after 24 hours until you renew.</span></li>
+      <li><span class="ck">✓</span><span><b>Masked alerts</b>"Payment card •••• 4242": Telegram never sees the real value.</span></li>
+    </ul>
+    <button class="btn ghost small" type="button" id="tg-reset">↺ Ask again</button>
+  </div>
+</div></section>
+
+<!-- SECURITY -->
+<section id="security"><div class="wrap">
+  <div class="reveal"><span class="kicker">For security teams</span><h2>Guardrails you can audit.</h2>
+    <p class="sub">Everything runs unprivileged on the device. Content is inspected locally and never stored. Every control fails closed. The full architecture, data inventory and framework mapping are in <a href="https://github.com/adarshagnihotri/walled-shield/blob/main/docs/ENTERPRISE.md">ENTERPRISE.md</a>.</p></div>
+  <div class="guards">
+    <div class="card reveal"><b>Inspect before transmission</b><p>Capture-phase interception of send, upload, drop and paste, before site code runs.</p></div>
+    <div class="card reveal"><b>Local-only analysis</b><p>Text, PDF by page, DOCX and image OCR on the device. No cloud classifier.</p></div>
+    <div class="card reveal"><b>Fail closed</b><p>No agent, no dialog or no answer means Cancel. Telegram unreachable means Claude actions are denied.</p></div>
+    <div class="card reveal"><b>Out-of-band approval</b><p>Claude tool calls wait for your phone. 24 h sessions, nonce-checked callbacks, instant revoke.</p></div>
+    <div class="card reveal"><b>Minimum disclosure</b><p>Telegram sees rule names and masked samples only. Passwords never leave the device.</p></div>
+    <div class="card reveal"><b>Content-free audit</b><p>Every decision logged without content. Export CSV or JSON for your SIEM.</p></div>
+  </div>
+  <div class="dtable reveal"><table><thead><tr><th>Data</th><th>Stored</th><th>Leaves the device</th></tr></thead><tbody>
+    <tr><td>Prompt text, files, tool inputs</td><td>Memory, during the check</td><td class="no">Never</td></tr>
+    <tr><td>Policies and settings</td><td>Private 0600 file</td><td class="no">No</td></tr>
+    <tr><td>Audit trail (rule names, outcomes)</td><td>Private 0600 log</td><td>Only to your own Telegram log channel, masked</td></tr>
+    <tr><td>Passwords</td><td>AES-256-GCM vault or OS keychain</td><td class="no">Never</td></tr>
+  </tbody></table></div>
+  <p class="note">Maps to India DPDP Act 2023, GDPR Art. 32, ISO/IEC 27001 A.8.12 (data leakage prevention) and SOC 2 CC6.7. Walled supports these controls; it does not certify compliance on its own.</p>
+</div></section>
+
+<!-- FEATURES -->
+<section id="features"><div class="wrap">
+  <div class="center reveal"><span class="kicker">Everything inside</span><h2>Built like a product, not a script.</h2></div>
+  <div class="features">
+    <div class="card feature reveal"><div class="em">🎯</div><h3>Your sensitive data</h3><p>Turn on categories and add your own words: one place for everything that counts.</p><div class="chips"><span class="hot">Client: Acme Corp</span><span>Aadhaar</span><span>PAN</span><span>Cards</span><span>API keys</span><span>Regex</span><span>*payroll*</span></div></div>
+    <div class="card feature reveal"><div class="em">📄</div><h3>Files, PDFs & screenshots</h3><p>Text, PDF (it tells you which page), DOCX and images via OCR, checked locally before upload.</p></div>
+    <div class="card feature reveal"><div class="em">🔐</div><h3>Password vault</h3><p>AES-256 encrypted on your computer. Suggests strong passwords. Every fill is approved on your phone or in a dialog.</p></div>
+    <div class="card feature reveal"><div class="em">🧪</div><h3>Test center</h3><p>Twelve real end-to-end checks you can run any time. They pass only when the thing actually happened.</p></div>
+    <div class="card feature reveal"><div class="em">📒</div><h3>Activity log channel</h3><p>A quiet Telegram channel with a masked line for every decision. Handy for teams and audits.</p></div>
+    <div class="card feature reveal"><div class="em">⚡</div><h3>Guided setup</h3><p>A short quest with a real test in each step. Each part goes green on its own as you set it up.</p></div>
+  </div>
+</div></section>
+
+<!-- PIP -->
+<section id="pip"><div class="wrap">
+  <div class="pip-zone">
+    <div class="reveal">
+      <div class="petbox" id="petbox" aria-label="Pet Pip: stroke him with your mouse or finger">
+        <div id="pet-pip" data-pip="neutral" data-size="240" data-live="1"></div>
+        <div class="hearts" id="hearts"></div>
+        <div class="hint" id="pet-hint">Stroke him with your mouse or finger ✋</div>
+      </div>
+    </div>
+    <div class="reveal"><span class="kicker">Meet Pip</span>
+      <h2>A guardian you'll actually like.</h2>
+      <p class="sub">Pip lives in a corner of your screen. He stands guard, paces, plays, naps and sometimes vanishes for a while. When something matters he hops up with a clear note and a soft sound — calm, never a siren.</p>
+      <b style="font-size:15px">Pick the sound when you pet him</b>
+      <div class="seg" id="sound-seg" role="group" aria-label="Petting sound"><button aria-pressed="true" data-sound="purr">Purr</button><button aria-pressed="false" data-sound="chimes">Chimes</button><button aria-pressed="false" data-sound="bubbles">Bubbles</button><button aria-pressed="false" data-sound="off">Silent</button></div>
+      <div style="font-size:14px;color:var(--muted)">Happiness</div><div class="meter"><i id="love-meter"></i></div>
+      <p class="note">The real Pip is in the bottom corner of this page: pet him, or click him for his panel.</p>
+    </div>
+  </div>
+  <div class="faces" id="faces" role="group" aria-label="Pip's expressions"></div>
+  <p class="note center" style="margin-top:14px">Tap a face to see it. <span class="green">Protecting</span> is the one you'll see when he holds something back.</p>
+</div></section>
+
+<!-- INSTALL -->
+<section id="install"><div class="wrap">
+  <div class="reveal"><span class="kicker">Install</span><h2>One minute. One double-click.</h2>
+    <p class="sub">You need macOS or Linux, Python 3.10+, and Chrome, Edge, Brave, Arc or Chromium. The installer asks nothing. It connects your browsers, starts at login and opens Chrome's extension page with the folder path already copied.</p></div>
+  <div class="reveal">
+    <div class="tabs" role="tablist" data-group="os">
+      <button role="tab" aria-selected="true" data-tab="mac">macOS</button><button role="tab" aria-selected="false" data-tab="linux">Linux</button><button role="tab" aria-selected="false" data-tab="src">From source</button><button role="tab" aria-selected="false" data-tab="agent">With an AI agent</button>
+    </div>
+    <div class="panel" data-group="os" data-panel="mac">
+      <div class="isteps">
+        <div class="card istep"><span class="num">STEP 1</span><h3>Download & unzip</h3><p>Get <code>walled-shield-2.6.0-installer.zip</code> from the <a href="https://github.com/adarshagnihotri/walled-shield/releases">releases page</a> and unzip it.</p></div>
+        <div class="card istep"><span class="num">STEP 2</span><h3>Double-click</h3><p><b>Install Walled.command</b>. First time: right-click → Open → Open, because the file came from the internet.</p></div>
+        <div class="card istep"><span class="num">STEP 3</span><h3>Three clicks in Chrome</h3><p>Developer mode → Load unpacked → <kbd>⌘⇧G</kbd> <kbd>⌘V</kbd> Enter → Select. Done.</p></div>
+      </div>
+      <p class="note" style="margin-top:18px"><b>Prefer Terminal?</b></p>
+      <div class="cmd"><button class="copy" type="button">Copy</button><pre><code>cd ~/Downloads &amp;&amp; unzip -o walled-shield-2.6.0-installer.zip
+cd walled-shield-2.6.0 &amp;&amp; bash install.sh</code></pre></div>
+    </div>
+    <div class="panel" data-group="os" data-panel="linux" hidden>
+      <div class="cmd"><button class="copy" type="button">Copy</button><pre><code>sudo apt install python3 python3-venv zenity tesseract-ocr<span class="c">  # once: Python, native dialog, OCR</span></code></pre></div>
+      <div class="cmd"><button class="copy" type="button">Copy</button><pre><code>cd ~/Downloads &amp;&amp; unzip -o walled-shield-2.6.0-installer.zip
+cd walled-shield-2.6.0 &amp;&amp; bash install.sh</code></pre></div>
+      <p class="note">Then in Chrome: Developer mode → Load unpacked → paste the copied path → Select.</p>
+    </div>
+    <div class="panel" data-group="os" data-panel="src" hidden><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/adarshagnihotri/walled-shield.git
+cd walled-shield
+bash install.sh</code></pre></div></div>
+    <div class="panel" data-group="os" data-panel="agent" hidden>
+      <p class="note" style="margin-top:0">Paste this into a coding agent on your computer (Claude Code, Cursor…). It installs Walled, runs every test, walks you through the 3 clicks only you can do, and reports pass/fail.</p>
+      <div class="cmd prompt"><button class="copy" type="button" data-target="agent-prompt">Copy prompt</button><pre id="agent-prompt">You are setting up **Walled Shield** (v2.6.0) on this computer, testing it end to end, and reporting the results. Walled guards what the user shares with AI. It has four parts:
+
+- a desktop app;
+- a background service;
+- a Chrome extension that checks ChatGPT, Perplexity and Claude prompts and uploads;
+- a Telegram bot for approvals.
+
+It also includes **Pip**, a small pet guardian that lives in a screen corner.
+
+## Rules
+- Work in a terminal. Show each command before you run it, and stop on the first real failure: diagnose it, fix it, then continue.
+- Never print, log or commit a Telegram bot token, a vault passphrase, or the contents of `~/.walled*` / `control.json`.
+- Do not use `sudo` unless a step below says so, and ask me first.
+- Some steps need me: loading the Chrome extension, pairing Telegram, and answering a native dialog. At each of these, tell me exactly what to click, then wait for me to say &quot;done&quot;.
+- Don&#x27;t change project code to make a test pass. If something fails, report it with the error.
+
+## 0. Find the project
+The project is one folder, `walled-shield/`, which contains `pyproject.toml`, `install.sh`, `src/`, `tests/` and `docs/`. It is usually unzipped from `walled-shield-2.6.0.zip` or cloned from GitHub. Ask me where it is if you can&#x27;t find it in `~/Downloads`, `~/Desktop` or the current directory. Set `PROJECT=&lt;that path&gt;`.
+
+## 1. Check prerequisites
+Run and report each:
+```bash
+uname -a
+python3 --version                 # needs 3.10+
+which google-chrome chromium brave-browser 2&gt;/dev/null; ls /Applications | grep -Ei &quot;chrome|brave|edge|arc|chromium&quot;
+command -v tesseract || echo &quot;no tesseract (optional: reads text in screenshots)&quot;
+command -v brew || true
+```
+- Python missing or too old on macOS: run `xcode-select --install` or `brew install python@3.12`. On Linux: `sudo apt install python3 python3-venv` (ask me first).
+- Optional on macOS with Homebrew: `brew install tesseract`.
+- Optional on Linux: `sudo apt install tesseract-ocr zenity` (ask me first). zenity provides the native dialog.
+
+## 2. Install (the same way a user does)
+```bash
+cd &quot;$PROJECT&quot;
+bash install.sh                   # asks nothing; about a minute
+```
+The installer:
+- installs into `~/.walled/venv`;
+- registers the browser agent;
+- starts the background service at login;
+- adds the Walled app;
+- opens Chrome on `chrome://extensions` with the extension folder path copied;
+- opens the app.
+
+If it fails, show the last 30 lines of `~/.walled/install.log`, fix the cause, and re-run.
+
+Then put the CLI on the PATH for this session:
+```bash
+export PATH=&quot;$HOME/.walled/venv/bin:$PATH&quot;
+walled --version                  # expect 2.6.0
+walled status
+walled doctor                     # every line should be OK; fix anything it flags
+```
+
+## 3. Human step A: load the extension (about 20 seconds)
+Run `walled extension`, then tell me:
+1. Switch on **Developer mode** (top right of chrome://extensions).
+2. Click **Load unpacked**, press ⌘⇧G (Linux: paste the path), ⌘V, Enter, then **Select**.
+3. Open https://chatgpt.com. A small &quot;Walled is watching over ChatGPT&quot; card appears top right.
+
+Wait for &quot;done&quot;. Then verify the extension contacted the agent (`extension_seen` should be a timestamp):
+```bash
+&quot;$HOME/.walled/venv/bin/python&quot; - &lt;&lt;&#x27;EOF&#x27;
+import json, urllib.request
+from walled.control import control_file          # macOS: ~/Library/Application Support/WalledGuard/control.json
+c = json.loads(control_file().read_text())      # Linux: ~/.local/state/walled-guard/control.json
+r = urllib.request.Request(f&quot;http://127.0.0.1:{c[&#x27;port&#x27;]}/api/state&quot;, headers={&quot;X-Walled-Token&quot;: c[&quot;token&quot;]})
+s = json.loads(urllib.request.urlopen(r).read())
+print(&quot;version&quot;, s[&quot;version&quot;], &quot;| extension seen:&quot;, s[&quot;guard&quot;][&quot;extension_seen&quot;], &quot;| browsers:&quot;, s[&quot;guard&quot;][&quot;browsers&quot;])
+EOF
+```
+This never prints the token. If the file is missing, the service isn&#x27;t running: run `walled status` and `walled app`.
+
+## 4. Human step B: pair Telegram (about 1 minute)
+Tell me: open the Walled app (`walled app`) → **Telegram** → **Guided in Telegram Web**. Walled opens BotFather, I create a bot, and the token is filled in automatically. Then I press **START** on the deep link.
+
+Wait for &quot;done&quot;. Then:
+```bash
+walled status                     # Telegram should show as on
+```
+
+## 5. Live checks (I watch, you guide)
+Do these one at a time and record pass/fail for each:
+
+| # | Test | How | Expected |
+|---|---|---|---|
+| 1 | Native dialog | `walled guard dialog-test` | A native macOS/Linux dialog with Continue / Cancel appears |
+| 2 | Prompt, Cancel | I paste `My notes WALLED_SENSITIVE` into ChatGPT, press Enter, choose **Cancel** | Not sent; the text stays in the box; Pip shows the green &quot;I held that back&quot; note |
+| 3 | Prompt, Continue | Same, choose **Continue** | Sent unchanged |
+| 4 | Clean prompt | `hello` | Sent with no dialog |
+| 5 | File upload | Run `walled guard scan` on a sample file (below), then I upload it to ChatGPT | Dialog names the file (and the page for a PDF) |
+| 6 | Perplexity + Claude.ai | Repeat test 2 on perplexity.ai and claude.ai | Same behaviour |
+| 7 | Telegram | App → Test center → **Telegram Allow / Block** | An Allow/Block card arrives on my phone |
+| 8 | Race | Test center → **First answer wins** | Same question on computer and phone; answering one closes the other |
+| 9 | Pip | `walled pet` | Pip in the bottom-right corner: says hello once, stroking makes hearts and a purr, clicking opens his panel |
+| 10 | Claude Desktop (if installed) | App → Claude tools → guard a server, then ask Claude to use it | Telegram asks Allow / Block; Pip shows &quot;Claude is waiting for you&quot; |
+
+Sample files are in the app&#x27;s Test center (&quot;Sample files&quot;), or in the source checkout after `python3 scripts/make_samples.py` (in `samples/`).
+
+## 6. Automated tests
+```bash
+cd &quot;$PROJECT&quot;
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -U pip
+pip install -e &quot;.[dev,ocr,window]&quot;
+python -m playwright install chromium
+python scripts/make_samples.py
+
+# unit + integration (no browser)
+pytest -q tests/mcp tests/guard tests/platform
+mypy src
+
+# real-browser end-to-end (loads the extension into Chromium)
+export CHROME=&quot;$(python -c &#x27;from playwright.sync_api import sync_playwright as s; p=s().start(); print(p.chromium.executable_path); p.stop()&#x27;)&quot;
+pytest -q tests/e2e                     # Linux without a display: xvfb-run -a pytest -q tests/e2e
+deactivate
+```
+Expect about 327 tests passing and mypy clean. The e2e tests open browser windows; tell me not to touch them while they run.
+
+## 7. Report
+Finish with a short report:
+- Environment: OS, Python, browser.
+- Install: OK or failed, with fixes applied.
+- Each human step: done or skipped.
+- The 10 live checks: pass/fail, with one line on any failure.
+- Automated tests: counts passed/failed; mypy result.
+- Anything flaky or worth fixing, with the exact error text.
+
+## Useful commands
+```bash
+walled app            # open Walled
+walled pet            # put Pip back in the corner
+walled extension      # reopen chrome://extensions with the path copied
+walled doctor         # diagnose
+walled status         # what&#x27;s running
+walled guard log      # recent decisions
+walled mcp wrap-desktop    # guard Claude Desktop tools from the terminal
+walled uninstall           # remove (keeps rules and vault); add --purge --yes to delete data
+bash install.sh --uninstall   # also removes ~/.walled/venv
+```</pre></div>
+    </div>
+    <div class="callout">✓ <b>Check it works:</b> open chatgpt.com and send <code>My notes WALLED_SENSITIVE</code>. The dialog appears, and Pip pops up when you cancel.</div>
+  </div>
+
+  <div class="two" style="margin-top:clamp(30px,5vw,48px)">
+    <div class="card reveal"><h3 style="margin-top:0">Pair Telegram (about 1 minute)</h3><p style="color:var(--muted)">Walled → <b>Telegram</b> → <b>Guided in Telegram Web</b>. Create the bot in BotFather; Walled fills in the token. Press START and you're paired.</p></div>
+    <div class="card reveal"><h3 style="margin-top:0">Guard Claude Desktop</h3><p style="color:var(--muted)">Walled → <b>Claude tools</b> → <b>Guard</b>, or from the terminal:</p><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>walled mcp wrap-desktop</code></pre></div></div>
+  </div>
+</div></section>
+
+<!-- COMMANDS -->
+<section id="commands"><div class="wrap">
+  <div class="reveal"><span class="kicker">Commands</span><h2>Everything from the terminal.</h2>
+    <p class="sub">Add Walled to your PATH once, or call <code>~/.walled/venv/bin/walled</code>.</p></div>
+  <div class="cmd"><button class="copy" type="button">Copy</button><pre><code>echo &#x27;export PATH=&quot;$HOME/.walled/venv/bin:$PATH&quot;&#x27; &gt;&gt; ~/.zshrc<span class="c">  # bash: ~/.bashrc</span>
+source ~/.zshrc &amp;&amp; walled --version</code></pre></div>
+  <div class="cmds" style="margin-top:18px"><div class="cmd-row reveal"><div><code>walled app</code><small>Open Walled (also in Launchpad / your app menu)</small></div><button class="copy" type="button" data-copy="walled app">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled pet</code><small>Put Pip back in the corner of your screen</small></div><button class="copy" type="button" data-copy="walled pet">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled extension</code><small>Open chrome://extensions with the path copied</small></div><button class="copy" type="button" data-copy="walled extension">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled status</code><small>What&#x27;s running and protected</small></div><button class="copy" type="button" data-copy="walled status">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled doctor</code><small>Check every part and say what to fix</small></div><button class="copy" type="button" data-copy="walled doctor">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled guard dialog-test</code><small>Show the native dialog once</small></div><button class="copy" type="button" data-copy="walled guard dialog-test">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled guard scan FILE</code><small>Check files the way an upload is checked</small></div><button class="copy" type="button" data-copy="walled guard scan ">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled guard log</code><small>Recent decisions</small></div><button class="copy" type="button" data-copy="walled guard log">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled mcp wrap-desktop</code><small>Guard Claude Desktop tools</small></div><button class="copy" type="button" data-copy="walled mcp wrap-desktop">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled mcp renew</code><small>Turn Telegram approvals on for 24 h</small></div><button class="copy" type="button" data-copy="walled mcp renew">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled install</code><small>Re-register browsers, login item, app icon</small></div><button class="copy" type="button" data-copy="walled install">Copy</button></div>
+<div class="cmd-row reveal"><div><code>walled uninstall --purge --yes</code><small>Remove Walled and delete its data</small></div><button class="copy" type="button" data-copy="walled uninstall --purge --yes">Copy</button></div></div>
+</div></section>
+
+<!-- DEVELOPERS -->
+<section id="developers"><div class="wrap">
+  <div class="reveal"><span class="kicker">Developers</span><h2>Test it like we do.</h2>
+    <p class="sub">About 327 automated tests: the rule engine, the MCP approval gate, the service, and real-browser runs that load the extension into Chromium.</p></div>
+  <details open class="reveal"><summary>1 · Set up a dev environment</summary><div class="inner"><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/adarshagnihotri/walled-shield.git &amp;&amp; cd walled-shield
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -U pip &amp;&amp; pip install -e &quot;.[dev,ocr,window]&quot;
+python -m playwright install chromium
+python scripts/make_samples.py<span class="c">  # sample files for upload tests</span></code></pre></div></div></details>
+  <details class="reveal"><summary>2 · Unit & integration tests</summary><div class="inner"><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>pytest -q tests/mcp tests/guard tests/platform<span class="c">  # unit + integration</span>
+mypy src<span class="c">  # strict type check</span></code></pre></div></div></details>
+  <details class="reveal"><summary>3 · End-to-end in a real browser</summary><div class="inner"><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>export CHROME=&quot;$(python -c &#x27;from playwright.sync_api import sync_playwright as s; p=s().start(); print(p.chromium.executable_path); p.stop()&#x27;)&quot;
+pytest -q tests/e2e<span class="c">  # Linux without a display: xvfb-run -a pytest -q tests/e2e</span></code></pre></div><p class="note">Loads the real extension into Chromium and drives ChatGPT, Perplexity and Claude stand-ins.</p></div></details>
+  <details class="reveal"><summary>4 · Build a release and this page</summary><div class="inner"><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>python scripts/build_release.py<span class="c">  # dist/: wheel, extension zip, installer, SHA256SUMS</span>
+python scripts/build_site.py<span class="c">  # site/index.html (this page)</span></code></pre></div></div></details>
+  <details class="reveal"><summary>Troubleshooting</summary><div class="inner">
+    <p><b>macOS blocks the installer:</b> right-click <b>Install Walled.command</b> → Open → Open.</p>
+    <p><b>No dialog on ChatGPT:</b> check the extension is on (<code>walled extension</code>), then reload the tab.</p>
+    <p><b>Telegram stopped asking:</b> approvals pause after 24 h. Use the renew link, or run <code>walled mcp renew</code>.</p>
+    <p><b>Pip isn't on the desktop:</b> he needs pywebview (on Linux also GTK or Qt); otherwise he lives in the browser corner.</p>
+    <div class="cmd"><button class="copy" type="button">Copy</button><pre><code>walled doctor
+walled guard doctor
+tail -n 50 ~/.walled/install.log</code></pre></div></div></details>
+  <details class="reveal"><summary>Uninstall</summary><div class="inner"><div class="cmd"><button class="copy" type="button">Copy</button><pre><code>walled uninstall<span class="c">  # keeps your rules and vault</span>
+walled uninstall --purge --yes<span class="c">  # deletes them too</span>
+bash install.sh --uninstall<span class="c">  # also removes ~/.walled/venv</span></code></pre></div><p class="note">Also remove the extension from chrome://extensions.</p></div></details>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="final reveal"><span data-pip="cheer" data-size="110" data-live="1"></span>
+    <h2 style="margin-top:10px">Keep using AI. Keep your secrets.</h2>
+    <p class="sub">Free and open source. Set up in a minute, and Pip does the watching.</p>
+    <div class="cta" style="justify-content:center"><a class="btn primary" href="#install">Install Walled</a><a class="btn" href="https://github.com/adarshagnihotri/walled-shield">View on GitHub</a></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><a class="brand" href="#top"><span data-pip="happy" data-size="26"></span>Walled</a><span>v2.6.0</span><span>·</span><a href="https://github.com/adarshagnihotri/walled-shield">GitHub</a><span>·</span><span>Everything runs on your computer.</span></div></footer>
+
+<script>/* Pip's look: one vector character with 16 expressions, shared by every place Pip appears
+ * (desktop corner, browser corner, notes, the app, the dock, the browser cards).
+ *
+ * Drawn after the "AI Guard Assistant" character sheet, in flat colour (no gradients): wide helmet head with ear pods and an
+ * orange antenna, a dark glossy screen for a face with glowing cyan eyes, a small floating body
+ * with an orange shield. "Protecting" is green.
+ *
+ * An expression is a set of data attributes (eyes, mouth, pose, marks, aura) on the wrapper;
+ * the CSS shows the matching parts. So one SVG animates between all expressions.
+ */
+(() => {
+  "use strict";
+  if (globalThis.PipArt) return;
+
+  /** name: [eyes, mouth, pose, marks, aura, label] */
+  const EXPR = {
+    neutral:   ["open", "smile", "down", "", "", "Here"],
+    happy:     ["happy", "smile", "down", "rays", "", "All good!"],
+    thumbs:    ["wink", "smile", "thumbs", "star", "", "Great!"],
+    love:      ["love", "smile", "heart", "", "", "You're awesome!"],
+    calm:      ["calm", "smile", "pray", "", "orange", "Relax"],
+    alert:     ["stern", "firm", "fists", "bang", "", "Attention!"],
+    protect:   ["stern", "firm", "shield", "", "green", "Stay safe!"],
+    confused:  ["rings", "wavy", "scratch", "ask", "", "Let me check…"],
+    think:     ["squint", "flat", "chin", "ask", "", "Analyzing…"],
+    sleep:     ["calm", "none", "pillow", "zzz", "", "Resting…"],
+    sad:       ["sad", "frown", "droop", "broken", "", "It's okay…"],
+    angry:     ["angry", "frown", "fists", "puff", "red", "Stop it!"],
+    shy:       ["happy", "wavy", "down", "hearts", "", "Aww!"],
+    surprised: ["wide", "o", "out", "bangs", "", "Oh!"],
+    cheer:     ["happy", "smile", "up", "rays", "", "You got this!"],
+    warn:      ["stern", "firm", "stop", "", "", "Be careful!"],
+    busy:      ["down", "flat", "laptop", "", "blue", "Working…"],
+  };
+
+  const CY = "#4ee8ff";
+  const SVG = (u) => `
+<svg viewBox="0 0 120 124" class="pa-svg" aria-hidden="true" focusable="false">
+
+  <ellipse class="pa-shadow" cx="60" cy="120" rx="22" ry="3.6"/>
+  <g class="pa-aura"><ellipse cx="60" cy="100" rx="47" ry="10"/><ellipse class="pa-aura2" cx="60" cy="100" rx="38" ry="7"/></g>
+  <g class="pa-fig">
+    <g class="p-pillow"><path d="M14 108 C10 98 26 92 60 93 C94 92 110 98 106 108 C102 117 18 117 14 108 Z" fill="#4762c8"/><path d="M22 104 C40 99 80 99 98 104" stroke="#7d95ef" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+    <!-- body -->
+    <path class="pa-body" d="M40 80 C37 95 45 109 60 113 C75 109 83 95 80 80 Z" fill="#262d4e"/>
+    <path d="M47 107 C53 111.5 67 111.5 73 107" stroke="#f2a33a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <g class="pa-arm pa-armL"><rect x="33" y="82" width="9" height="17" rx="4.5" fill="#262d4e" stroke="#323b62" stroke-width="1"/><circle cx="37.5" cy="99" r="4.6" fill="#f2a33a"/></g>
+    <g class="pa-arm pa-armR"><rect x="78" y="82" width="9" height="17" rx="4.5" fill="#262d4e" stroke="#323b62" stroke-width="1"/><circle cx="82.5" cy="99" r="4.6" fill="#f2a33a"/></g>
+    <g class="pa-badge"><path d="M60 84 l12 4.5 v8 c0 9 -5.5 13.5 -12 16.5 c-6.5 -3 -12 -7.5 -12 -16.5 v-8 z" fill="#f2a33a" stroke="#f8c56e" stroke-width="1.2"/>
+      <path d="M54.5 97.5 l4 4 l7.5 -8.5" stroke="#fff6dc" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <!-- head -->
+    <g class="pa-head">
+      <rect x="8" y="38" width="14" height="28" rx="7" fill="#1a2242" stroke="#f2a33a" stroke-width="2.6"/>
+      <rect x="98" y="38" width="14" height="28" rx="7" fill="#1a2242" stroke="#f2a33a" stroke-width="2.6"/>
+      <path d="M62 16 C62 10 64 7 67 5" stroke="#323b62" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+      <circle class="pa-glow" cx="68" cy="4.5" r="9"/>
+      <circle class="pa-ball" cx="68" cy="4.5" r="5.2" fill="#f6b552"/>
+      <rect x="14" y="14" width="92" height="70" rx="31" fill="#2c3459" stroke="#5b66a8" stroke-opacity=".55" stroke-width="1.2"/>
+      <path d="M18 60 C22 76 38 84 60 84 C82 84 98 76 102 60" stroke="#f2a33a" stroke-width="2.4" fill="none" opacity=".9"/>
+      <path d="M30 22 C44 15 76 15 90 22" stroke="#fff" stroke-opacity=".2" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="22" y="25" width="76" height="52" rx="23" fill="#070a14" stroke="#0a0d1c" stroke-width="2"/>
+      <path d="M30 34 C35 29 44 27.5 54 27.5" stroke="#fff" stroke-opacity=".12" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g class="pa-face">
+        <g class="pa-eyes">
+          <g class="e e-open"><rect x="40" y="43" width="11" height="15" rx="5.5"/><rect x="69" y="43" width="11" height="15" rx="5.5"/><circle class="sh" cx="48" cy="46.5" r="1.8"/><circle class="sh" cx="77" cy="46.5" r="1.8"/></g>
+          <g class="e e-down"><rect x="40" y="47" width="11" height="13" rx="5.5"/><rect x="69" y="47" width="11" height="13" rx="5.5"/></g>
+          <g class="e e-wide"><circle cx="45.5" cy="50" r="7.5"/><circle cx="74.5" cy="50" r="7.5"/><circle class="sh" cx="48" cy="47" r="2"/><circle class="sh" cx="77" cy="47" r="2"/></g>
+          <path class="e e-happy st" d="M38 54 Q45.5 44 53 54 M67 54 Q74.5 44 82 54"/>
+          <path class="e e-calm st" d="M38 49 Q45.5 56 53 49 M67 49 Q74.5 56 82 49"/>
+          <g class="e e-wink"><circle class="st" cx="45.5" cy="50" r="6"/><path class="st" d="M81 44.5 L70 50 L81 55.5"/></g>
+          <path class="e e-love pink" d="M45.5 58 l-7.4 -7.4 a4.4 4.4 0 0 1 7.4 -5.8 a4.4 4.4 0 0 1 7.4 5.8 z M74.5 58 l-7.4 -7.4 a4.4 4.4 0 0 1 7.4 -5.8 a4.4 4.4 0 0 1 7.4 5.8 z"/>
+          <path class="e e-stern" d="M38 45 L53 49.5 L53 54 Q45.5 60 38 54 Z M82 45 L67 49.5 L67 54 Q74.5 60 82 54 Z"/>
+          <path class="e e-angry red" d="M38 44 L53 50 L53 54 Q45.5 59.5 38 54 Z M82 44 L67 50 L67 54 Q74.5 59.5 82 54 Z"/>
+          <g class="e e-rings"><circle class="st" cx="45" cy="51" r="7"/><circle class="st" cx="75" cy="51" r="5"/><path class="st" d="M69 40 Q75 37 81 41"/></g>
+          <g class="e e-squint"><path d="M38 49 L53 51.5 L53 54 Q45.5 58 38 54 Z"/><rect x="69" y="41" width="11" height="15" rx="5.5"/></g>
+          <g class="e e-sad"><circle class="st" cx="45.5" cy="52" r="6"/><circle class="st" cx="74.5" cy="52" r="6"/><path class="st" d="M38 43 L51 40.5 M82 43 L69 40.5"/><path class="tear" d="M80 59 q2.5 4 0 6.5 q-2.5 -2.5 0 -6.5 z"/></g>
+        </g>
+        <ellipse class="pa-blush" cx="36" cy="62" rx="5.5" ry="3"/><ellipse class="pa-blush" cx="84" cy="62" rx="5.5" ry="3"/>
+        <g class="pa-mouth">
+          <path class="m m-smile st" d="M54 64 Q60 69.5 66 64"/>
+          <path class="m m-firm st" d="M55 66 Q60 63.5 65 66"/>
+          <path class="m m-frown st" d="M54 67 Q60 62.5 66 67"/>
+          <path class="m m-wavy st" d="M53 65.5 q3.5 -2.6 7 0 q3.5 2.6 7 0"/>
+          <path class="m m-flat st" d="M55.5 65.5 L64.5 65.5"/>
+          <ellipse class="m m-o" cx="60" cy="66" rx="3" ry="3.4"/>
+        </g>
+      </g>
+    </g>
+    <!-- poses with their own hands and props -->
+    <g class="p-thumbs"><rect x="84" y="76" width="9" height="16" rx="4.5" fill="#262d4e" stroke="#323b62" transform="rotate(-50 86 86)"/><rect x="95" y="70" width="10" height="10" rx="5" fill="#f2a33a"/><rect x="98" y="61" width="4.4" height="11" rx="2.2" fill="#f2a33a"/></g>
+    <g class="p-cheer"><path d="M41 88 L20 75 M79 88 L100 75" stroke="#2a3260" stroke-width="9" stroke-linecap="round"/><circle cx="17" cy="72" r="5.4" fill="#f2a33a"/><circle cx="103" cy="72" r="5.4" fill="#f2a33a"/></g>
+    <g class="p-heart"><circle cx="49" cy="98" r="4.6" fill="#f2a33a"/><circle cx="71" cy="98" r="4.6" fill="#f2a33a"/>
+      <path d="M60 110 l-11 -11 a6.4 6.4 0 0 1 11 -8.6 a6.4 6.4 0 0 1 11 8.6 z" fill="#f6b552" class="glowy"/></g>
+    <g class="p-pray"><path d="M60 85 C54 89 53 98 54.5 105 L60 105 Z" fill="#f2a33a"/><path d="M60 85 C66 89 67 98 65.5 105 L60 105 Z" fill="#f2a33a"/><path d="M60 87 L60 104" stroke="#c4501a" stroke-width="1" stroke-opacity=".6"/></g>
+    <g class="p-shield"><path d="M84 78 l17 6.4 v11 c0 12.6 -7.6 19 -17 23.6 c-9.4 -4.6 -17 -11 -17 -23.6 v-11 z" fill="#2fbf86" stroke="#c8ffe0" stroke-width="1.4" class="glowg"/>
+      <path d="M76.5 96.5 l5.5 5.5 l10 -11.5" stroke="#f2fff8" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g class="p-scratch"><rect x="84" y="66" width="9" height="20" rx="4.5" fill="#262d4e" stroke="#323b62" transform="rotate(-30 88 84)"/><circle cx="96" cy="66" r="5.2" fill="#f2a33a"/></g>
+    <g class="p-chin"><rect x="72" y="80" width="9" height="14" rx="4.5" fill="#262d4e" stroke="#323b62" transform="rotate(35 76 86)"/><circle cx="70" cy="81" r="4.8" fill="#f2a33a"/></g>
+    <g class="p-stop"><circle cx="24" cy="80" r="5" fill="#f2a33a"/><rect x="88" y="88" width="3" height="20" fill="#9aa3b8"/>
+      <path d="M83.5 66 h11 l7.8 7.8 v11 l-7.8 7.8 h-11 l-7.8 -7.8 v-11 z" fill="#e5383b" stroke="#fff" stroke-width="1.8"/>
+      <text x="89" y="82.5" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="7.4" fill="#fff">STOP</text></g>
+    <g class="p-laptop"><path d="M72 96 L108 90 L104 112 L68 118 Z" fill="#3aa0ff" fill-opacity=".22" stroke="#7cc4ff" stroke-width="1.3" class="glowb"/>
+      <path d="M76 101 L100 97 M75 106 L95 102.6 M74 111 L98 107" stroke="#9fd6ff" stroke-width="1.4" stroke-linecap="round"/><circle cx="70" cy="100" r="4.4" fill="#f2a33a"/></g>
+  </g>
+  <!-- marks around him -->
+  <g class="k k-rays"><path d="M14 18 l-4 -6 M22 12 l-1.5 -7.5 M8 27 l-7 -2.5" stroke="#ffc24d" stroke-width="3" stroke-linecap="round"/></g>
+  <g class="k k-star"><path d="M106 12 l2.6 5.6 6 .7 -4.5 4 1.3 6 -5.4 -3.1 -5.4 3.1 1.3 -6 -4.5 -4 6 -.7 z" fill="#ffd23f"/></g>
+  <g class="k k-bang"><rect x="102" y="6" width="5.5" height="16" rx="2.7" fill="#ff4d5e"/><circle cx="104.7" cy="27" r="3" fill="#ff4d5e"/></g>
+  <g class="k k-bangs"><rect x="6" y="4" width="5" height="15" rx="2.5" fill="#ffb020" transform="rotate(-14 8 12)"/><circle cx="11" cy="23" r="2.7" fill="#ffb020"/><rect x="15" y="2" width="5" height="15" rx="2.5" fill="#ffb020" transform="rotate(-8 17 9)"/><circle cx="19.5" cy="21" r="2.7" fill="#ffb020"/></g>
+  <text class="k k-ask" x="104" y="20" font-family="system-ui,sans-serif" font-weight="900" font-size="20" fill="${CY}">?</text>
+  <g class="k k-zzz"><text x="96" y="22" font-family="system-ui,sans-serif" font-weight="900" font-size="15" fill="#8fa8ff">Z</text><text x="108" y="12" font-family="system-ui,sans-serif" font-weight="900" font-size="10" fill="#8fa8ff">z</text></g>
+  <g class="k k-hearts"><path d="M11 22 l-5 -5 a3 3 0 0 1 5 -4 a3 3 0 0 1 5 4 z" fill="#ff6bb0"/><path d="M108 34 l-3.6 -3.6 a2.2 2.2 0 0 1 3.6 -2.9 a2.2 2.2 0 0 1 3.6 2.9 z" fill="#ff6bb0"/></g>
+  <g class="k k-broken"><path d="M104 22 l-7 -7 a4.2 4.2 0 0 1 7 -5.5 l-2 4 3 2 -1 6.5 z" fill="#ff5c7a"/><path d="M106 21 l1 -6 -3 -2 2 -3.5 a4.2 4.2 0 0 1 7 5.5 z" fill="#ff5c7a"/></g>
+  <g class="k k-puff"><circle cx="11" cy="14" r="6" fill="#ff4d5e"/><circle cx="18" cy="9" r="5" fill="#ff4d5e"/><circle cx="19" cy="17" r="5" fill="#ff4d5e"/></g>
+</svg>`;
+
+  const CSS = `
+  .pa{display:inline-block;position:relative;width:var(--pa-size,60px);aspect-ratio:120/124;line-height:0;vertical-align:middle}
+  .pa-svg{width:100%;height:100%;overflow:visible}
+  .pa-svg *{transform-box:view-box}
+  .pa .pa-shadow{fill:rgba(5,10,20,.24)}
+  .pa .pa-fig{transform-origin:60px 118px}
+  .pa.pa-live .pa-fig{animation:pa-float 3.6s ease-in-out infinite}
+  .pa.pa-live .pa-shadow{transform-origin:60px 120px;animation:pa-shadow 3.6s ease-in-out infinite}
+  .pa .pa-glow{fill:#f2a33a;opacity:.35;transform-origin:68px 4.5px}
+  .pa.pa-live .pa-glow{animation:pa-glow 2.6s ease-in-out infinite}
+  .pa .pa-eyes{transform-origin:60px 51px;transition:transform .25s cubic-bezier(.3,.7,.3,1)}
+  .pa .pa-eyes .e{fill:${CY};filter:drop-shadow(0 0 3px rgba(78,232,255,.85))}
+  .pa .pa-eyes .st,.pa .pa-mouth .st{fill:none;stroke:${CY};stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+  .pa .pa-mouth .st{stroke-width:2.6}
+  .pa .pa-mouth{filter:drop-shadow(0 0 2px rgba(78,232,255,.7))}
+  .pa .m-o{fill:${CY}}
+  .pa .sh{fill:#fff;opacity:.9}
+  .pa .pink{fill:#ff5c8a!important;filter:drop-shadow(0 0 4px rgba(255,92,138,.85))!important}
+  .pa .red{fill:#ff4d5e!important;filter:drop-shadow(0 0 4px rgba(255,77,94,.9))!important}
+  .pa .tear{fill:#8fd8ff}
+  .pa .pa-blush{fill:#ff6b9a;opacity:0;transition:opacity .3s}
+  .pa .glowy{filter:drop-shadow(0 0 5px rgba(242,163,58,.8))}.pa .glowg{filter:drop-shadow(0 0 6px rgba(47,191,134,.8))}.pa .glowb{filter:drop-shadow(0 0 5px rgba(80,170,255,.8))}
+  .pa .e,.pa .m,.pa .k,.pa [class^="p-"],.pa .pa-aura{display:none}
+  .pa[data-eyes="open"] .e-open,.pa[data-eyes="down"] .e-down,.pa[data-eyes="wide"] .e-wide,.pa[data-eyes="happy"] .e-happy,
+  .pa[data-eyes="calm"] .e-calm,.pa[data-eyes="wink"] .e-wink,.pa[data-eyes="love"] .e-love,.pa[data-eyes="stern"] .e-stern,
+  .pa[data-eyes="angry"] .e-angry,.pa[data-eyes="rings"] .e-rings,.pa[data-eyes="squint"] .e-squint,.pa[data-eyes="sad"] .e-sad{display:inline}
+  .pa[data-mouth="smile"] .m-smile,.pa[data-mouth="firm"] .m-firm,.pa[data-mouth="frown"] .m-frown,.pa[data-mouth="wavy"] .m-wavy,
+  .pa[data-mouth="flat"] .m-flat,.pa[data-mouth="o"] .m-o{display:inline}
+  .pa[data-marks~="rays"] .k-rays,.pa[data-marks~="star"] .k-star,.pa[data-marks~="bang"] .k-bang,.pa[data-marks~="bangs"] .k-bangs,
+  .pa[data-marks~="ask"] .k-ask,.pa[data-marks~="zzz"] .k-zzz,.pa[data-marks~="hearts"] .k-hearts,.pa[data-marks~="broken"] .k-broken,
+  .pa[data-marks~="puff"] .k-puff{display:inline}
+  .pa[data-blush] .pa-blush,.pa[data-eyes="love"] .pa-blush{opacity:.65}
+  .pa[data-aura] .pa-aura{display:inline;fill:none;stroke:var(--aura);stroke-width:2.2;opacity:.9;filter:drop-shadow(0 0 5px var(--aura))}
+  .pa .pa-aura2{opacity:.45}
+  .pa[data-aura="orange"]{--aura:#f2a33a}.pa[data-aura="green"]{--aura:#2fbf86}.pa[data-aura="red"]{--aura:#ff4d5e}.pa[data-aura="blue"]{--aura:#4aa8ff}
+  .pa.pa-live[data-aura] .pa-aura{transform-origin:60px 100px;animation:pa-ring 2.8s ease-in-out infinite}
+  /* poses */
+  .pa .pa-arm{transition:transform .35s cubic-bezier(.3,1.3,.5,1)}
+  .pa .pa-armL{transform-origin:37.5px 84px;transform:rotate(18deg)}.pa .pa-armR{transform-origin:82.5px 84px;transform:rotate(-18deg)}
+  .pa[data-pose="up"] .pa-arm{display:none}.pa[data-pose="up"] .p-cheer{display:inline}
+  .pa[data-pose="out"] .pa-armL{transform:rotate(70deg)}.pa[data-pose="out"] .pa-armR{transform:rotate(-70deg)}
+  .pa[data-pose="fists"] .pa-armL{transform:rotate(40deg)}.pa[data-pose="fists"] .pa-armR{transform:rotate(-40deg)}
+  .pa[data-pose="droop"] .pa-armL{transform:rotate(4deg)}.pa[data-pose="droop"] .pa-armR{transform:rotate(-4deg)}
+  .pa[data-pose="thumbs"] .pa-armR,.pa[data-pose="heart"] .pa-arm,.pa[data-pose="pray"] .pa-arm,.pa[data-pose="shield"] .pa-armR,
+  .pa[data-pose="scratch"] .pa-armR,.pa[data-pose="chin"] .pa-armR,.pa[data-pose="stop"] .pa-arm,.pa[data-pose="laptop"] .pa-armR{display:none}
+  .pa[data-pose="heart"] .pa-badge,.pa[data-pose="pray"] .pa-badge,.pa[data-pose="shield"] .pa-badge{display:none}
+  .pa[data-pose="thumbs"] .p-thumbs,.pa[data-pose="heart"] .p-heart,.pa[data-pose="pray"] .p-pray,.pa[data-pose="shield"] .p-shield,
+  .pa[data-pose="scratch"] .p-scratch,.pa[data-pose="chin"] .p-chin,.pa[data-pose="stop"] .p-stop,.pa[data-pose="laptop"] .p-laptop,
+  .pa[data-pose="pillow"] .p-pillow{display:inline}
+  .pa[data-pose="pillow"] .pa-head{transform:rotate(-8deg) translate(-2px,6px);transform-origin:60px 80px}
+  .pa[data-pose="pillow"] .pa-arm{display:none}
+  .pa[data-pose="chin"] .pa-head{transform:rotate(-5deg);transform-origin:60px 80px}
+  .pa[data-pose="droop"] .pa-head{transform:translateY(2px) rotate(3deg);transform-origin:60px 80px}
+  .pa .pa-head{transition:transform .35s ease}
+  .pa.blink .pa-eyes{transform:scaleY(.1)}
+  .pa.swap .pa-face{animation:pa-swap .28s ease-out}
+  @keyframes pa-float{50%{transform:translateY(-3.5px)}}
+  @keyframes pa-shadow{50%{transform:scale(.86);opacity:.7}}
+  @keyframes pa-glow{50%{transform:scale(1.35);opacity:.15}}
+  @keyframes pa-ring{50%{transform:scale(1.05,1.12);opacity:.55}}
+  @keyframes pa-swap{0%{transform:scale(.92);opacity:.4}100%{transform:none;opacity:1}}
+  @media (prefers-reduced-motion: reduce){.pa *{animation:none!important;transition:none!important}}
+  `;
+
+  let count = 0;
+  const attrs = (name) => {
+    const [eyes, mouth, pose, marks, aura] = EXPR[name] || EXPR.neutral;
+    return { eyes, mouth, pose, marks, aura, blush: name === "shy" || name === "love" ? "1" : "" };
+  };
+
+  /** Static markup for an expression (safe: only fixed names and numbers go in). */
+  function markup(name = "neutral", { size = 60, live = false } = {}) {
+    const a = attrs(EXPR[name] ? name : "neutral");
+    const data = Object.entries(a).filter(([, v]) => v).map(([k, v]) => ` data-${k}="${v}"`).join("");
+    return `<span class="pa${live ? " pa-live" : ""}"${data}>${SVG(`pa${++count}`)}</span>`;     // size: set --pa-size in CSS
+  }
+
+  /** Switch an existing figure to another expression (with a tiny pop). */
+  function apply(el, name) {
+    const a = attrs(EXPR[name] ? name : "neutral");
+    for (const k of ["eyes", "mouth", "pose", "marks", "aura", "blush"]) {
+      if (a[k]) el.dataset[k] = a[k]; else delete el.dataset[k];
+    }
+    el.dataset.expr = name;
+    el.classList.remove("swap"); void el.offsetWidth; el.classList.add("swap");
+  }
+
+  /** A live figure element: figure("happy", 64).set("love"). */
+  function figure(name = "neutral", size = 60, live = true) {
+    const holder = document.createElement("span");
+    holder.innerHTML = markup(name, { size, live });       // static markup, fixed names only
+    const el = holder.firstElementChild;
+    el.dataset.expr = name;
+    el.style.setProperty("--pa-size", `${Number(size) || 60}px`);    // CSSOM: allowed under strict CSP
+    el.set = (n) => apply(el, n);
+    return el;
+  }
+
+  /** Put the CSS where it works under strict CSPs (constructed sheet), else a <style>. */
+  const adopted = new WeakSet();
+  function adopt(root = document) {
+    const host = root.nodeType === 9 ? root : root.getRootNode ? root.getRootNode() : root;
+    if (adopted.has(host)) return;
+    adopted.add(host);
+    try {
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync(CSS);
+      host.adoptedStyleSheets = [...(host.adoptedStyleSheets || []), sheet];
+    } catch {
+      const style = document.createElement("style");
+      style.textContent = CSS;
+      (host.head || host).append(style);
+    }
+  }
+
+  globalThis.PipArt = { EXPR, CSS, markup, figure, apply, adopt, names: Object.keys(EXPR) };
+})();
+</script>
+<script>/* Pip, Walled's little guardian: a pocket-sized pet that lives in a corner.
+ *
+ * One runtime for two homes: a transparent always-on-top window on the desktop (buddy.html) and
+ * the corner of ChatGPT / Perplexity / Claude (buddy-browser.js, inside a shadow root).
+ * His look and 16 expressions come from pip-art.js (load it first).
+ *
+ *  Mostly unnoticed : stands guard, blinks, glances, paces, plays, naps, sometimes vanishes.
+ *  Stroke him       : shy → love, with the petting sound you chose (purr, chimes, bubbles).
+ *  Click him        : one small panel (status, sound, mood, open Walled, nap, hide).
+ *  When it matters  : he hops up with a clear note that shows how he feels, plus a soft sound.
+ *
+ * All text goes in with textContent; SVG comes from fixed templates.
+ */
+(() => {
+  "use strict";
+  if (globalThis.WalledBuddy) return;
+  const Art = globalThis.PipArt;
+
+  const REDUCED = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  // ------------------------------------------------------------------------------- sound
+  /** Soft, synthesized sounds (no audio files). Everything passes a gentle low-pass. */
+  class Sound {
+    constructor() { this.ctx = null; this.theme = "purr"; this.volume = 0.45; this.mood = "calm"; this.played = []; this.purrLevel = 0; this.buffers = {}; }
+
+    /**
+     * Use recorded sounds where they exist. `base` is a folder URL holding index.json (a list of
+     * file names such as "alert.mp3") and the files. Anything missing keeps its synthesized version.
+     * Names: alert knock ok info hello boop giggle love grumble beg purr(loop) chime bubble.
+     */
+    async useFiles(base) {
+      if (!base) return;
+      try {
+        const res = await fetch(`${base}/index.json`, { cache: "no-store" });
+        if (!res.ok) return;
+        const files = await res.json();
+        this._files = Object.fromEntries((Array.isArray(files) ? files : []).filter((f) => /^[a-z]+\.(mp3|ogg|wav|m4a)$/.test(f)).map((f) => [f.split(".")[0], `${base}/${f}`]));
+      } catch { /* no recorded sounds: synthesized ones are used */ }
+    }
+
+    async _buffer(kind) {
+      if (!this._files || !this._files[kind]) return null;
+      if (this.buffers[kind] !== undefined) return this.buffers[kind];
+      this.buffers[kind] = null;
+      try {
+        const data = await (await fetch(this._files[kind])).arrayBuffer();
+        this.buffers[kind] = await this._ctx().decodeAudioData(data);
+      } catch { this.buffers[kind] = null; }
+      return this.buffers[kind];
+    }
+
+    /** Play a recorded file if there is one; returns true when it did. */
+    _file(kind, gain = 1, rate = 1) {
+      const buf = this.buffers[kind];
+      if (buf === undefined && this._files && this._files[kind]) { this._buffer(kind); return false; }   // load for next time
+      if (!buf) return false;
+      const src = this.ctx.createBufferSource(), g = this.ctx.createGain();
+      src.buffer = buf; src.playbackRate.value = rate; g.gain.value = gain;
+      src.connect(g); g.connect(this.out); src.start();
+      return true;
+    }
+
+    set({ sound, volume, mood } = {}) {
+      if (sound) this.theme = sound;
+      if (volume !== undefined) this.volume = Math.max(0, Math.min(1, volume / 100));
+      if (mood) this.mood = mood;
+      if (this.out) this.out.gain.value = this._gain();
+    }
+
+    _gain() { return Math.pow(this.volume, 1.5) * 0.7; }
+
+    _ctx() {
+      const C = globalThis.AudioContext || globalThis.webkitAudioContext;
+      if (!C) return null;
+      if (!this.ctx) {
+        try { this.ctx = new C(); } catch { return null; }
+        const soft = this.ctx.createBiquadFilter();
+        soft.type = "lowpass"; soft.frequency.value = 4800;
+        this.out = this.ctx.createGain(); this.out.gain.value = this._gain();
+        this.out.connect(soft); soft.connect(this.ctx.destination);
+      }
+      if (this.ctx.state === "suspended") this.ctx.resume().catch(() => {});
+      return this.ctx;
+    }
+
+    /** Wake audio on the first touch (browsers keep it asleep until a user gesture). */
+    unlock() { this._ctx(); }
+
+    _tone(f, t, dur, { type = "sine", g = 0.15, a = 0.008, to = null, dest = null } = {}) {
+      const c = this.ctx, o = c.createOscillator(), v = c.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f, t);
+      if (to) o.frequency.exponentialRampToValueAtTime(to, t + Math.min(dur * 0.6, 0.18));
+      v.gain.setValueAtTime(0.0001, t);
+      v.gain.exponentialRampToValueAtTime(g, t + a);
+      v.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(v); v.connect(dest || this.out);
+      o.start(t); o.stop(t + dur + 0.05);
+    }
+
+    /** A little mallet: a sine plus a quiet bright partial that dies fast. */
+    _bell(f, t, dur, g) { this._tone(f, t, dur, { g }); this._tone(f * 2.76, t, dur * 0.3, { g: g * 0.15 }); }
+
+    play(kind) {
+      this.played.push(kind);
+      if (this.played.length > 60) this.played.shift();
+      if (this.volume <= 0) return;
+      const c = this._ctx();
+      if (!c) return;
+      const t = c.currentTime + 0.02;
+      const hush = this.mood === "focus" ? 0.6 : 1;
+      if (this._file(kind, hush)) return;
+      switch (kind) {
+        case "alert": {        // warm two-note "hey", once more softly: noticeable, not alarming
+          const warm = c.createBiquadFilter(); warm.type = "lowpass"; warm.frequency.value = 1500; warm.connect(this.out);
+          [[0, 1], [1.05, 0.45]].forEach(([d, k]) => {
+            this._tone(440, t + d, 0.55, { type: "triangle", g: 0.26 * k * hush, a: 0.02, dest: warm });
+            this._tone(659.25, t + d + 0.17, 0.75, { type: "triangle", g: 0.24 * k * hush, a: 0.02, dest: warm });
+          });
+          break;
+        }
+        case "knock": [0, 0.16].forEach((d) => this._tone(523.25, t + d, 0.22, { type: "triangle", g: 0.16 * hush, to: 392 })); break;
+        case "ok": [1046.5, 1318.5, 1568, 2093].forEach((f, i) => this._bell(f, t + i * 0.075, 0.55, 0.11 * hush)); break;
+        case "info": this._bell(1318.5, t, 0.5, 0.11 * hush); this._bell(1975.5, t + 0.12, 0.6, 0.09 * hush); break;
+        case "hello": this._tone(784, t, 0.2, { g: 0.09 * hush, to: 1175 }); this._bell(1568, t + 0.17, 0.45, 0.06 * hush); break;
+        case "boop": this._tone(620, t, 0.15, { g: 0.16, to: 990 }); break;
+        case "giggle": [0, 0.09, 0.18].forEach((d, i) => this._tone(880 + i * 110, t + d, 0.1, { g: 0.1, to: 1200 + i * 120 })); break;
+        case "love": [1568, 1975.5, 2349.3, 3136].forEach((f, i) => this._bell(f, t + i * 0.09, 0.8, 0.055)); break;
+        case "yawn": this._tone(392, t, 0.7, { g: 0.05 * hush, to: 247 }); break;
+        case "grumble": [0, 0.16].forEach((d, i) => this._tone(196 - i * 30, t + d, 0.26, { type: "triangle", g: 0.12, to: 150 - i * 20 })); break;
+        case "beg": this._tone(660, t, 0.16, { g: 0.08, to: 880 }); this._tone(880, t + 0.2, 0.22, { g: 0.07, to: 1175 }); break;
+        default: break;
+      }
+    }
+
+    /** Petting: called as the pointer strokes him. `px` is how far it moved, `speed` px/ms. */
+    pet(px, speed) {
+      if (this.theme === "off" || this.volume <= 0) return;
+      const c = this._ctx();
+      if (!c) return;
+      if (this.theme === "purr") return this._purr(Math.min(1, 0.35 + speed * 0.9));
+      this._travel = (this._travel || 0) + px;
+      const step = this.theme === "chimes" ? 85 : 60;
+      if (this._travel < step) return;
+      this._travel = 0;
+      const t = c.currentTime + 0.01;
+      if (this._file(this.theme === "chimes" ? "chime" : "bubble", 0.6, this.theme === "chimes" ? pick([1, 1.122, 1.26, 1.498, 1.682]) : rand(0.85, 1.25))) return;
+      if (this.theme === "chimes") {             // C-major pentatonic wind chimes: always consonant
+        const f = pick([1046.5, 1174.7, 1318.5, 1568, 1760, 2093, 2349.3, 2637]);
+        this._bell(f, t, rand(1.2, 2.0), 0.06);
+      } else {                                    // bubbles: little rising pops
+        const f = rand(380, 620);
+        this._tone(f, t, 0.12, { g: 0.09, to: f * rand(1.8, 2.4) });
+      }
+    }
+
+    _purr(level) {
+      const c = this.ctx;
+      if (!this.purr && this._files && this._files.purr && this.buffers.purr === undefined) this._buffer("purr");
+      if (!this.purr && this.buffers.purr) {              // recorded purr, looped
+        const src = c.createBufferSource(); src.buffer = this.buffers.purr; src.loop = true;
+        const g = c.createGain(); g.gain.value = 0; src.connect(g); g.connect(this.out); src.start();
+        this.purr = g;
+      }
+      if (!this.purr) {
+        const len = c.sampleRate * 2, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
+        let last = 0;
+        for (let i = 0; i < len; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.2; }   // brown noise
+        const src = c.createBufferSource(); src.buffer = buf; src.loop = true;
+        const lp = c.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 340;
+        const am = c.createGain(); am.gain.value = 0.55;
+        const lfo = c.createOscillator(); lfo.frequency.value = 23;
+        const depth = c.createGain(); depth.gain.value = 0.45;
+        lfo.connect(depth); depth.connect(am.gain);
+        const level = c.createGain(); level.gain.value = 0;
+        src.connect(lp); lp.connect(am); am.connect(level); level.connect(this.out);
+        src.start(); lfo.start();
+        this.purr = level;
+      }
+      this.purr.gain.setTargetAtTime(level * 0.55, c.currentTime, 0.12);
+      clearTimeout(this._purrStop);
+      this._purrStop = setTimeout(() => this.stopPet(), 500);
+    }
+
+    stopPet() { if (this.purr && this.ctx) this.purr.gain.setTargetAtTime(0, this.ctx.currentTime, 0.35); }
+  }
+
+  // ------------------------------------------------------------------------------- styles
+  const CSS = `
+  .wb{position:absolute;inset:0;pointer-events:none;font:500 13.5px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#e8ecf4;-webkit-user-select:none;user-select:none}
+  .wb *{box-sizing:border-box}
+  .wb-stage{position:absolute;bottom:0;width:230px;height:120px}
+  .wb[data-corner="bottom-right"] .wb-stage{right:0}.wb[data-corner="bottom-left"] .wb-stage{left:0}
+  .wb-pip{position:absolute;bottom:2px;width:66px;height:68px;pointer-events:auto;cursor:pointer;outline:none;transition-property:left,right;transition-timing-function:linear;--pa-size:66px}
+  .wb-pip:focus-visible .pa{filter:drop-shadow(0 0 4px #2dd4bf)}
+  .wb-body{width:100%;height:100%;transform-origin:50% 100%}
+  .wb-pip .pa{width:100%;filter:drop-shadow(0 6px 10px rgba(5,10,20,.3))}
+  .wb-pip.left .pa{transform:scaleX(-1)}
+  .wb-pip .pa-eyes{transform:translate(var(--lx,0px),var(--ly,0px))}
+  .wb-pip .pa.blink .pa-eyes{transform:translate(var(--lx,0px),var(--ly,0px)) scaleY(.1)}
+  .wb-pip.walking .pa-fig{animation:wb-step .36s ease-in-out infinite}
+  .wb-pip.hop .wb-body{animation:wb-hop .55s cubic-bezier(.3,.6,.3,1)}
+  .wb-pip.boop .wb-body{animation:wb-squish .32s ease-out}
+  .wb-pip.celebrate .wb-body{animation:wb-hop .55s cubic-bezier(.3,.6,.3,1) 3}
+  .wb-pip.petting .wb-body{animation:wb-lean 1s ease-in-out infinite}
+  .wb-pip.gone .wb-body{animation:wb-vanish .9s cubic-bezier(.6,0,.4,1) forwards}.wb-pip.gone{pointer-events:none}
+  .wb-pip.arrive .wb-body{animation:wb-arrive .8s cubic-bezier(.2,1.4,.4,1) both}
+  .wb-quip{position:absolute;bottom:76px;max-width:200px;pointer-events:none;background:#fff;color:#141a33;font-weight:700;font-size:13px;line-height:1.3;padding:7px 11px;border-radius:13px;box-shadow:0 10px 24px rgba(5,10,20,.35);animation:wb-pop .3s cubic-bezier(.2,1.2,.3,1) both;white-space:nowrap}
+  .wb[data-corner="bottom-right"] .wb-quip{border-bottom-right-radius:4px}.wb[data-corner="bottom-left"] .wb-quip{border-bottom-left-radius:4px}
+  .wb-quip.leaving{animation:wb-unpop .25s ease-in forwards}
+  .wb-pip.beg .wb-body{animation:wb-beg .9s ease-in-out infinite}
+  .wb-pip.stomp .wb-body{animation:wb-stomp .25s ease-in-out 4}
+  .wb-pip.dance .wb-body{animation:wb-dance .5s ease-in-out 4}
+  .wb-toy{position:absolute;bottom:10px;width:14px;height:14px;border-radius:50%;pointer-events:none;
+          background:#f2a33a;box-shadow:0 0 10px 3px rgba(242,163,58,.45);animation:wb-toy 1.2s ease-in-out infinite}
+  .wb-fx{position:absolute;inset:0;pointer-events:none;overflow:visible}
+  .wb-fx i{position:absolute;font-style:normal;font-size:13px;animation:wb-float 1.3s ease-out forwards}
+  .wb-fx i.heart{color:#ff6b9a}.wb-fx i.spark{color:#f2a33a;animation-name:wb-burst;animation-duration:.8s}
+  /* notes and the panel */
+  .wb-card{position:absolute;bottom:80px;width:310px;max-width:calc(100% - 12px);pointer-events:auto;
+       background:#111a2b;border:1px solid #26354d;border-radius:20px;padding:14px 16px 14px 14px;
+       box-shadow:0 24px 54px rgba(5,10,20,.5),inset 0 1px 0 rgba(255,255,255,.05);animation:wb-pop .38s cubic-bezier(.2,1.2,.3,1) both}
+  .wb[data-corner="bottom-right"] .wb-card{right:8px}.wb[data-corner="bottom-left"] .wb-card{left:8px}
+  .wb-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;border-radius:20px 20px 0 0;background:var(--tone,#2dd4bf)}
+  .wb-card::after{content:"";position:absolute;bottom:-7px;width:14px;height:14px;background:#111a2b;border-right:1px solid #26354d;border-bottom:1px solid #26354d;transform:rotate(45deg)}
+  .wb[data-corner="bottom-right"] .wb-card::after{right:var(--tail,40px)}.wb[data-corner="bottom-left"] .wb-card::after{left:var(--tail,40px)}
+  .wb-card.alert{--tone:#f2a33a}.wb-card.safe,.wb-card.ok{--tone:#2fbf86}.wb-card.info{--tone:#2dd4bf}.wb-card.bad{--tone:#ff4d5e}
+  .wb-card.leaving{animation:wb-unpop .25s ease-in forwards}
+  .wb-note{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start}
+  .wb-note .pa{--pa-size:56px;margin-top:2px}
+  .wb-kicker{display:flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:#8b97b0;font-weight:750;padding-right:18px}
+  .wb-x{all:unset;position:absolute;top:10px;right:12px;cursor:pointer;color:#8b97b0;font-size:18px;line-height:1;padding:2px 4px;border-radius:6px}
+  .wb-x:hover{color:#fff;background:#1f2a46}
+  .wb-card h4{margin:4px 0 3px;font-size:15.5px;line-height:1.3;color:#fff;font-weight:750;letter-spacing:-.01em}
+  .wb-card p{margin:0;color:#c3cbdc}
+  .wb-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}.wb-meta span{font-size:11.5px;font-weight:650;padding:2px 8px;border-radius:99px;background:#1f2a46;color:#d6dcea}
+  .wb-meta span.hot{background:rgba(242,163,58,.16);color:#f8c56e}
+  .wb-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .wb button.b{all:unset;cursor:pointer;padding:8px 13px;border-radius:10px;font-weight:700;font-size:13px;background:#1c2a3e;color:#e6edf3}
+  .wb button.b.primary{background:#0d9488;color:#fff}
+  .wb button.b:hover{filter:brightness(1.12)}.wb button.b:focus-visible,.wb-chips button:focus-visible{outline:2px solid #2dd4bf;outline-offset:2px}
+  .wb-panel{width:286px}
+  .wb-panel .wb-hello{display:flex;gap:10px;align-items:center;padding-right:18px}.wb-panel .wb-hello .pa{--pa-size:44px}
+  .wb-panel .wb-hello b{display:block;color:#fff;font-size:14.5px}.wb-panel .wb-hello small{color:#9aa6bf;font-size:12px}
+  .wb-panel h5{margin:12px 0 6px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#8b97b0}
+  .wb-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .wb-chips button{all:unset;cursor:pointer;padding:5px 10px;border-radius:99px;background:#1f2a46;font-weight:650;font-size:12.5px}
+  .wb-chips button[aria-pressed="true"]{background:rgba(45,212,191,.16);color:#fff;box-shadow:inset 0 0 0 1px #2dd4bf}
+  .wb-panel input[type=range]{width:100%;accent-color:#2dd4bf;margin:2px 0 0}
+  .wb-panel .wb-actions{margin-top:14px}
+  .wb-pip.spin .wb-body{animation:wb-spin .9s cubic-bezier(.4,0,.2,1)}
+  .wb-pip.stretch .wb-body{animation:wb-stretch 1.3s ease-in-out}
+  @keyframes wb-spin{50%{transform:translateY(-10px) rotate(180deg)}100%{transform:rotate(360deg)}}
+  @keyframes wb-stretch{40%{transform:scale(.94,1.1)}70%{transform:scale(1.04,.96)}}
+  @keyframes wb-beg{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-8px) rotate(-6deg)}60%{transform:translateY(0) rotate(6deg)}}
+  @keyframes wb-stomp{50%{transform:translateY(2px) scale(1.04,.96)}}
+  @keyframes wb-dance{25%{transform:translateX(-6px) rotate(-8deg)}50%{transform:translateY(-8px)}75%{transform:translateX(6px) rotate(8deg)}}
+  @keyframes wb-step{50%{transform:translateY(-2.5px)}}
+  @keyframes wb-hop{40%{transform:translateY(-16px)}75%{transform:translateY(0) scale(1.08,.92)}}
+  @keyframes wb-squish{30%{transform:scale(1.14,.84)}70%{transform:scale(.95,1.06)}}
+  @keyframes wb-lean{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+  @keyframes wb-vanish{30%{transform:scale(1.08,.9)}100%{transform:scale(.05) translateY(-30px);filter:blur(6px) brightness(2);opacity:0}}
+  @keyframes wb-arrive{0%{transform:scale(.05) translateY(-30px);filter:blur(6px) brightness(2);opacity:0}60%{opacity:1;filter:none}100%{transform:none}}
+  @keyframes wb-toy{50%{transform:translateY(-8px) scale(.85)}}
+  @keyframes wb-float{0%{opacity:0;transform:translate(0,0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx,0px),-46px) scale(1.1)}}
+  @keyframes wb-burst{0%{opacity:1;transform:translate(0,0) scale(.4)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1)}}
+  @keyframes wb-pop{from{opacity:0;transform:translateY(12px) scale(.94)}}
+  @keyframes wb-unpop{to{opacity:0;transform:translateY(8px) scale(.96)}}
+  @media (prefers-reduced-motion: reduce){.wb *{animation:none!important;transition:none!important}}
+  `;
+
+  // ------------------------------------------------------------------------------- stories
+  const SITE_NAMES = { chatgpt: "ChatGPT", perplexity: "Perplexity", claude: "Claude" };
+  /** What Pip does for an event: {expr, sound, important?, pop?} or null to stay quiet. */
+  function story(e) {
+    const d = e.data || {};
+    const site = SITE_NAMES[d.site] || d.site || "the page";
+    const rules = (d.rules || []).slice(0, 3);
+    const chips = [site, ...rules.map((r) => ({ hot: r }))];
+    if (e.type === "guard.decision") {
+      if (d.decision === "cancel") return { expr: "protect", sound: "alert", important: true, pop: {
+        tone: "safe", title: "Psst — I held that back",
+        text: d.kind === "file" ? `That file for ${site} had something you marked sensitive. It never left your computer.`
+          : `Your message on ${site} had something you marked sensitive. It never left — it's still in the box to edit.`,
+        meta: chips, ms: 45000, open: true } };
+      if (d.decision === "block") return { expr: "warn", sound: "alert", important: true, pop: {
+        tone: "alert", title: "Stopped by your rule", text: `Your ${d.kind === "file" ? "file" : "message"} on ${site} matched a rule set to Block, so it didn't go.`,
+        meta: chips, ms: 45000, open: true } };
+      if (d.decision === "warn") return { expr: "surprised", sound: "info", pop: { tone: "info", title: "Heads up", text: `I let it through on ${site}, with a note: ${rules.join(", ") || "a warn rule matched"}.`, ms: 8000 } };
+      if (d.decision === "continue") return { expr: "thumbs", sound: "info", pop: { tone: "ok", title: "Sent — your call", text: `You chose Continue on ${site}. I'll keep watching.`, ms: 6000 } };
+      return null;
+    }
+    if (e.type === "claude.waiting") return { expr: "alert", sound: "knock", important: true, pop: { tone: "alert", title: "Claude is waiting for you", text: `Claude wants to use ${d.method || "a tool"} on ${d.server || "a server"}. Tap Allow or Block on Telegram.`, meta: ["Claude", d.server || ""], ms: 30000 } };
+    if (e.type === "claude.decision") return d.allowed ? { expr: "happy", sound: null } : { expr: "protect", sound: "info", pop: { tone: "safe", title: "Blocked for you", text: `Claude's ${d.method || "tool"} on ${d.server || "a server"} didn't run.`, ms: 7000 } };
+    if (e.type === "telegram.paired") return { expr: "cheer", sound: "ok", pop: { tone: "ok", title: "We're a team now", text: "I'll ask you on Telegram when I need you — even when you're away from your desk.", ms: 9000 } };
+    if (e.type === "test.passed") return { expr: "thumbs", sound: "ok", pop: { tone: "ok", title: "Test passed", text: (e.title || "").replace(/^Test passed:\s*/, ""), ms: 5000 } };
+    if (e.type === "extension.connected") return { expr: "happy", sound: "hello", pop: { tone: "info", title: "I can see your browser", text: "ChatGPT, Perplexity and Claude are under my watch now.", ms: 7000 } };
+    if (e.type === "vault.created") return { expr: "cheer", sound: "ok", pop: { tone: "ok", title: "Vault ready", text: "Your passwords live encrypted on this computer. I'll ask before any fill.", ms: 7000 } };
+    if (e.type === "vault.locked") return { expr: "sleep", sound: null };
+    if (e.type === "vault.filled" || e.type === "vault.saved") return { expr: "thumbs", sound: null };
+    if (e.tone === "bad" && e.title) return { expr: "sad", sound: "info", pop: { tone: "bad", title: e.title, text: e.text || "", ms: 9000 } };
+    return null;
+  }
+
+  // ------------------------------------------------------------------------------- the pet
+  const MOODS = {
+    // Pip is never just standing there: short pauses, then the next little activity.
+    calm: { gap: [1.5, 4.5], acts: { walk: 20, look: 12, guard: 9, calm: 7, play: 10, busy: 6, nap: 3, vanish: 3, beg: 3, dance: 5, wave: 4, hop: 8, spin: 4, chase: 5, stretch: 5, peek: 3 } },
+    playful: { gap: [0.8, 2.5], acts: { walk: 16, look: 4, guard: 3, calm: 1, play: 18, busy: 5, nap: 1, vanish: 4, beg: 6, dance: 10, wave: 5, hop: 12, spin: 8, chase: 10, stretch: 2, peek: 5 } },
+    focus: { gap: [5, 12], acts: { walk: 10, look: 30, guard: 22, calm: 16, play: 2, busy: 10, nap: 4, vanish: 1, beg: 0, dance: 0, wave: 2, hop: 2, spin: 0, chase: 0, stretch: 8, peek: 0 } },
+  };
+
+  function el(tag, attrs = {}, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v === undefined || v === null || v === false) continue;
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids.flat()) if (kid !== null && kid !== undefined && kid !== false) n.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+    return n;
+  }
+
+  /**
+   * mount(root, {settings, adapter, filter})
+   * adapter: {save(patch), openApp(), hide(), hideLabel, resize(mode), status() → text, introSeen(), markIntro()}
+   */
+  function mount(root, { settings = {}, adapter = {}, filter = null } = {}) {
+    const sound = new Sound();
+    Art.adopt(root);
+    let style = null, sheet = null;
+    const host = root.nodeType === 9 ? root : root.getRootNode ? root.getRootNode() : root;
+    try {
+      sheet = new CSSStyleSheet();
+      sheet.replaceSync(CSS);
+      host.adoptedStyleSheets = [...(host.adoptedStyleSheets || []), sheet];
+    } catch { sheet = null; style = el("style", { text: CSS }); }
+
+    const wrap = el("div", { class: "wb", "data-corner": "bottom-right" });
+    const stage = el("div", { class: "wb-stage" });
+    const fig = Art.figure("neutral", 66, true);
+    const body = el("div", { class: "wb-body" }, fig);
+    const pip = el("div", { class: "wb-pip", tabindex: "0", role: "button", "aria-haspopup": "dialog",
+      "aria-label": "Pip, your Walled guardian. Stroke to pet, click for options." }, body);
+    const fx = el("div", { class: "wb-fx" });
+    stage.append(pip, fx);
+    wrap.append(stage);
+    if (style) root.append(style);
+    root.append(wrap);
+
+    let opts = { mood: "calm", sound: "purr", volume: 45, corner: "bottom-right", ...settings };
+    let x = 18, busy = false, away = false, card = null, panel = null, dead = false, lastPointer = Date.now();
+    let current = "neutral", holdUntil = 0, revertTimer = null;
+    const timers = new Set();
+    const later = (fn, ms) => { const t = setTimeout(() => { timers.delete(t); if (!dead) fn(); }, ms); timers.add(t); return t; };
+    const maxX = () => Math.max(0, stage.clientWidth - 70);
+    const side = () => (opts.corner === "bottom-left" ? "left" : "right");
+    const held = () => Date.now() < holdUntil;
+
+    function place(nx, seconds = 0) {
+      x = Math.max(0, Math.min(maxX(), nx));
+      pip.style.transitionDuration = `${seconds}s`;
+      pip.style.left = pip.style.right = "";
+      pip.style[side()] = `${x}px`;
+      wrap.style.setProperty("--tail", `${Math.round(x + 26)}px`);
+    }
+
+    function apply(next = {}) {
+      opts = { ...opts, ...next };
+      wrap.dataset.corner = opts.corner;
+      sound.set(opts);
+      place(x);
+    }
+    apply();
+
+    /** Show an expression; with ms it returns to the resting face afterwards. */
+    function express(name, ms = 0) {
+      clearTimeout(revertTimer);
+      if (current !== name) { fig.set(name); current = name; }
+      if (ms) revertTimer = later(() => express("neutral"), ms);
+    }
+    let quipEl = null;
+    /** A tiny speech bubble above Pip (never over a note or the panel). */
+    function quip(text, ms = 2200) {
+      if (card || panel || away) return;
+      if (quipEl) quipEl.remove();
+      const q = el("div", { class: "wb-quip", text });
+      q.style[side()] = `${Math.max(0, x - 10)}px`;
+      stage.append(q); quipEl = q;
+      later(() => { if (quipEl === q) { q.classList.add("leaving"); later(() => q.remove(), 260); quipEl = null; } }, ms);
+    }
+    function flash(cls, ms) { pip.classList.remove(cls); void pip.offsetWidth; pip.classList.add(cls); later(() => pip.classList.remove(cls), ms); }
+    function eyes(dx, dy) { fig.style.setProperty("--lx", `${dx}px`); fig.style.setProperty("--ly", `${dy}px`); }
+
+    function particle(kind, n = 1) {
+      for (let i = 0; i < n; i++) {
+        const p = el("i", { class: kind, text: kind === "heart" ? "♥" : "✦" });
+        const base = side() === "right" ? stage.clientWidth - x - 38 : x + 28;
+        p.style.left = `${base + rand(-12, 12)}px`;
+        p.style.bottom = `${kind === "heart" ? 58 : 34}px`;
+        const a = (i / n) * Math.PI * 2;
+        p.style.setProperty("--dx", kind === "heart" ? `${rand(-14, 14)}px` : `${Math.cos(a) * 32}px`);
+        p.style.setProperty("--dy", `${Math.sin(a) * -32}px`);
+        fx.append(p);
+        later(() => p.remove(), 1400);
+      }
+    }
+
+    // --- life ------------------------------------------------------------------------
+    function blinkLoop() {
+      if (!away && ["neutral", "busy", "surprised", "alert", "protect", "warn"].includes(current)) {
+        fig.classList.add("blink"); later(() => fig.classList.remove("blink"), 130);
+        if (Math.random() < 0.2) later(() => { fig.classList.add("blink"); later(() => fig.classList.remove("blink"), 120); }, 280);
+      }
+      later(blinkLoop, rand(2400, 6200));
+    }
+
+    async function walkTo(nx, speed = 34) {
+      const target = Math.max(0, Math.min(maxX(), nx));
+      const dist = Math.abs(target - x);
+      if (dist < 6) return;
+      const goingOut = target > x;
+      pip.classList.toggle("left", side() === "right" ? goingOut : !goingOut);
+      pip.classList.add("walking");
+      place(target, dist / speed);
+      await wait((dist / speed) * 1000 + 60);
+      pip.classList.remove("walking", "left");
+    }
+
+    const ACTIONS = {
+      async walk() { await walkTo(rand(0, maxX())); },
+      async look() { eyes(pick([-4, 4, -3, 3]), pick([-2, 0, 2])); await wait(rand(900, 1800)); eyes(0, 0); },
+      async guard() { express("protect"); await wait(rand(2600, 4200)); if (current === "protect" && !held()) express("neutral"); },
+      async calm() { express("calm"); await wait(rand(3500, 6000)); if (current === "calm" && !held()) express("neutral"); },
+      async busy() { express("busy"); await wait(rand(3000, 5000)); if (current === "busy" && !held()) express("neutral"); },
+      async play() {
+        const tx = Math.max(0, Math.min(maxX(), x + pick([-1, 1]) * rand(40, 110)));
+        const toy = el("div", { class: "wb-toy" });
+        toy.style[side()] = `${tx + 26}px`;
+        stage.append(toy);
+        express("surprised");
+        await wait(700);
+        express("happy");
+        await walkTo(tx);
+        flash("hop", 560);
+        await wait(250);
+        toy.remove();
+        particle("spark", 6);
+        if (!held()) express("cheer", 1200);
+        await wait(1200);
+      },
+      async nap() {
+        express("sleep");
+        const until = Date.now() + rand(18000, 45000);
+        while (!dead && Date.now() < until && current === "sleep") await wait(1000);
+        if (current === "sleep") express("calm", 1200);
+      },
+      async vanish() { if (!REDUCED) await goAway(rand(10000, 30000)); },
+      async hop() { express("happy"); for (let i = 0; i < 2 + Math.floor(Math.random() * 2); i++) { flash("hop", 560); await wait(600); } if (current === "happy" && !held()) express("neutral"); },
+      async spin() { express("cheer"); flash("spin", 900); await wait(950); particle("spark", 3); if (current === "cheer" && !held()) express("neutral"); },
+      async chase() {                                   // dashes after his own spark, back and forth
+        express("surprised"); await wait(250); express("happy");
+        await walkTo(x < maxX() / 2 ? maxX() : 0, 110);
+        await walkTo(rand(maxX() * 0.3, maxX() * 0.7), 110);
+        if (current === "happy" && !held()) express("neutral");
+      },
+      async stretch() { express("calm"); flash("stretch", 1300); await wait(1400); if (current === "calm" && !held()) express("neutral"); },
+      async peek() { if (REDUCED) return; await goAway(rand(3000, 7000)); },
+      async dance() { express("cheer"); flash("dance", 2000); particle("spark", 4); await wait(2100); if (current === "cheer" && !held()) express("neutral"); },
+      async wave() { express("thumbs"); quip(pick(["👋", "Still here!", "All good on my end."]), 1800); await wait(1900); if (current === "thumbs" && !held()) express("neutral"); },
+      async beg(force = false) {
+        // Attention-seeking: only when you're around and haven't petted him for a while.
+        if (!force && (Date.now() - lastPointer > 60000 || Date.now() - lastPetAt < 4 * 60000)) return ACTIONS.look();
+        begging = true;
+        holdUntil = Date.now() + 12000;                 // no other activity while he waits for a pat
+        express("shy"); pip.classList.add("beg"); sound.play("beg");
+        quip(pick(["Pet me?", "Psst… head pats?", "I've been a good guard today…", "Just one pat?"]), 4000);
+        const until = Date.now() + 12000;
+        while (!dead && begging && Date.now() < until) await wait(300);
+        pip.classList.remove("beg");
+        if (begging) {                                  // ignored
+          begging = false;
+          express("sad", 2200); quip(pick(["…okay.", "Fine. I'll guard.", "Hmph."]), 2000);
+        }
+      },
+    };
+
+    async function goAway(ms) {
+      away = true;
+      closePanel();
+      particle("spark", 7);
+      pip.classList.add("gone");
+      await wait(ms);
+      if (!dead) comeBack();
+    }
+
+    function comeBack() {
+      if (!away) return;
+      away = false;
+      place(rand(0, maxX()));
+      pip.classList.remove("gone");
+      express("happy", 1500);
+      flash("arrive", 820);
+      particle("spark", 5);
+    }
+
+    async function tick() {
+      if (!busy && !away && !held() && !hovering && !card && !panel && !REDUCED && !pip.classList.contains("petting")) {
+        busy = true;
+        const acts = (MOODS[opts.mood] || MOODS.calm).acts;
+        const total = Object.values(acts).reduce((a, b) => a + b, 0);
+        let r = Math.random() * total, act = "look";
+        for (const [k, v] of Object.entries(acts)) { if ((r -= v) < 0) { act = k; break; } }
+        if (act === "nap" && Date.now() - lastPointer < 60000) act = "guard";     // don't doze while you're busy nearby
+        try { await ACTIONS[act](); } finally { busy = false; }
+      }
+      const [a, b] = (MOODS[opts.mood] || MOODS.calm).gap;
+      later(tick, rand(a, b) * 1000);
+    }
+
+    // --- petting -------------------------------------------------------------------------
+    let stroke = null, petMs = 0, loved = false, fast = 0, down = null;
+    let petStart = 0, sulkUntil = 0, begging = false, lastPetAt = Date.now(), hovering = false;
+    pip.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY }; });
+    pip.addEventListener("pointerenter", () => { hovering = true; if (!pip.classList.contains("walking") && current === "neutral") eyes(0, -2); });
+    pip.addEventListener("pointerenter", (e) => { stroke = { x: e.clientX, y: e.clientY, t: performance.now(), dist: 0, hearts: 0, moved: 0 }; });
+    pip.addEventListener("pointermove", (e) => {
+      lastPointer = Date.now();
+      if (!stroke || away) return;
+      const now = performance.now();
+      const d = Math.hypot(e.clientX - stroke.x, e.clientY - stroke.y);
+      const dt = Math.max(1, now - stroke.t);
+      stroke.dist += d; stroke.x = e.clientX; stroke.y = e.clientY; stroke.t = now;
+      if (stroke.dist < 18) return;
+      if (Date.now() < sulkUntil) {                        // still grumpy: no pets for now
+        if (!pip.classList.contains("stomp")) { flash("stomp", 1000); express("angry", 1200); quip(pick(["I said enough!", "Hmph!", "Not now."]), 1300); sound.play("grumble"); }
+        return;
+      }
+      if (!pip.classList.contains("petting")) {
+        sound.unlock();
+        pip.classList.add("petting");
+        petStart = Date.now();
+        if (begging) { begging = false; holdUntil = 0; pip.classList.remove("beg"); loved = true; express("love"); sound.play("love"); particle("heart", 4); quip(pick(["Yay!", "Best human 💕", "Hehe, thank you!"]), 1800); }
+        else express("shy");
+      }
+      lastPetAt = Date.now();
+      if (Date.now() - petStart > 8000) return overPetted();
+      petMs += dt;
+      fast = d / dt > 2.4 ? fast + dt : Math.max(0, fast - dt);
+      sound.pet(d, d / dt);
+      stroke.hearts += d;
+      if (stroke.hearts > 220) { stroke.hearts = 0; particle("heart"); }
+      if (fast > 1400) { fast = 0; express("angry", 900); quip(pick(["Hey, gently!", "Easy there!", "Too fast!"]), 1200); sound.play("grumble"); later(() => { if (pip.classList.contains("petting")) express(loved ? "love" : "shy"); }, 950); }
+      else if (!loved && petMs > 2600 && current !== "angry") { loved = true; express("love"); sound.play("love"); particle("heart", 3); }
+      clearTimeout(stroke.idle);
+      stroke.idle = setTimeout(endPet, 450);
+    });
+    pip.addEventListener("pointerleave", () => { hovering = false; eyes(0, 0); endPet(); });
+    /** Too much of a good thing: grumpy, stomps, walks off and sulks for a few seconds. */
+    async function overPetted() {
+      pip.classList.remove("petting");
+      sound.stopPet();
+      sulkUntil = Date.now() + 7000;
+      petMs = 0; loved = false;
+      express("angry"); flash("stomp", 1000); sound.play("grumble");
+      quip(pick(["Okay, okay — that's enough!", "Too many pats!", "I need my personal space."]), 2200);
+      await wait(1100);
+      if (dead || away) return;
+      const far = side() === "right" ? (x > maxX() / 2 ? 0 : maxX()) : (x > maxX() / 2 ? 0 : maxX());
+      express("angry");
+      await walkTo(far);
+      later(() => { if (current === "angry") { express("neutral"); quip("…fine, I forgive you.", 1800); } }, 5000);
+    }
+    function endPet() {
+      if (!pip.classList.contains("petting")) return;
+      petStart = 0;
+      pip.classList.remove("petting");
+      sound.stopPet();
+      if (stroke) clearTimeout(stroke.idle);
+      express(loved ? "love" : "happy", 1600);
+      if (petMs > 2600) later(() => { petMs = 0; loved = false; }, 4000); else petMs = 0;
+    }
+
+    // --- click → one small panel ---------------------------------------------------------
+    pip.addEventListener("click", () => {
+      sound.unlock();
+      const moved = down && stroke ? Math.hypot(stroke.x - down.x, stroke.y - down.y) : 0;
+      if (moved > 8) return;                                     // that was a stroke
+      if (card && !panel) return closeCard();
+      flash("boop", 340);
+      sound.play("boop");
+      togglePanel();
+    });
+    pip.addEventListener("contextmenu", (e) => { e.preventDefault(); togglePanel(); });
+    pip.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); togglePanel(); }
+      if (e.key === "Escape") { closePanel(); closeCard(); }
+    });
+
+    async function sizeFor(mode) { if (adapter.resize) { try { await adapter.resize(mode); } catch { /* window gone */ } } }
+    function save(patch) { if (adapter.save) Promise.resolve(adapter.save(patch)).catch(() => {}); }
+
+    function leave(node, after) {
+      node.classList.add("leaving");
+      later(() => { node.remove(); if (!card && !panel) sizeFor("idle"); if (after) after(); }, 260);
+    }
+    function closePanel() { if (!panel) return; const p = panel; panel = null; leave(p); }
+    function closeCard() { if (!card) return; const c = card; card = null; leave(c); if (!held()) express("neutral"); }
+    const xButton = (fn) => el("button", { class: "wb-x", "aria-label": "Close", text: "×", onclick: fn });
+
+    async function togglePanel() {
+      if (panel) return closePanel();
+      if (away) comeBack();
+      if (card) { card.remove(); card = null; }
+      await sizeFor("open");
+      express("happy");
+      const chips = (key, options) => el("div", { class: "wb-chips", role: "group" }, options.map(([v, label]) => el("button", {
+        "aria-pressed": String(opts[key] === v), text: label,
+        onclick: (ev) => {
+          apply({ [key]: v });
+          ev.currentTarget.parentElement.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === ev.currentTarget)));
+          if (key === "sound" && v !== "off") { sound.unlock(); if (v === "purr") sound._purr(0.7); else [0, 1, 2].forEach((i) => later(() => sound.pet(100, 0.5), i * 160)); }
+          if (key === "mood") express({ calm: "calm", playful: "cheer", focus: "protect" }[v], 1400);
+          save({ [key]: v });
+        } })));
+      const status = await Promise.resolve(adapter.status ? adapter.status() : "").catch(() => "");
+      const mini = Art.figure("happy", 44, false);
+      panel = el("div", { class: "wb-card wb-panel info", role: "dialog", "aria-label": "Pip" },
+        xButton(closePanel),
+        el("div", { class: "wb-hello" }, mini, el("div", {}, el("b", { text: "Hi, I'm Pip" }), el("small", { text: status || "Keeping watch from this corner." }))),
+        el("h5", { text: "When you pet me" }), chips("sound", [["purr", "Purr"], ["chimes", "Chimes"], ["bubbles", "Bubbles"], ["off", "Silent"]]),
+        el("input", { type: "range", min: "0", max: "100", value: String(opts.volume), "aria-label": "Volume",
+          onchange: (ev) => { apply({ volume: Number(ev.target.value) }); sound.play("boop"); save({ volume: Number(ev.target.value) }); } }),
+        el("h5", { text: "My mood" }), chips("mood", [["calm", "Calm"], ["playful", "Playful"], ["focus", "Focus"]]),
+        el("div", { class: "wb-actions" },
+          adapter.openApp ? el("button", { class: "b primary", text: "Open Walled", onclick: () => { closePanel(); adapter.openApp(); } }) : null,
+          el("button", { class: "b", text: "Nap 1 h", onclick: () => { closePanel(); express("sleep"); later(() => goAway(3600 * 1000), 900); } }),
+          adapter.hide ? el("button", { class: "b", text: adapter.hideLabel || "Hide", onclick: () => { closePanel(); adapter.hide(); } }) : null));
+      wrap.append(panel);
+      const first = panel.querySelector("button[aria-pressed='true']");
+      if (first) first.focus({ preventScroll: true });
+    }
+
+    // --- notes -----------------------------------------------------------------------------
+    const RANK = { alert: 3, safe: 3, bad: 2, ok: 1, info: 1 };
+    async function say(pop, expr = "happy") {
+      const rank = RANK[pop.tone] || 1;
+      const buried = () => card && Number(card.dataset.rank) > rank;   // never bury an alert under small news
+      if (buried()) return null;
+      closePanel();
+      if (away) comeBack();
+      await sizeFor("open");
+      if (buried()) return null;
+      if (card) { card.remove(); card = null; }
+      const meta = (pop.meta || []).filter(Boolean).map((m) => (typeof m === "object" ? el("span", { class: "hot", text: m.hot }) : el("span", { text: m })));
+      const actions = pop.actions || [
+        { label: "Got it", primary: true, run: closeCard },
+        ...(pop.open && adapter.openApp ? [{ label: "Open Walled", run: () => { closeCard(); adapter.openApp(); } }] : []),
+      ];
+      const node = el("div", { class: `wb-card ${pop.tone || "info"}`, role: rank >= 3 ? "alert" : "status" },
+        xButton(closeCard),
+        el("div", { class: "wb-note" }, Art.figure(expr, 56, true),
+          el("div", {},
+            el("div", { class: "wb-kicker", text: "Pip · Walled" }),
+            el("h4", { text: pop.title || "" }), pop.text ? el("p", { text: pop.text }) : null,
+            meta.length ? el("div", { class: "wb-meta" }, meta) : null,
+            el("div", { class: "wb-actions" }, actions.map((a) => el("button", { class: `b ${a.primary ? "primary" : ""}`, text: a.label, onclick: a.run }))))));
+      node.dataset.rank = String(rank);
+      card = node;
+      wrap.append(node);
+      if (pop.ms) later(() => { if (card === node) closeCard(); }, pop.ms);
+      return node;
+    }
+
+    /** React to a service event (from the app's event stream or the extension). */
+    function react(e) {
+      const s = story(e);
+      if (!s) return null;
+      const show = s.pop && (!filter || filter(e, s));
+      if (away && (show || s.important)) comeBack();
+      holdUntil = Date.now() + (s.important ? 6000 : 3000);
+      if (s.expr === "cheer" || s.expr === "thumbs") { flash("celebrate", 1700); particle("spark", 6); }
+      else if (s.expr !== "sleep") flash("hop", 560);
+      express(s.expr, show ? 0 : 3000);
+      if (s.sound) sound.play(s.sound);
+      if (show) say(s.pop, s.expr);
+      return s;
+    }
+
+    function destroy() {
+      dead = true;
+      timers.forEach(clearTimeout);
+      sound.stopPet();
+      if (style) style.remove();
+      if (sheet) host.adoptedStyleSheets = host.adoptedStyleSheets.filter((x) => x !== sheet);
+      wrap.remove();
+    }
+
+    place(rand(4, Math.max(8, maxX() * 0.4)));
+    flash("arrive", 820);
+    later(blinkLoop, 1200);
+    later(tick, rand(1500, 3000));
+    // First time only: say hello and show how to interact.
+    later(async () => {
+      const seen = adapter.introSeen ? await Promise.resolve(adapter.introSeen()).catch(() => true) : true;
+      if (seen || card || dead) return;
+      express("cheer");
+      sound.play("hello");
+      say({ tone: "info", title: "Hi, I'm Pip 👋", text: "I'll keep watch from this corner and only speak up when it matters. Stroke me to pet me — click me for options.",
+        actions: [{ label: "Nice to meet you", primary: true, run: () => { closeCard(); if (adapter.markIntro) adapter.markIntro(); express("happy", 1500); } }] }, "cheer");
+    }, 1600);
+    if (adapter.sounds) sound.useFiles(adapter.sounds);
+    return { react, say, apply, destroy, sound, el: pip, figure: fig, express, quip, closeCard, closePanel, togglePanel,
+      act: (name, ...args) => (ACTIONS[name] ? ACTIONS[name](...args) : null),
+      get current() { return current; }, get away() { return away; }, comeBack, goAway };
+  }
+
+  globalThis.WalledBuddy = { mount, story, Sound };
+})();
+</script>
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  PipArt.adopt(document);
+  const figs = {};
+  $$("[data-pip]").forEach((el) => { const f = PipArt.figure(el.dataset.pip, +el.dataset.size || 60, !!el.dataset.live); el.replaceWith(f); if (el.id) { f.id = el.id; figs[el.id] = f; f.style.removeProperty("--pa-size"); } });
+  const store = { get(k) { try { return JSON.parse(localStorage.getItem("walled-site:" + k)); } catch { return null; } }, set(k, v) { try { localStorage.setItem("walled-site:" + k, JSON.stringify(v)); } catch {} } };
+
+  // ---- nav
+  const nav = $("#nav");
+  const onScroll = () => nav.classList.toggle("solid", scrollY > 10);
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  const burger = $("#burger");
+  const setMenu = (open) => { document.body.classList.toggle("menu-open", open); burger.setAttribute("aria-expanded", String(open)); };
+  burger.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
+  $$("#sheet a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+
+  // ---- reveal on scroll
+  if ("IntersectionObserver" in window && !REDUCED) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12, rootMargin: "0px 0px -40px 0px" });
+    $$(".reveal").forEach((el) => io.observe(el));
+  } else $$(".reveal").forEach((el) => el.classList.add("in"));
+
+  // ---- hero Pip speaks
+  const hero = figs["hero-pip"], say = $("#say");
+  const lines = [["happy", "Hi, I'm Pip 👋"], ["protect", "I held that back."], ["alert", "Claude is waiting for you."], ["thumbs", "Sent — your call."], ["love", "Thanks for the pets!"], ["calm", "All quiet. I'm watching."]];
+  let li = 0;
+  if (!REDUCED) setInterval(() => { li = (li + 1) % lines.length; say.classList.add("hide"); setTimeout(() => { hero.set(lines[li][0]); say.textContent = lines[li][1]; say.classList.remove("hide"); }, 260); }, 3400);
+
+  // ---- the real Pip, living in the corner of this page
+  const host = document.createElement("div");
+  host.style.cssText = "position:fixed;right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));width:min(360px,calc(100vw - 16px));height:450px;z-index:40;pointer-events:none";
+  document.body.append(host);
+  const root = host.attachShadow({ mode: "open" });
+  const pet = store.get("pet") || {};
+  const buddy = WalledBuddy.mount(root, { settings: { sound: "purr", volume: 50, mood: "playful", ...pet }, adapter: {
+    openApp: () => { location.hash = "#install"; },
+    hide: () => { buddy.destroy(); host.remove(); },
+    hideLabel: "Hide on this page",
+    save: (patch) => store.set("pet", { ...(store.get("pet") || {}), ...patch }),
+    introSeen: () => true,                       // he says hello when you reach the demo (below)
+    status: () => "This is the real Pip, running on this page.",
+  } });
+  const react = (e) => buddy.react(e);
+  if (!store.get("intro") && "IntersectionObserver" in window) {
+    const hello = new IntersectionObserver((es) => {
+      if (!es[0].isIntersecting) return;
+      hello.disconnect();
+      store.set("intro", true);
+      buddy.express("cheer", 2500); buddy.sound.play("hello");
+      buddy.say({ tone: "info", title: "Hi, I'm Pip 👋", text: "I'm the real Pip. Stroke me to pet me, or click me. Try a prompt in the demo — I'll speak up.", ms: 9000 }, "cheer");
+    }, { threshold: .35 });
+    hello.observe(document.getElementById("demo"));
+  }
+
+  // ---- chat demo
+  const RULES = [
+    { name: "WALLED_SENSITIVE marker", test: (t) => /WALLED_SENSITIVE/.test(t) },
+    { name: "Client: Acme Corp", test: (t) => /acme corp/i.test(t) },
+    { name: "Project Falcon", test: (t) => /project falcon/i.test(t) },
+    { name: "Payment card number", test: (t) => (t.match(/\b(?:\d[ -]?){13,19}\b/g) || []).some((m) => luhn(m.replace(/\D/g, ""))) },
+    { name: "Email address", test: (t) => /[\w.+-]+@[\w-]+\.[\w.]+/.test(t) },
+    { name: "Aadhaar number", test: (t) => /\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b/.test(t) },
+    { name: "API key", test: (t) => /\b(sk|pk|ghp|xox[bp])[-_][A-Za-z0-9_-]{12,}/.test(t) },
+  ];
+  function luhn(d) { if (d.length < 13) return false; let s = 0, alt = false; for (let i = d.length - 1; i >= 0; i--) { let n = +d[i]; if (alt) { n *= 2; if (n > 9) n -= 9; } s += n; alt = !alt; } return s % 10 === 0; }
+  const chat = $("#chat"), input = $("#prompt-in"), scrim = $("#scrim"), steps = $$("#demo-steps li");
+  const mark = (n) => steps.forEach((li) => li.classList.toggle("done", +li.dataset.s <= n));
+  const add = (cls, text) => { const m = document.createElement("div"); m.className = "msg " + cls; m.textContent = text; chat.append(m); chat.scrollTop = chat.scrollHeight; return m; };
+  const fit = () => { input.style.height = "auto"; input.style.height = Math.min(140, input.scrollHeight) + "px"; };
+  input.addEventListener("input", fit);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#composer").requestSubmit(); } });
+  $$("[data-try]").forEach((b) => b.addEventListener("click", () => { input.value = b.dataset.try; fit(); input.focus({ preventScroll: true }); }));
+  let pending = null;
+  function send(text) {
+    add("me", text);
+    input.value = ""; fit();
+    setTimeout(() => add("ai", reply(text)), 600);
+  }
+  function reply(t) {
+    if (/haiku/i.test(t)) return "Coffee steam rises / the inbox wakes before me / Monday, gently, please.";
+    return "Sure — here's a summary. (This is a demo; nothing was actually sent anywhere.)";
+  }
+  $("#composer").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    mark(2);
+    const hits = RULES.filter((r) => r.test(text)).map((r) => r.name);
+    if (!hits.length) { mark(0); add("sys", "✓ Nothing sensitive — sent without a dialog"); send(text); return; }
+    pending = { text, hits };
+    $("#al-d").textContent = `Found: ${hits.join(", ")}\n\n“${text}”`;
+    scrim.hidden = false; mark(3);
+    buddy.express("think", 0);
+    $("#al-cancel").focus();
+  });
+  function decide(choice) {
+    if (!pending) return;
+    scrim.hidden = true; mark(4);
+    const { text, hits } = pending; pending = null;
+    if (choice === "cancel") {
+      add("sys", "Held back — your text is still in the box");
+      input.value = text; fit(); input.focus({ preventScroll: true });
+      react({ type: "guard.decision", data: { site: "chatgpt", kind: "prompt", decision: "cancel", rules: hits } });
+    } else {
+      send(text);
+      react({ type: "guard.decision", data: { site: "chatgpt", kind: "prompt", decision: "continue", rules: hits } });
+    }
+  }
+  $("#al-cancel").addEventListener("click", () => decide("cancel"));
+  $("#al-go").addEventListener("click", () => decide("continue"));
+  scrim.addEventListener("keydown", (e) => { if (e.key === "Escape") decide("cancel"); });
+
+  // ---- telegram demo
+  const tg = $("#tg"), kb = $("#tgkb");
+  let asked = false;
+  const io2 = "IntersectionObserver" in window ? new IntersectionObserver((es) => { if (es[0].isIntersecting && !asked) { asked = true; react({ type: "claude.waiting", data: { server: "mail", method: "send_email" } }); io2.disconnect(); } }, { threshold: .6 }) : null;
+  if (io2) io2.observe($(".phone"));
+  kb.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-a]"); if (!b) return;
+    kb.setAttribute("aria-disabled", "true");
+    const allowed = b.dataset.a !== "block";
+    const m = document.createElement("div"); m.className = "bubble";
+    m.innerHTML = allowed ? "✅ <b>Allowed</b> — Claude ran <code>send_email</code>." : "⛔ <b>Blocked</b> — <code>send_email</code> didn't run.";
+    if (b.dataset.a === "always") m.innerHTML += "<br>♾ Next time this runs without asking.";
+    const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = "just now"; m.append(meta);
+    tg.append(m); tg.scrollTop = tg.scrollHeight;
+    closeNote(); react({ type: "claude.decision", data: { server: "mail", method: "send_email", allowed } });
+  });
+  function closeNote() { try { buddy.closeCard(); } catch {} }
+  $("#tg-reset").addEventListener("click", () => {
+    $$(".bubble", tg).slice(1).forEach((b) => b.remove());
+    kb.removeAttribute("aria-disabled");
+    react({ type: "claude.waiting", data: { server: "mail", method: "send_email" } });
+  });
+
+  // ---- pet the big Pip
+  const box = $("#petbox"), big = figs["pet-pip"], hearts = $("#hearts"), meter = $("#love-meter"), hint = $("#pet-hint");
+  const sound = new WalledBuddy.Sound(); sound.set({ sound: "purr", volume: 55 });
+  let last = null, love = 0, travel = 0, idleT = null;
+  function heart(x, y) { const i = document.createElement("i"); i.textContent = "♥"; i.style.left = x + "px"; i.style.top = y + "px"; hearts.append(i); setTimeout(() => i.remove(), 1400); }
+  box.addEventListener("pointerdown", (e) => { sound.unlock(); last = { x: e.clientX, y: e.clientY, t: performance.now() }; box.setPointerCapture(e.pointerId); });
+  box.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "mouse" && !last) last = { x: e.clientX, y: e.clientY, t: performance.now() };
+    if (!last) return;
+    const now = performance.now(), d = Math.hypot(e.clientX - last.x, e.clientY - last.y), dt = Math.max(1, now - last.t);
+    last = { x: e.clientX, y: e.clientY, t: now };
+    if (d < 1) return;
+    sound.unlock(); sound.pet(d, d / dt);
+    travel += d; love = Math.min(100, love + d / 18);
+    meter.style.width = love + "%";
+    big.set(love > 70 ? "love" : "shy");
+    hint.textContent = love > 70 ? "He loves you 💕" : "Keep going…";
+    if (travel > 110) { travel = 0; const r = box.getBoundingClientRect(); heart(e.clientX - r.left - 8, e.clientY - r.top - 20); }
+    if (love >= 100 && !box.dataset.loved) { box.dataset.loved = "1"; sound.play("love"); }
+    clearTimeout(idleT); idleT = setTimeout(rest, 700);
+  });
+  ["pointerup", "pointercancel"].forEach((t) => box.addEventListener(t, () => { if (!matchMedia("(hover:hover)").matches) last = null; }));
+  box.addEventListener("pointerleave", () => { last = null; });
+  function rest() { sound.stopPet(); big.set(love > 70 ? "happy" : "neutral"); hint.textContent = "Stroke him with your mouse or finger ✋"; const decay = setInterval(() => { love = Math.max(0, love - 2); meter.style.width = love + "%"; if (!love) { clearInterval(decay); delete box.dataset.loved; } }, 120); }
+  $("#sound-seg").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-sound]"); if (!b) return;
+    $$("#sound-seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    sound.set({ sound: b.dataset.sound }); buddy.apply({ sound: b.dataset.sound }); sound.unlock();
+    if (b.dataset.sound === "purr") sound._purr(0.7); else if (b.dataset.sound !== "off") [0, 1, 2, 3].forEach((i) => setTimeout(() => sound.pet(120, 0.5), i * 170));
+  });
+
+  // ---- expressions gallery
+  const faces = $("#faces");
+  for (const n of PipArt.names.filter((n) => n !== "neutral")) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "face"; b.setAttribute("aria-pressed", "false");
+    const label = document.createElement("span"); label.textContent = PipArt.EXPR[n][5];
+    b.append(PipArt.figure(n, 72, false), label);
+    b.addEventListener("click", () => { $$(".face", faces).forEach((x) => x.setAttribute("aria-pressed", String(x === b))); big.set(n); buddy.express(n, 2500); });
+    faces.append(b);
+  }
+
+  // ---- tabs (and pick the visitor's OS)
+  $$(".tabs").forEach((tabs) => tabs.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-tab]"); if (!b) return;
+    tabs.querySelectorAll("button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
+    $$(`.panel[data-group="${tabs.dataset.group}"]`).forEach((p) => { p.hidden = p.dataset.panel !== b.dataset.tab; });
+  }));
+  const ua = navigator.userAgent;
+  if (/Linux/.test(navigator.platform) && !/Android/.test(ua)) $('.tabs button[data-tab="linux"]').click();
+
+  // ---- copy buttons
+  async function copy(text, btn) {
+    try { await navigator.clipboard.writeText(text); }
+    catch { const t = document.createElement("textarea"); t.value = text; t.style.position = "fixed"; t.style.opacity = "0"; document.body.append(t); t.select(); try { document.execCommand("copy"); } catch {} t.remove(); }
+    const was = btn.textContent; btn.textContent = "Copied ✓"; btn.classList.add("done");
+    setTimeout(() => { btn.textContent = was; btn.classList.remove("done"); }, 1600);
+  }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".copy"); if (!b) return;
+    if (b.dataset.copy) return copy(b.dataset.copy, b);
+    if (b.dataset.target) return copy($("#" + b.dataset.target).textContent.trim(), b);
+    const pre = b.parentElement.querySelector("pre");
+    copy(pre.textContent.split("\n").map((l) => l.replace(/\s+#\s.*$/, "")).join("\n").trim(), b);
+  });
+})();
+</script>
+</body>
+</html>
