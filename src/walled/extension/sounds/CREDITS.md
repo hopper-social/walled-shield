@@ -1,33 +1,60 @@
 # Sound Credits
 
-This folder contains sounds for Pip. All sounds should be licensed for redistribution.
+This folder contains sounds for Pip. The current files are **placeholder MP3s** - they are valid MP3 files but contain silence. Walled will use synthesized fallback sounds until real sounds are added.
 
 ## Required Sounds (13 total)
 
-| File | When it plays | Source | License |
-|------|---------------|--------|---------|
-| `alert.mp3` | Sensitive data held back / Block rule fired | TBD | TBD |
-| `knock.mp3` | Claude is waiting for Allow/Block | TBD | TBD |
-| `ok.mp3` | Telegram paired / vault ready / test passed | TBD | TBD |
-| `info.mp3` | Routine news (Continue chosen, warn rule) | TBD | TBD |
-| `hello.mp3` | Pip arrives or says hi | TBD | TBD |
-| `boop.mp3` | You click Pip | TBD | TBD |
-| `giggle.mp3` | Three quick boops | TBD | TBD |
-| `love.mp3` | Long petting → heart eyes | TBD | TBD |
-| `grumble.mp3` | Too much petting / scrubbed too fast | TBD | TBD |
-| `beg.mp3` | Pip asks to be petted | TBD | TBD |
-| `purr.mp3` | While you pet him (theme: Purr) - loop | TBD | TBD |
-| `chime.mp3` | Each stroke (theme: Chimes) | TBD | TBD |
-| `bubble.mp3` | Each stroke (theme: Bubbles) | TBD | TBD |
+| File | When it plays | Status |
+|------|---------------|--------|
+| `alert.mp3` | Sensitive data held back / Block rule fired | Placeholder |
+| `knock.mp3` | Claude is waiting for Allow/Block | Placeholder |
+| `ok.mp3` | Telegram paired / vault ready / test passed | Placeholder |
+| `info.mp3` | Routine news (Continue chosen, warn rule) | Placeholder |
+| `hello.mp3` | Pip arrives or says hi | Placeholder |
+| `boop.mp3` | You click Pip | Placeholder |
+| `giggle.mp3` | Three quick boops | Placeholder |
+| `love.mp3` | Long petting → heart eyes | Placeholder |
+| `grumble.mp3` | Too much petting / scrubbed too fast | Placeholder |
+| `beg.mp3` | Pip asks to be petted | Placeholder |
+| `purr.mp3` | While you pet him (theme: Purr) - loop | Placeholder |
+| `chime.mp3` | Each stroke (theme: Chimes) | Placeholder |
+| `bubble.mp3` | Each stroke (theme: Bubbles) | Placeholder |
 
-## Search Tips
+## Getting Real Sounds
 
-See `docs/SOUNDS.md` for detailed search terms and specifications.
+See `docs/SOUNDS.md` for detailed specifications and search terms.
 
-Recommended sources:
-- **Pixabay** (Pixabay Content License) - https://pixabay.com/sound-effects/
-- **Freesound** (CC0 only) - https://freesound.org/search/?q=&f=is_license%3Atrue+
-- **Zapsplat** (standard license with attribution) - https://www.zapsplat.com/
+### Recommended Sources
+
+1. **Pixabay** (Pixabay Content License) - https://pixabay.com/sound-effects/
+   - Free for commercial use
+   - No attribution required
+
+2. **Freesound** (CC0 only) - https://freesound.org/search/?f=is_license%3Atrue+
+   - Filter by "Creative Commons 0" license
+   - Free for any use
+
+3. **Zapsplat** (standard license with attribution) - https://www.zapsplat.com/
+   - Free with account
+   - Requires attribution
+
+### Search Terms by Sound
+
+| Sound | Search Terms |
+|-------|--------------|
+| alert | "soft notification two tone", "kalimba notification" |
+| knock | "soft wood knock", "double tap wood" |
+| ok | "success chime marimba", "celesta success" |
+| info | "soft bell ping", "glass notification" |
+| hello | "cute robot chirp", "friendly robot beep" |
+| boop | "soft pop UI", "bubble pop" |
+| giggle | "cute robot laugh", "tiny chirps" |
+| love | "magic sparkle chime", "celesta glissando" |
+| grumble | "cartoon grumble soft", "robot hmph" |
+| beg | "cute question chirp", "pleading chirp" |
+| purr | "cat purr loop", "purring seamless" |
+| chime | "single wind chime", "chime strike" |
+| bubble | "single bubble bloop", "water drop pop" |
 
 ## Format Requirements
 
@@ -39,4 +66,4 @@ Recommended sources:
 
 ## Fallback
 
-If sounds are missing, Walled uses synthesized fallback sounds automatically.
+Walled uses synthesized fallback sounds automatically when files are missing or invalid. The app works out of the box without real sounds.
